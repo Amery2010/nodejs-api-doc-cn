@@ -1,0 +1,18 @@
+# 方法和属性
+
+* [setup事件](#event_setup)
+* [listening事件](#event_listening)
+* [online事件](#event_online)
+* [message事件](#event_message)
+* [fork事件](#event_fork)
+* [disconnect事件](#event_disconnect)
+* [exit事件](#event_exit)
+* [cluster.settings](#settings)
+* [cluster.setupMaster([settings])](#setupMaster)
+* [cluster.fork([env])](#fork)
+* [cluster.worker](#worker)
+* [cluster.workers](#workers)
+* [cluster.schedulingPolicy](#schedulingPolicy)
+* [cluster.isMaster](#isMaster)
+* [cluster.isWorker](#isWorker)
+* [cluster.disconnect([callback])](#disconnect)

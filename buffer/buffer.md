@@ -1,0 +1,3 @@
+# 方法和属性
+
+* [buffer.INSPECT_MAX_BYTES](#INSPECT_MAX_BYTES)

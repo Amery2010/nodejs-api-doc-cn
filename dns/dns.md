@@ -1,0 +1,16 @@
+# 方法和属性
+
+* [dns.setServers(servers)](#setServers)
+* [dns.getServers()](#getServers)
+* [dns.resolve(hostname[, rrtype], callback)](#resolve)
+* [dns.resolve4(hostname, callback)](#resolve4)
+* [dns.resolve6(hostname, callback)](#resolve6)
+* [dns.resolveCname(hostname, callback)](#resolveCname)
+* [dns.resolveMx(hostname, callback)](#resolveMx)
+* [dns.resolveNs(hostname, callback)](#resolveNs)
+* [dns.resolveSoa(hostname, callback)](#resolveSoa)
+* [dns.resolveSrv(hostname, callback)](#resolveSrv)
+* [dns.resolveTxt(hostname, callback)](#resolveTxt)
+* [dns.lookup(hostname[, options], callback)](#lookup)
+* [dns.lookupService(address, port, callback)](#lookupService)
+* [dns.reverse(ip, callback)](#reverse)

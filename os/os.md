@@ -1,0 +1,17 @@
+# 方法和属性
+
+* [os.EOL](#EOL)
+* [os.type()](#type)
+* [os.release()](#release)
+* [os.platform()](#platform)
+* [os.cpus()](#cpus)
+* [os.arch()](#arch)
+* [os.endianness()](#endianness)
+* [os.loadavg()](#loadavg)
+* [os.totalmem()](#totalmem)
+* [os.freemem()](#freemem)
+* [os.uptime()](#uptime)
+* [os.networkInterfaces()](#networkInterfaces)
+* [os.hostname()](#hostname)
+* [os.homedir()](#homedir)
+* [os.tmpdir()](#tmpdir)

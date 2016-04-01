@@ -1,0 +1,16 @@
+# 方法和属性
+
+* [assert(value[, message])](#assert)
+* [assert.equal(actual, expected[, message])](#equal)
+* [assert.strictEqual(actual, expected[, message])](#strictEqual)
+* [assert.notEqual(actual, expected[, message])](#notEqual)
+* [assert.notStrictEqual(actual, expected[, message])](#notStrictEqual)
+* [assert.deepEqual(actual, expected[, message])](#deepEqual)
+* [assert.deepStrictEqual(actual, expected[, message])](#deepStrictEqual)
+* [assert.notDeepEqual(actual, expected[, message])](#notDeepEqual)
+* [assert.notDeepStrictEqual(actual, expected[, message])](#notDeepStrictEqual)
+* [assert.ok(value[, message])](#ok)
+* [assert.fail(actual, expected, message, operator)](#fail)
+* [assert.ifError(value)](#ifError)
+* [assert.throws(block[, error][, message])](#throws)
+* [assert.doesNotThrow(block[, error][, message])](#doesNotThrow)
