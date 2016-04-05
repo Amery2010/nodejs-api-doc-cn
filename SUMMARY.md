@@ -1,9 +1,9 @@
 # Summary
 
-* [关于本文档](about_this_documentation/README.md)
-  - [稳定度](about_this_documentation/stability_index.md)
-  - [JSON格式输出](about_this_documentation/json_output.md)
-  - [系统调用和手册页](about_this_documentation/syscalls_and_man_pages.md)
+* [关于本文档](documentation/README.md)
+  - [稳定度](documentation/stability_index.md)
+  - [JSON格式输出](documentation/json_output.md)
+  - [系统调用和手册页](documentation/syscalls_and_man_pages.md)
   
 * [概述](synopsis/README.md)
 
