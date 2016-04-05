@@ -20,16 +20,16 @@
 --------------------------------------------------
 
 
+<div id="class_Buffer" class="anchor"></div>
 ## Buffer类
-<div id="class_Buffer"></div>
 
 - {Function}
 
 用于处理二进制数据，详见 [Buffer](../buffer/) 章节。
 
 
+<div id="dirname" class="anchor"></div>
 ## __dirname
-<div id="dirname"></div>
 
 - {String}
 
@@ -45,8 +45,8 @@ console.log(__dirname);
 `__dirname` 实际上是各个模块本地的而非全局。
 
 
+<div id="filename" class="anchor"></div>
 ## __filename
-<div id="filename"></div>
 
 - {String}
 
@@ -62,24 +62,24 @@ console.log(__filename);
 `__filename` 实际上是各个模块本地的而非全局。
 
 
+<div id="global" class="anchor"></div>
 ## global
-<div id="global"></div>
 
 - {Object} 全局命名空间对象
 
 在浏览器中，顶级作用域就是全局作用域。这就是说，在浏览器中如果当前是在全局作用域内，`var something` 将会声明一个全局变量。在 Node 中则不同。顶级作用域并非全局作用域，在 Node 模块里的 `var something` 只属于那个模块。
 
 
+<div id="process" class="anchor"></div>
 ## process
-<div id="process"></div>
 
 - {Object}
 
 进程对象。详见[进程](../process/)章节。
 
 
+<div id="module" class="anchor"></div>
 ## module
-<div id="module"></div>
 
 - {Object}
 
@@ -90,8 +90,8 @@ console.log(__filename);
 详情可查阅[模块系统文档](../modules/)。
 
 
+<div id="exports" class="anchor"></div>
 ## exports
-<div id="exports"></div>
 
 `module.exports` 的快捷引用方式。何时使用 `exports` 以及何时使用 `module.exports` 的详细内容可查阅[模块系统文档](../modules/)。
 
@@ -100,8 +100,8 @@ console.log(__filename);
 详情可查阅[模块系统文档](../modules/)。
 
 
+<div id="require" class="anchor"></div>
 ## require()
-<div id="require"></div>
 
 - {Function}
 
@@ -109,15 +109,15 @@ console.log(__filename);
 
 `require()` 实际上是各个模块本地的而非全局。
 
+<div id="require_cache" class="anchor"></div>
 #### require.cache
-<div id="require_cache"></div>
 
 - {Object}
 
 模块在引入时会缓存到该对象。如果删除该对象的键值，下次调用require时将会重新加载相应模块。
 
+<div id="require_extensions" class="anchor"></div>
 #### require.extensions
-<div id="require_extensions"></div>
 
 > 稳定度：0 - 已废弃
 
@@ -135,22 +135,22 @@ require.extensions['.sjs'] = require.extensions['.js'];
 
 由于[模块系统](../modules/)被锁定，该特性可能永远不会消失。改动它可能会产生细微的错误和复杂性，所以最好保持不变。
 
+<div id="require_resolve" class="anchor"></div>
 #### require.resolve()
-<div id="require_resolve"></div>
 
 该方法使用 `require()` 的内部机制查找一个模块的位置，但并不会加载该模块，只返回解析后的文件名。
 
 
+<div id="console" class="anchor"></div>
 ## console
-<div id="console"></div>
 
 - {Object}
 
 用于打印标准输出和标准错误。详见[控制台](../console/)章节。
 
 
+<div id="setTimeout" class="anchor"></div>
 ## setTimeout(cb, ms)
-<div id="setTimeout"></div>
 
 在至少 `ms` 毫秒后调用回调函数 `cb` 。实际延迟取决于外部因素，如操作系统定时器粒度及系统负载。
 
@@ -159,14 +159,14 @@ require.extensions['.sjs'] = require.extensions['.js'];
 返回一个代表该定时器的句柄值。
 
 
+<div id="clearTimeout" class="anchor"></div>
 ## clearTimeout(t)
-<div id="clearTimeout"></div>
 
 停止一个之前通过 [setTimeout()](#setTimeout) 创建的定时器。回调将不再被执行。
 
 
+<div id="setInterval" class="anchor"></div>
 ## setInterval(cb, ms)
-<div id="setInterval"></div>
 
 每隔 `ms` 毫秒重复调用回调函数 `cb` 。值得注意的是，实际间隔取决于外部因素，如操作系统定时器粒度及系统负载。它绝不会少于 `ms` 但可能比 `ms` 长。
 
@@ -175,8 +175,8 @@ require.extensions['.sjs'] = require.extensions['.js'];
 返回一个代表该定时器的句柄值。
 
 
+<div id="clearInterval" class="anchor"></div>
 ## clearInterval(t)
-<div id="clearInterval"></div>
 
 停止一个之前通过 [clearInterval()](#clearInterval) 创建的定时器。回调将不再被执行。
 
