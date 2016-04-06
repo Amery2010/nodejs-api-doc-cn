@@ -1,0 +1,7 @@
+{
+    "output": "../website/",
+    "generator": "site",
+    "plugins": [
+      "-search"
+    ]
+}
