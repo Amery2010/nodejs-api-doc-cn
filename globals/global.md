@@ -146,7 +146,7 @@ require.extensions['.sjs'] = require.extensions['.js'];
 
 - {Object}
 
-用于打印标准输出和标准错误。详见[控制台](../console/)章节。
+用于打印 `stdout` 和 `stderr` 。详见[控制台](../console/)章节。
 
 
 <div id="setTimeout" class="anchor"></div>

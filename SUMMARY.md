@@ -12,7 +12,7 @@
 
 * [控制台(Console)](console/README.md)
   - [Console类](console/class_Console.md)
-  - [异步vs同步](console/asynchronous_vs_synchronous_consoles.md)
+  - [异步和同步的控制台](console/asynchronous_vs_synchronous_consoles.md)
 
 * [定时器(Timers)](timers/README.md)
   - [方法和属性](timers/timer.md)
