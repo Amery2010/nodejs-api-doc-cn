@@ -1,7 +1,19 @@
 {
-    "output": "../website/",
+    "output": "../_website/",
     "generator": "site",
     "plugins": [
-      "-search"
-    ]
+        "-search",
+        "regexplace"
+    ],
+    "pluginsConfig": {
+        "regexplace": {
+            "substitutes": [
+                {
+                    "pattern": ".md#",
+                    "flags": "g",
+                    "substitute": ".html#"
+                }
+            ]
+        }
+    }
 }

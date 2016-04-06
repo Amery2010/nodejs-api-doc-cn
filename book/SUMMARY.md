@@ -214,3 +214,5 @@
   - [插件实例](addons/addon_examples.md)
   - [Node.js的原生抽象](addons/native_abstractions_for_nodejs.md)
   
+* [附录](appendix/README.md)
+  - [函数速查表](appendix/functions_glossary.md)
