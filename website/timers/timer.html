@@ -49,7 +49,7 @@
         data-chapter-title="方法和属性"
         data-filepath="timers/timer.md"
         data-basepath=".."
-        data-revision="Wed Apr 06 2016 13:21:59 GMT+0800 (CST)"
+        data-revision="Wed Apr 06 2016 15:41:53 GMT+0800 (CST)"
         data-innerlanguage="">
     
 
@@ -2975,6 +2975,37 @@
 <li><a href="#ref">ref()</a></li>
 <li><a href="#unref">unref()</a></li>
 </ul>
+<hr>
+<p><div id="setTimeout" class="anchor"></div></p>
+<h2 id="settimeoutcallback-delay-arg-">setTimeout(callback, delay[, arg][, ...])</h2>
+<p>&#x5728; <code>delay</code> &#x6BEB;&#x79D2;&#x540E;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x56DE;&#x8C03;&#x51FD;&#x6570; <code>callback</code> &#x3002;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x53EF;&#x80FD;&#x88AB; <a href="#clearTimeout">clearTimeout</a> &#x7528;&#x5230;&#x7684; <code>timeoutObject</code> &#x3002;&#x5176;&#x4ED6;&#x53EF;&#x9009;&#x53C2;&#x6570;&#x53EF;&#x80FD;&#x88AB;&#x4F20;&#x9012;&#x7ED9;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x8BF7;&#x52A1;&#x5FC5;&#x6CE8;&#x610F;&#xFF0C;&#x60A8;&#x7684;&#x56DE;&#x8C03;&#x6709;&#x53EF;&#x80FD;&#x4E0D;&#x4F1A;&#x5728;&#x51C6;&#x786E;&#x7684; <code>delay</code> &#x6BEB;&#x79D2;&#x540E;&#x88AB;&#x8C03;&#x7528;&#x3002;Node.js &#x4E0D;&#x4FDD;&#x8BC1;&#x56DE;&#x8C03;&#x88AB;&#x89E6;&#x53D1;&#x7684;&#x7CBE;&#x786E;&#x65F6;&#x95F4;&#x548C;&#x987A;&#x5E8F;&#x3002;&#x56DE;&#x8C03;&#x4F1A;&#x5728;&#x5C3D;&#x53EF;&#x80FD;&#x63A5;&#x8FD1;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x65F6;&#x95F4;&#x4E0A;&#x88AB;&#x8C03;&#x7528;&#x3002;</p>
+<p>&#x6839;&#x636E;&#x6D4F;&#x89C8;&#x5668;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;&#xFF0C;&#x5F53;&#x4F60;&#x4F7F;&#x7528;&#x5927;&#x4E8E; 2147483647 &#x6BEB;&#x79D2;&#xFF08;&#x7EA6;25&#x5929;&#xFF09;&#x6216;&#x5C0F;&#x4E8E; 1 &#x6BEB;&#x79D2;&#x7684;&#x5EF6;&#x8FDF;&#x65F6;&#xFF0C;<code>delay</code> &#x4F1A;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A; 1 &#xFF0C;&#x8D85;&#x65F6;&#x5C06;&#x7ACB;&#x5373;&#x6267;&#x884C;&#x3002;</p>
+<p><div id="clearTimeout" class="anchor"></div></p>
+<h2 id="cleartimeouttimeoutobject">clearTimeout(timeoutObject)</h2>
+<p>&#x963B;&#x6B62;&#x4E00;&#x4E2A;&#x7531; <a href="#setTimeout">setTimeout</a> &#x521B;&#x5EFA;&#x7684; <code>timeoutObject</code> &#x89E6;&#x53D1;&#x3002;</p>
+<p><div id="setInterval" class="anchor"></div></p>
+<h2 id="setintervalcallback-delay-arg-">setInterval(callback, delay[, arg][, ...])</h2>
+<p>&#x6BCF;&#x9694; <code>delay</code> &#x6BEB;&#x79D2;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x56DE;&#x8C03;&#x51FD;&#x6570; <code>callback</code> &#x3002;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x53EF;&#x80FD;&#x88AB; <a href="#clearInterval">clearInterval</a> &#x7528;&#x5230;&#x7684; <code>intervalObject</code> &#x3002;&#x5176;&#x4ED6;&#x53EF;&#x9009;&#x53C2;&#x6570;&#x53EF;&#x80FD;&#x88AB;&#x4F20;&#x9012;&#x7ED9;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x6839;&#x636E;&#x6D4F;&#x89C8;&#x5668;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;&#xFF0C;&#x5F53;&#x4F60;&#x4F7F;&#x7528;&#x5927;&#x4E8E; 2147483647 &#x6BEB;&#x79D2;&#xFF08;&#x7EA6;25&#x5929;&#xFF09;&#x6216;&#x5C0F;&#x4E8E; 1 &#x6BEB;&#x79D2;&#x7684;&#x5EF6;&#x8FDF;&#x65F6;&#xFF0C;Node.js&#x5C06;&#x4F7F;&#x7528; 1 &#x4F5C;&#x4E3A;&#x5EF6;&#x8FDF;&#x3002;</p>
+<p><div id="clearInterval" class="anchor"></div></p>
+<h2 id="clearintervalintervalobject">clearInterval(intervalObject)</h2>
+<p>&#x963B;&#x6B62;&#x4E00;&#x4E2A;&#x7531; <a href="#setInterval">setInterval</a> &#x521B;&#x5EFA;&#x7684; <code>intervalObject</code> &#x89E6;&#x53D1;&#x3002;</p>
+<p><div id="setImmediate" class="anchor"></div></p>
+<h2 id="setimmediatecallback-arg-">setImmediate(callback[, arg][, ...])</h2>
+<p>&#x5728; I/O &#x4E8B;&#x4EF6;&#x56DE;&#x8C03;&#x4E4B;&#x540E;&#x4EE5;&#x53CA; <a href="#setTimeout">setTimeout</a> &#x548C; <a href="#setInterval">setInterval</a> &#x4E4B;&#x524D;&#x201C;&#x7ACB;&#x5373;&#x201D;&#x6267;&#x884C;  <code>callback</code> &#x3002;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x53EF;&#x80FD;&#x88AB; <a href="#clearImmediate">clearImmediate</a> &#x7528;&#x5230;&#x7684; <code>immediateObject</code> &#x3002;&#x5176;&#x4ED6;&#x53EF;&#x9009;&#x53C2;&#x6570;&#x53EF;&#x80FD;&#x88AB;&#x4F20;&#x9012;&#x7ED9;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;</p>
+<p><div id="clearImmediate" class="anchor"></div></p>
+<h2 id="clearimmediateimmediateobject">clearImmediate(immediateObject)</h2>
+<p>&#x963B;&#x6B62;&#x4E00;&#x4E2A;&#x7531; <a href="#setImmediate">setImmediate</a> &#x521B;&#x5EFA;&#x7684; <code>immediateObject</code> &#x89E6;&#x53D1;&#x3002;</p>
+<p><div id="ref" class="anchor"></div></p>
+<h2 id="ref">ref()</h2>
+<p>&#x5982;&#x679C;&#x60A8;&#x4E4B;&#x524D; <code>unref()</code> &#x4E86;&#x4E00;&#x4E2A;&#x5B9A;&#x65F6;&#x5668;&#xFF0C;&#x60A8;&#x53EF;&#x4EE5;&#x8C03;&#x7528; <code>ref()</code> &#x6765;&#x660E;&#x786E;&#x8981;&#x6C42;&#x5B9A;&#x65F6;&#x5668;&#x8BA9;&#x7A0B;&#x5E8F;&#x4FDD;&#x6301;&#x8FD0;&#x884C;&#x3002;&#x5982;&#x679C;&#x5B9A;&#x65F6;&#x5668;&#x5DF2;&#x88AB; <code>ref</code> &#x90A3;&#x4E48;&#x518D;&#x6B21;&#x8C03;&#x7528; <code>ref</code> &#x4E0D;&#x4F1A;&#x4EA7;&#x751F;&#x5176;&#x5B83;&#x5F71;&#x54CD;&#x3002;</p>
+<p>&#x8FD4;&#x56DE;&#x5B9A;&#x65F6;&#x5668;&#x5BF9;&#x8C61;&#x3002;</p>
+<p><div id="unref" class="anchor"></div></p>
+<h2 id="unref">unref()</h2>
+<p><a href="#setTimeout">setTimeout</a> &#x548C; <a href="#setInterval">setInterval</a> &#x6240;&#x8FD4;&#x56DE;&#x7684;&#x503C;&#x90FD;&#x5305;&#x542B; <code>timer.unref()</code> &#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x5141;&#x8BB8;&#x60A8;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6D3B;&#x52A8;&#x7684;&#x4F46;&#x5F53;&#x5B83;&#x662F;&#x4E8B;&#x4EF6;&#x5FAA;&#x73AF;&#x4E2D;&#x4EC5;&#x5269;&#x7684;&#x9879;&#x76EE;&#x65F6;&#x4E0D;&#x4F1A;&#x4FDD;&#x6301;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#x7684;&#x5B9A;&#x65F6;&#x5668;&#x3002;&#x5982;&#x679C;&#x5B9A;&#x65F6;&#x5668;&#x5DF2;&#x88AB; <code>unref</code> &#xFF0C;&#x518D;&#x6B21;&#x8C03;&#x7528; <code>unref</code> &#x4E0D;&#x4F1A;&#x4EA7;&#x751F;&#x5176;&#x5B83;&#x5F71;&#x54CD;&#x3002;</p>
+<p>&#x5728;&#x4F7F;&#x7528; <a href="#setTimeout">setTimeout</a> &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<code>unref</code> &#x4F1A;&#x521B;&#x5EFA;&#x53E6;&#x4E00;&#x4E2A;&#x72EC;&#x7ACB;&#x7684;&#x5B9A;&#x65F6;&#x5668;&#xFF0C;&#x5E76;&#x5524;&#x9192;&#x4E8B;&#x4EF6;&#x5FAA;&#x73AF;&#x3002;&#x521B;&#x5EFA;&#x592A;&#x591A;&#x8FD9;&#x79CD;&#x5B9A;&#x65F6;&#x5668;&#x53EF;&#x80FD;&#x4F1A;&#x5F71;&#x54CD;&#x4E8B;&#x4EF6;&#x5FAA;&#x73AF;&#x7684;&#x6027;&#x80FD;&#xFF0C;<strong>&#x614E;&#x7528;</strong>&#x3002;</p>
+<p>&#x8FD4;&#x56DE;&#x5B9A;&#x65F6;&#x5668;&#x5BF9;&#x8C61;&#x3002;</p>
 
                     
                     </section>
@@ -3004,13 +3035,9 @@
     <script src="../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
     
 
-    
-    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
-    
-
 <script>
 require(["gitbook"], function(gitbook) {
-    var config = {"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"livereload":{}};
+    var config = {"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
     gitbook.start(config);
 });
 </script>
