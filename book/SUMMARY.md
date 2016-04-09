@@ -39,9 +39,9 @@
 
 * [错误(Errors)](errors/README.md)
   - [Error类](errors/class_Error.md)
-  - [RangeError类](errors/class_RangeError.md)
-  - [ReferenceError类](errors/class_ReferenceError.md)
   - [SyntaxError类](errors/class_SyntaxError.md)
+  - [ReferenceError类](errors/class_ReferenceError.md)
+  - [RangeError类](errors/class_RangeError.md)
   - [TypeError类](errors/class_TypeError.md)
   - [错误的冒泡和捕捉](errors/error_propagation_and_interception.md)
   - [异常与错误](errors/exceptions_vs_errors.md)
