@@ -48,6 +48,20 @@
 
 [exports的别名](../globals/global.md#exports_alias)
 
+[Error.captureStackTrace(targetObject[, constructorOpt])](../errors/class_Error.md#captureStackTrace)
+
+[Error.stackTraceLimit](../errors/class_Error.md#stackTraceLimit)
+
+[error.message](../errors/class_Error.md#message)
+
+[error.stack](../errors/class_Error.md#stack)
+
+[error.errno](../errors/system_errors.md#errno)
+
+[error.code](../errors/system_errors.md#code)
+
+[error.syscall](../errors/system_errors.md#syscall)
+
 ### F
 
 ### G
@@ -86,6 +100,8 @@
 
 [new Console(stdout[, stderr])](../console/class_Console.md#new_Console)
 
+[new Error(message)](../errors/class_Error.md#new_Error)
+
 ### O
 
 ### P
@@ -117,6 +133,8 @@
 [setInterval(callback, delay[, arg][, ...])](../timers/timer.md#setInterval)
 
 [setImmediate(callback[, arg][, ...])](../timers/timer.md#setImmediate)
+
+[System Error类](../errors/system_errors.md#class_System_Error)
 
 ### T
 
