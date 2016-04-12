@@ -6,6 +6,8 @@
 
 [Buffer类](../globals/global.md#class_Buffer)
 
+[buffer.INSPECT_MAX_BYTES](../buffer/buffer.md#INSPECT_MAX_BYTES)
+
 ### C
 
 [Console类](../console/class_Console.md#)

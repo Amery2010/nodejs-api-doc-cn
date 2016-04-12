@@ -59,6 +59,8 @@
   - [Buffers和字符编码](buffer/buffers_and_character_encodings.md)
   - [Buffers和ES6迭代器](buffer/buffers_and_es6_iteration.md)
   - [Buffers和类型数组](buffer/buffers_and_typedarray.md)
+  - [Buffer.from(), Buffer.alloc(), and Buffer.allocUnsafe()](buffer/other.md)
+  - [--zero-fill-buffers命令行选项](buffer/the_zero_fill_buffers_clo.md)
   
 * [流(Stream)](stream/README.md)
   - [面向使用者的API](stream/api_for_stream_consumers.md)
