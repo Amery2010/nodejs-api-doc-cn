@@ -30,10 +30,13 @@
 * [buf.indexOf(value[, byteOffset][, encoding])](#indexOf)
 * [buf.includes(value[, byteOffset][, encoding])](#includes)
 * [buf.copy(targetBuffer[, targetStart[, sourceStart[, sourceEnd]]])](#copy)
-* [buf.entries()](#entries)
-* [buf.values()](#values)
 * [buf.compare(otherBuffer)](#compare)
 * [buf.equals(otherBuffer)](#equals)
+* [buf.entries()](#entries)
+* [buf.keys()](#keys)
+* [buf.values()](#values)
+* [buf.swap16()](#swap16)
+* [buf.swap32()](#swap32)
 * [buf.readIntBE(offset, byteLength[, noAssert])](#readIntBE)
 * [buf.readIntLE(offset, byteLength[, noAssert])](#readIntLE)
 * [buf.readFloatBE(offset[, noAssert])](#readFloatBE)
@@ -448,3 +451,759 @@ const arr = [Buffer.from('1234'), Buffer.from('0123')];
 arr.sort(Buffer.compare);
 ```
 
+
+--------------------------------------------------
+
+## 实例的属性和方法
+
+
+<div id="length" class="anchor"></div>
+#### buf.length
+
+- {Number}
+
+返回该 Buffer 在字节数上分配的内存量。注意，这并不一定反映 Buffer 内可用的数据量。例如在下面的例子中，一个 Buffer 分配了 1234 字节，但只写入了 11 ASCII 字节。
+
+```javascript
+const buf = Buffer.allocUnsafe(1234);
+
+console.log(buf.length);
+// Prints: 1234
+
+buf.write('some string', 0, 'ascii');
+console.log(buf.length);
+// Prints: 1234
+```
+
+而 `length` 属性并非一成不变，改变 `length` 值会导致不确定和不一致的行为。应用程序如果希望修改一个 Buffer 的长度，因而需要把 `length` 设为只读并使用 [buf.slice()](#slice) 创建一个新的 Buffer 。
+
+```javascript
+var buf = Buffer.allocUnsafe(10);
+buf.write('abcdefghj', 0, 'ascii');
+console.log(buf.length);
+// Prints: 10
+buf = buf.slice(0, 5);
+console.log(buf.length);
+// Prints: 5
+```
+
+
+<div id="index" class="anchor"></div>
+#### buf[index]
+
+索引操作符 `[index]` 可用于获取或设置 Buffer 中指定 `index` 位置的8位字节。这个值指的是单个字节，所以这个值合法范围是16进制的 0x00 到 0xFF，或 10进制的 0 到 255。
+
+例如，将一个 ASCII 字符串拷贝到一个 Buffer 中，一次一个字节：
+
+```javascript
+const str = "Node.js";
+const buf = Buffer.allocUnsafe(str.length);
+
+for (var i = 0; i < str.length; i++) {
+    buf[i] = str.charCodeAt(i);
+}
+
+console.log(buf.toString('ascii'));
+// Prints: Node.js
+```
+
+
+<div id="toString" class="anchor"></div>
+#### buf.toString([encoding[, start[, end]]])
+
+- `encoding` {String} 默认：`'utf8'`
+
+- `start` {Number} 默认：0
+
+- `end` {Number} 默认：`buffer.length`
+
+- 返回：{String}
+
+返回使用指定的字符集编码解码 Buffer 数据的字符串。
+
+```javascript
+const buf = Buffer.allocUnsafe(26);
+for (var i = 0; i < 26; i++) {
+    buf[i] = i + 97; // 97 is ASCII a
+}
+buf.toString('ascii');
+// Returns: 'abcdefghijklmnopqrstuvwxyz'
+buf.toString('ascii', 0, 5);
+// Returns: 'abcde'
+buf.toString('utf8', 0, 5);
+// Returns: 'abcde'
+buf.toString(undefined, 0, 5);
+// Returns: 'abcde', encoding defaults to 'utf8'
+```
+
+
+<div id="toJSON" class="anchor"></div>
+#### buf.toJSON()
+
+- 返回：{Object}
+
+返回该 Buffer 实例的 JSON 表达式。当字符串化一个 Buffer 实例时会隐式调用 [JSON.stringify()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) 这个函数。
+
+例子：
+
+```javascript
+const buf = Buffer.from('test');
+const json = JSON.stringify(buf);
+
+console.log(json);
+// Prints: '{"type":"Buffer","data":[116,101,115,116]}'
+
+const copy = JSON.parse(json, (key, value) => {
+    return value && value.type === 'Buffer' ? Buffer.from(value.data) : value;
+});
+
+console.log(copy.toString());
+// Prints: 'test'
+```
+
+
+<div id="slice" class="anchor"></div>
+#### buf.slice([start[, end]])
+
+- `start` {Number} 默认：0
+
+- `end` {Number} 默认：`buffer.length`
+
+- 返回：{Buffer}
+
+返回一个指向相同原始内存的新 Buffer ，但会有偏移并通过 `start` 和 `end` 索引值进行裁剪。
+
+**请注意，修改这个新的 Buffer 切片，将会修改原始 Buffer 的内存，因为这两个对象共享所分配的内存。**
+
+例子：创建一个 ASCII 字母的 Buffer，进行切片，然后修改原始 Buffer 上的一个字节。
+
+```javascript
+const buf1 = Buffer.allocUnsafe(26);
+
+for (var i = 0; i < 26; i++) {
+    buf1[i] = i + 97; // 97 is ASCII a
+}
+
+const buf2 = buf1.slice(0, 3);
+buf2.toString('ascii', 0, buf2.length);
+// Returns: 'abc'
+buf1[0] = 33;
+buf2.toString('ascii', 0, buf2.length);
+// Returns : '!bc'
+```
+
+指定负索引会导致产生相对于这个 Buffer 的末尾而不是开头的切片（slice）。
+
+```javascript
+const buf = Buffer.from('buffer');
+
+buf.slice(-6, -1).toString();
+// Returns 'buffe', equivalent to buf.slice(0, 5)
+buf.slice(-6, -2).toString();
+// Returns 'buff', equivalent to buf.slice(0, 4)
+buf.slice(-5, -2).toString();
+// Returns 'uff', equivalent to buf.slice(1, 4)
+```
+
+
+<div id="fill" class="anchor"></div>
+#### buf.fill(value[, offset[, end]][, encoding])
+
+- `value` {String} | {Buffer} | {Number}
+
+- `offset` {Number} 默认：0
+
+- `end` {Number} 默认：`buf.length`
+
+- `encoding` {String} 默认：`'utf8'`
+
+- 返回：{Buffer}
+
+使用指定的值填充当前 Buffer 。如果 `offset` (默认是 `0`) 和 `end` (默认是 `buffer.length`) 没有明确给出，将会填充整个 buffer 。该方法返回一个当前 Buffer 的引用，以便于链式调用。这也意味着可以通过这种小而简的方式创建一个 Buffer 。允许在单行内创建和填充 Buffer ：
+
+```javascript
+const b = Buffer.alloc(50, 'h');
+console.log(b.toString());
+// Prints: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+```
+
+`encoding` 只在 `value` 是一个字符串时应用，除此之外，都会被忽略。如果 `value` 不是一个 `String` 或 `Number` ，则会被强制转换到 `uint32` 类型。
+
+`fill()` 操作默默地向 Buffer 里写入字节。即便最终写入落在多字节字符之间，它也会将这些字节塞到被写入的 buffer 里。
+
+```javascript
+Buffer.alloc(3, '\u0222');
+// Prints: <Buffer c8 a2 c8/>
+```
+
+
+<div id="indexOf" class="anchor"></div>
+#### buf.indexOf(value[, byteOffset][, encoding])
+
+- `value` {String} | {Buffer} | {Number}
+
+- `byteOffset` {Number} 默认：0
+
+- `encoding` {String} 默认：`'utf8'`
+
+- 返回：{Number}
+
+该操作类似于 [Array#indexOf()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) ，它返回 `value` 在 Buffer 中的最开始的索引位置，如果当前 Buffer 不包含这个 `value` 则返回 `-1` 。这个 `value` 的值可以是 `String` 、`Buffer` 或 `Number` 。字符串会默认用 UTF8 解释。Buffer 将会使用整个 Buffer（比较部分 Buffer 请使用 [buf.slice()](#slice) 方法）。数字在 0 到 255 的范围内。 
+
+```javascript
+const buf = Buffer.from('this is a buffer');
+
+buf.indexOf('this');
+// returns 0
+buf.indexOf('is');
+// returns 2
+buf.indexOf(Buffer.from('a buffer'));
+// returns 8
+buf.indexOf(97); // ascii for 'a'
+// returns 8
+buf.indexOf(Buffer.from('a buffer example'));
+// returns -1
+buf.indexOf(Buffer.from('a buffer example').slice(0, 8));
+// returns 8
+
+const utf16Buffer = Buffer.from('\u039a\u0391\u03a3\u03a3\u0395', 'ucs2');
+
+utf16Buffer.indexOf('\u03a3', 0, 'ucs2');
+// returns 4
+utf16Buffer.indexOf('\u03a3', -4, 'ucs2');
+// returns 6
+```
+
+
+<div id="includes" class="anchor"></div>
+#### buf.includes(value[, byteOffset][, encoding])
+
+
+- `value` {String} | {Buffer} | {Number}
+
+- `byteOffset` {Number} 默认：0
+
+- `encoding` {String} 默认：`'utf8'`
+
+- 返回：{Boolean}
+
+该操作类似于 [Array#includes()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)。这个 `value` 的值可以是 `String` 、`Buffer` 或 `Number` 。字符串会被作为 UTF8 解释，除非你覆盖了 `encoding` 参数。Buffer 将会使用整个 Buffer（比较部分 Buffer 请使用 [buf.slice()](#slice) 方法）。数字在 0 到 255 的范围内。 
+
+`byteOffset` 表示在搜索 `buf` 时的初始索引值。
+
+```javascript
+const buf = Buffer.from('this is a buffer');
+
+buf.includes('this');
+// returns true
+buf.includes('is');
+// returns true
+buf.includes(Buffer.from('a buffer'));
+// returns true
+buf.includes(97); // ascii for 'a'
+// returns true
+buf.includes(Buffer.from('a buffer example'));
+// returns false
+buf.includes(Buffer.from('a buffer example').slice(0, 8));
+// returns true
+buf.includes('this', 4);
+// returns false
+```
+
+
+<div id="copy" class="anchor"></div>
+#### buf.copy(targetBuffer[, targetStart[, sourceStart[, sourceEnd]]])
+
+- `targetBuffer` {Buffer} 需要拷贝的 Buffer
+
+- `targetStart` {Number} 默认：0
+
+- `sourceStart` {Number} 默认：0
+
+- `sourceEnd` {Number} 默认：`buffer.length`
+
+- 返回：{Number} 被拷贝的字节数
+
+将这个 Buffer 的一个区域的数据拷贝到目标 Buffer 的一个区域，即便与目标是共享内存区域资源的。
+
+例子：创建两个 Buffer ，然后把将 `buf1` 第 16 到 19 位的字节拷贝到 `buf2` 中，并从 `buf2` 的第 8 位开始（覆盖）。
+
+```javascript
+const buf1 = Buffer.allocUnsafe(26);
+const buf2 = Buffer.allocUnsafe(26).fill('!');
+
+for (var i = 0; i < 26; i++) {
+    buf1[i] = i + 97; // 97 is ASCII a
+}
+
+buf1.copy(buf2, 8, 16, 20);
+console.log(buf2.toString('ascii', 0, 25));
+// Prints: !!!!!!!!qrst!!!!!!!!!!!!!
+```
+
+例子：创建一个单一的 Buffer ，然后将一块区域的数据拷贝到同一个 Buffer 中另一块交叉的区域。
+
+```javascript
+const buf = Buffer.allocUnsafe(26);
+
+for (var i = 0; i < 26; i++) {
+    buf[i] = i + 97; // 97 is ASCII a
+}
+
+buf.copy(buf, 0, 4, 10);
+console.log(buf.toString());
+
+// efghijghijklmnopqrstuvwxyz
+```
+
+
+<div id="compare" class="anchor"></div>
+#### buf.compare(otherBuffer)
+
+- `otherBuffer` {Buffer}
+
+- 返回：{Number}
+
+比较两个 Buffer 实例，无论 `buf` 在排序上靠前、靠后甚至与 `otherBuffer` 相同都会返回一个数字标识。比较是基于在每个 Buffer 的实际字节序列。
+
+* 如果 `otherBuffer` 和 `buf` 相同，则返回 `0`
+
+* 如果 `otherBuffer` 排在 `buf` *前面*，则返回 `1`
+
+* 如果 `otherBuffer` 排在 `buf` *后面*，则返回 `-1`
+
+```javascript
+const buf1 = Buffer.from('ABC');
+const buf2 = Buffer.from('BCD');
+const buf3 = Buffer.from('ABCD');
+
+console.log(buf1.compare(buf1));
+// Prints: 0
+console.log(buf1.compare(buf2));
+// Prints: -1
+console.log(buf1.compare(buf3));
+// Prints: 1
+console.log(buf2.compare(buf1));
+// Prints: 1
+console.log(buf2.compare(buf3));
+// Prints: 1
+
+[buf1, buf2, buf3].sort(Buffer.compare);
+// produces sort order [buf1, buf3, buf2]
+```
+
+
+<div id="equals" class="anchor"></div>
+#### buf.equals(otherBuffer)
+
+- `otherBuffer` {Buffer}
+
+- 返回：{Boolean}
+
+返回一个 boolean 标识，无论 `this` 和 `otherBuffer` 是否具有完全相同的字节。
+
+```javascript
+const buf1 = Buffer.from('ABC');
+const buf2 = Buffer.from('414243', 'hex');
+const buf3 = Buffer.from('ABCD');
+
+console.log(buf1.equals(buf2));
+// Prints: true
+console.log(buf1.equals(buf3));
+// Prints: false
+```
+
+
+<div id="entries" class="anchor"></div>
+#### buf.entries()
+
+- 返回：{Iterator}
+
+从当前 Buffer 的内容中，创建并返回一个 `[index, byte]` 形式的[迭代器](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols)。
+
+```javascript
+const buf = Buffer.from('buffer');
+for (var pair of buf.entries()) {
+    console.log(pair);
+}
+// prints:
+//   [0, 98]
+//   [1, 117]
+//   [2, 102]
+//   [3, 102]
+//   [4, 101]
+//   [5, 114]
+```
+
+
+<div id="keys" class="anchor"></div>
+#### buf.keys()
+
+- 返回：{Iterator}
+
+创建并返回一个包含 Buffer 键名（索引）的[迭代器](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols)。
+
+```javascript
+const buf = Buffer.from('buffer');
+for (var key of buf.keys()) {
+    console.log(key);
+}
+// prints:
+//   0
+//   1
+//   2
+//   3
+//   4
+//   5
+```
+
+
+<div id="values" class="anchor"></div>
+#### buf.values()
+
+- 返回：{Iterator}
+
+创建并返回一个包含 Buffer 值（字节）的[迭代器](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols)。当 Buffer 使用 `for..of` 声明时将自动调用该函数。
+
+```javascript
+const buf = Buffer.from('buffer');
+for (var value of buf.values()) {
+    console.log(value);
+}
+// prints:
+//   98
+//   117
+//   102
+//   102
+//   101
+//   114
+
+for (var value of buf) {
+    console.log(value);
+}
+// prints:
+//   98
+//   117
+//   102
+//   102
+//   101
+//   114
+```
+
+
+<div id="swap16" class="anchor"></div>
+#### buf.swap16()
+
+- 返回：{Buffer}
+
+将 Buffer 解释为一个16位的无符号整型数组并以字节顺序交换到位。如果 Buffer 的长度不是16位的倍数，则抛出一个 [RangeError](../errors/class_RangeError.md#) 错误。该方法返回一个当前 Buffer 的引用，以便于链式调用。
+
+```javascript
+const buf = Buffer.from([0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8]);
+console.log(buf);
+// Prints Buffer(0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8)
+buf.swap16();
+console.log(buf);
+// Prints Buffer(0x2, 0x1, 0x4, 0x3, 0x6, 0x5, 0x8, 0x7)
+```
+
+
+<div id="swap32" class="anchor"></div>
+#### buf.swap32()
+
+- 返回：{Buffer}
+
+将 Buffer 解释为一个32位的无符号整型数组并以字节顺序交换到位。如果 Buffer 的长度不是32位的倍数，则抛出一个 [RangeError](../errors/class_RangeError.md#) 错误。该方法返回一个当前 Buffer 的引用，以便于链式调用。
+
+```javascript
+const buf = Buffer.from([0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8]);
+console.log(buf);
+// Prints Buffer(0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8)
+buf.swap32();
+console.log(buf);
+// Prints Buffer(0x4, 0x3, 0x2, 0x1, 0x8, 0x7, 0x6, 0x5)
+```
+
+
+<div id="readIntBE" class="anchor"></div>
+#### buf.readIntBE(offset, byteLength[, noAssert])
+<div id="readIntLE" class="anchor"></div>
+#### buf.readIntLE(offset, byteLength[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - byteLength`
+
+- `byteLength` {Number} `0 < byteLength <= 6`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的 `offset` 位置开始读取 `byteLength` 字节数，并将结果解释为一个有符号的2的补码值。支持多达48位精度的值。例如：
+
+```javascript
+const buf = Buffer.allocUnsafe(6);
+buf.writeUInt16LE(0x90ab, 0);
+buf.writeUInt32LE(0x12345678, 2);
+buf.readIntLE(0, 6).toString(16); // Specify 6 bytes (48 bits)
+// Returns: '1234567890ab'
+
+buf.readIntBE(0, 6).toString(16);
+// Returns: -546f87a9cbee
+```
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+
+<div id="readFloatBE" class="anchor"></div>
+#### buf.readFloatBE(offset[, noAssert])
+<div id="readFloatLE" class="anchor"></div>
+#### buf.readFloatLE(offset[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - 4`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的带有特定尾数格式（`readFloatBE()` 返回一个较大的尾数，`readFloatLE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个32位 float 值。
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+```javascript
+const buf = Buffer.from([1, 2, 3, 4]);
+
+buf.readFloatBE();
+// Returns: 2.387939260590663e-38
+buf.readFloatLE();
+// Returns: 1.539989614439558e-36
+buf.readFloatLE(1);
+// throws RangeError: Index out of range
+
+buf.readFloatLE(1, true); // Warning: reads passed end of buffer!
+// Segmentation fault! don't do this!
+```
+
+
+<div id="readDoubleBE" class="anchor"></div>
+#### buf.readDoubleBE(offset[, noAssert])
+<div id="readDoubleLE" class="anchor"></div>
+#### buf.readDoubleLE(offset[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - 8`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的带有特定尾数格式（`readFloatBE()` 返回一个较大的尾数，`readFloatLE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个64位 double 值。
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+```javascript
+const buf = Buffer.from([1, 2, 3, 4, 5, 6, 7, 8]);
+
+buf.readDoubleBE();
+// Returns: 8.20788039913184e-304
+buf.readDoubleLE();
+// Returns: 5.447603722011605e-270
+buf.readDoubleLE(1);
+// throws RangeError: Index out of range
+
+buf.readDoubleLE(1, true); // Warning: reads passed end of buffer!
+// Segmentation fault! don't do this!
+```
+
+
+<div id="readInt8" class="anchor"></div>
+#### buf.readInt8(offset[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - 1`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的 `offset` 位置开始读取一个有符号的8位整型值。
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+从 Buffer 里读取的整型数值会被解释为有符号的2的补码值。
+
+```javascript
+const buf = Buffer.from([1, -2, 3, 4]);
+
+buf.readInt8(0);
+// returns 1
+buf.readInt8(1);
+// returns -2
+```
+
+
+<div id="readInt16BE" class="anchor"></div>
+#### buf.readInt16BE(offset[, noAssert])
+<div id="readInt16LE" class="anchor"></div>
+#### buf.readInt16LE(offset[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - 2`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的带有特定尾数格式（`readInt16BE()` 返回一个较大的尾数，`readInt16LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个16位整型值。
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+从 Buffer 里读取的整型数值会被解释为有符号的2的补码值。
+
+```javascript
+const buf = Buffer.from([1, -2, 3, 4]);
+
+buf.readInt16BE();
+// returns 510
+buf.readInt16LE(1);
+// returns 1022
+```
+
+
+<div id="readInt32BE" class="anchor"></div>
+#### buf.readInt32BE(offset[, noAssert])
+<div id="readInt32LE" class="anchor"></div>
+#### buf.readInt32LE(offset[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - 4`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的带有特定尾数格式（`readInt32BE()` 返回一个较大的尾数，`readInt32LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个有符号的32位整型值。
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+从 Buffer 里读取的整型数值会被解释为有符号的2的补码值。
+
+```javascript
+const buf = Buffer.from([1, -2, 3, 4]);
+
+buf.readInt32BE();
+// returns 33424132
+buf.readInt32LE();
+// returns 67370497
+buf.readInt32LE(1);
+// throws RangeError: Index out of range
+```
+
+
+<div id="readUIntBE" class="anchor"></div>
+#### buf.readUIntBE(offset, byteLength[, noAssert])
+<div id="readUIntLE" class="anchor"></div>
+#### buf.readUIntLE(offset, byteLength[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - byteLength`
+
+- `byteLength` {Number} `0 < byteLength <= 6`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的 `offset` 位置开始读取 `byteLength` 字节数，并将结果解释为一个无符号的整型值。支持多达48位精度的值。例如：
+
+```javascript
+const buf = Buffer.allocUnsafe(6);
+buf.writeUInt16LE(0x90ab, 0);
+buf.writeUInt32LE(0x12345678, 2);
+buf.readUIntLE(0, 6).toString(16); // Specify 6 bytes (48 bits)
+// Returns: '1234567890ab'
+
+buf.readUIntBE(0, 6).toString(16);
+// Returns: ab9078563412
+```
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+
+<div id="readUInt8" class="anchor"></div>
+#### buf.readUInt8(offset[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - 1`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的 `offset` 位置开始读取一个无符号的8位整型值。
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+```javascript
+const buf = Buffer.from([1, -2, 3, 4]);
+
+buf.readUInt8(0);
+// returns 1
+buf.readUInt8(1);
+// returns 254
+```
+
+
+<div id="readUInt16BE" class="anchor"></div>
+#### buf.readUInt16BE(offset[, noAssert])
+<div id="readUInt16LE" class="anchor"></div>
+#### buf.readUInt16LE(offset[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - 2`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的带有特定尾数格式（`readUInt16BE()` 返回一个较大的尾数，`readUInt16LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个无符号的16位整型值。
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+例子：
+
+```javascript
+const buf = Buffer.from([0x3, 0x4, 0x23, 0x42]);
+
+buf.readUInt16BE(0);
+// Returns: 0x0304
+buf.readUInt16LE(0);
+// Returns: 0x0403
+buf.readUInt16BE(1);
+// Returns: 0x0423
+buf.readUInt16LE(1);
+// Returns: 0x2304
+buf.readUInt16BE(2);
+// Returns: 0x2342
+buf.readUInt16LE(2);
+// Returns: 0x4223
+```
+
+
+<div id="readUInt32BE" class="anchor"></div>
+#### buf.readUInt32BE(offset[, noAssert])
+<div id="readUInt32LE" class="anchor"></div>
+#### buf.readUInt32LE(offset[, noAssert])
+
+- `offset` {Number} `0 <= offset <= buf.length - 4`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number}
+
+从该 Buffer 指定的带有特定尾数格式（`readUInt32BE()` 返回一个较大的尾数，`readUInt32LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个无符号的32位整型值。
+
+设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
+
+例子：
+
+```javascript
+const buf = Buffer.from([0x3, 0x4, 0x23, 0x42]);
+
+buf.readUInt32BE(0);
+// Returns: 0x03042342
+console.log(buf.readUInt32LE(0));
+// Returns: 0x42230403
+```
