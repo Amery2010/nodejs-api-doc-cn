@@ -93,11 +93,11 @@ Buffer 类是一个全局变量类型，用来直接处理2进制数据的。 �
 ```javascript
 const buf = new Buffer(5);
 console.log(buf);
-// <Buffer 78 e0 82 02 01/>
+// <Buffer 78 e0 82 02 01>
 // (octets will be different, every time)
 buf.fill(0);
 console.log(buf);
-// <Buffer 00 00 00 00 00/>
+// <Buffer 00 00 00 00 00>
 ```
 
 
@@ -155,13 +155,13 @@ arr[1] = 4000;
 const buf = new Buffer(arr.buffer); // shares the memory with arr;
 
 console.log(buf);
-// Prints: <Buffer 88 13 a0 0f/>
+// Prints: <Buffer 88 13 a0 0f>
 
 // changing the TypdArray changes the Buffer also
 arr[1] = 6000;
 
 console.log(buf);
-// Prints: <Buffer 88 13 70 17/>
+// Prints: <Buffer 88 13 70 17>
 ```
 
 
@@ -290,13 +290,13 @@ arr[1] = 4000;
 const buf = Buffer.from(arr.buffer); // shares the memory with arr;
 
 console.log(buf);
-// Prints: <Buffer 88 13 a0 0f/>
+// Prints: <Buffer 88 13 a0 0f>
 
 // changing the TypedArray changes the Buffer also
 arr[1] = 6000;
 
 console.log(buf);
-// Prints: <Buffer 88 13 70 17/>
+// Prints: <Buffer 88 13 70 17>
 ```
 
 选填的 `byteOffset` 和 `length` 参数指定一个将由 `Buffer` 共享的 `arrayBuffer` 中的内存范围。
@@ -349,7 +349,7 @@ console.log(buf2.toString());
 ```javascript
 const buf = Buffer.alloc(5);
 console.log(buf);
-// <Buffer 00 00 00 00 00/>
+// <Buffer 00 00 00 00 00>
 ```
 
 `size` 必须小于等于 `require('buffer').kMaxLength`（在64位架构上 `kMaxLength` 的大小是 `(2^31)-1`）的值，否则将抛出一个 [RangeError](../errors/class_RangeError.md#) 的错误。如果 `size` 小于 0 将创建一个特定的 0 长度（zero-length ）的 Buffer。
@@ -359,7 +359,7 @@ console.log(buf);
 ```javascript
 const buf = Buffer.alloc(5, 'a');
 console.log(buf);
-// <Buffer 61 61 61 61 61/>
+// <Buffer 61 61 61 61 61>
 ```
 
 如果同时指定了 `fill` 和 `encoding` 参数，将通过调用 [buf.fill(fill, encoding)](#fill) 初始化当前 `Buffer` 的分配。例如：
@@ -367,7 +367,7 @@ console.log(buf);
 ```javascript
 const buf = Buffer.alloc(11, 'aGVsbG8gd29ybGQ=', 'base64');
 console.log(buf);
-// <Buffer 68 65 6c 6c 6f 20 77 6f 72 6c 64/>
+// <Buffer 68 65 6c 6c 6f 20 77 6f 72 6c 64>
 ```
 
 调用 `Buffer.alloc(size)` 方法显然要比替代的 `Buffer.allocUnsafe(size)` 要慢，但可以确保新建的 Buffer 实例的内容*不会包含敏感数据*。
@@ -387,11 +387,11 @@ console.log(buf);
 ```javascript
 const buf = Buffer.allocUnsafe(5);
 console.log(buf);
-// <Buffer 78 e0 82 02 01/>
+// <Buffer 78 e0 82 02 01>
 // (octets will be different, every time)
 buf.fill(0);
 console.log(buf);
-// <Buffer 00 00 00 00 00/>
+// <Buffer 00 00 00 00 00>
 ```
 
 如果 `size` 不是一个数字则抛出一个 [TypeError](../errors/class_TypeError.md#) 错误。
@@ -430,7 +430,7 @@ console.log(bufA);
 console.log(bufA.length);
 
 // 42
-// <Buffer 00 00 00 00 ... />
+// <Buffer 00 00 00 00 ... >
 // 42
 ```
 
@@ -633,7 +633,7 @@ console.log(b.toString());
 
 ```javascript
 Buffer.alloc(3, '\u0222');
-// Prints: <Buffer c8 a2 c8/>
+// Prints: <Buffer c8 a2 c8>
 ```
 
 
@@ -648,7 +648,7 @@ Buffer.alloc(3, '\u0222');
 
 - 返回：{Number}
 
-该操作类似于 [Array#indexOf()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) ，它返回 `value` 在 Buffer 中的最开始的索引位置，如果当前 Buffer 不包含这个 `value` 则返回 `-1` 。这个 `value` 的值可以是 `String` 、`Buffer` 或 `Number` 。字符串会默认用 UTF8 解释。Buffer 将会使用整个 Buffer（比较部分 Buffer 请使用 [buf.slice()](#slice) 方法）。数字在 0 到 255 的范围内。 
+该操作类似于 [Array#indexOf()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) ，它返回 `value` 在 Buffer 中的最开始的索引位置，如果当前 Buffer 不包含这个 `value` 则返回 `-1` 。这个 `value` 的值可以是 `String` 、`Buffer` 或 `Number` 。字符串会默认用 UTF8 解释执行。Buffer 将会使用整个 Buffer（比较部分 Buffer 请使用 [buf.slice()](#slice) 方法）。数字在 0 到 255 的范围内。 
 
 ```javascript
 const buf = Buffer.from('this is a buffer');
@@ -687,7 +687,7 @@ utf16Buffer.indexOf('\u03a3', -4, 'ucs2');
 
 - 返回：{Boolean}
 
-该操作类似于 [Array#includes()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)。这个 `value` 的值可以是 `String` 、`Buffer` 或 `Number` 。字符串会被作为 UTF8 解释，除非你覆盖了 `encoding` 参数。Buffer 将会使用整个 Buffer（比较部分 Buffer 请使用 [buf.slice()](#slice) 方法）。数字在 0 到 255 的范围内。 
+该操作类似于 [Array#includes()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)。这个 `value` 的值可以是 `String` 、`Buffer` 或 `Number` 。字符串会被作为 UTF8 解释执行，除非你覆盖了 `encoding` 参数。Buffer 将会使用整个 Buffer（比较部分 Buffer 请使用 [buf.slice()](#slice) 方法）。数字在 0 到 255 的范围内。 
 
 `byteOffset` 表示在搜索 `buf` 时的初始索引值。
 
@@ -896,7 +896,7 @@ for (var value of buf) {
 
 - 返回：{Buffer}
 
-将 Buffer 解释为一个16位的无符号整型数组并以字节顺序交换到位。如果 Buffer 的长度不是16位的倍数，则抛出一个 [RangeError](../errors/class_RangeError.md#) 错误。该方法返回一个当前 Buffer 的引用，以便于链式调用。
+将 Buffer 解释执行为一个16位的无符号整数数组并以字节顺序交换到位。如果 Buffer 的长度不是16位的倍数，则抛出一个 [RangeError](../errors/class_RangeError.md#) 错误。该方法返回一个当前 Buffer 的引用，以便于链式调用。
 
 ```javascript
 const buf = Buffer.from([0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8]);
@@ -913,7 +913,7 @@ console.log(buf);
 
 - 返回：{Buffer}
 
-将 Buffer 解释为一个32位的无符号整型数组并以字节顺序交换到位。如果 Buffer 的长度不是32位的倍数，则抛出一个 [RangeError](../errors/class_RangeError.md#) 错误。该方法返回一个当前 Buffer 的引用，以便于链式调用。
+将 Buffer 解释执行为一个32位的无符号整数数组并以字节顺序交换到位。如果 Buffer 的长度不是32位的倍数，则抛出一个 [RangeError](../errors/class_RangeError.md#) 错误。该方法返回一个当前 Buffer 的引用，以便于链式调用。
 
 ```javascript
 const buf = Buffer.from([0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8]);
@@ -938,7 +938,7 @@ console.log(buf);
 
 - 返回：{Number}
 
-从该 Buffer 指定的 `offset` 位置开始读取 `byteLength` 字节数，并将结果解释为一个有符号的2的补码值。支持多达48位精度的值。例如：
+从该 Buffer 指定的 `offset` 位置开始读取 `byteLength` 字节数，并将结果解释执行为一个有符号的2的补码值。支持多达48位精度的值。例如：
 
 ```javascript
 const buf = Buffer.allocUnsafe(6);
@@ -965,7 +965,7 @@ buf.readIntBE(0, 6).toString(16);
 
 - 返回：{Number}
 
-从该 Buffer 指定的带有特定尾数格式（`readFloatBE()` 返回一个较大的尾数，`readFloatLE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个32位 float 值。
+从该 Buffer 指定的带有特定尾数格式（`readFloatBE()` 返回一个较大的尾数，`readFloatLE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个32位浮点值。
 
 设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
 
@@ -995,7 +995,7 @@ buf.readFloatLE(1, true); // Warning: reads passed end of buffer!
 
 - 返回：{Number}
 
-从该 Buffer 指定的带有特定尾数格式（`readFloatBE()` 返回一个较大的尾数，`readFloatLE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个64位 double 值。
+从该 Buffer 指定的带有特定尾数格式（`readDoubleBE()` 返回一个较大的尾数，`readDoubleLE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个64位双精度值。
 
 设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
 
@@ -1023,11 +1023,11 @@ buf.readDoubleLE(1, true); // Warning: reads passed end of buffer!
 
 - 返回：{Number}
 
-从该 Buffer 指定的 `offset` 位置开始读取一个有符号的8位整型值。
+从该 Buffer 指定的 `offset` 位置开始读取一个有符号的8位整数值。
 
 设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
 
-从 Buffer 里读取的整型数值会被解释为有符号的2的补码值。
+从 Buffer 里读取的整数数值会被解释执行为有符号的2的补码值。
 
 ```javascript
 const buf = Buffer.from([1, -2, 3, 4]);
@@ -1050,11 +1050,11 @@ buf.readInt8(1);
 
 - 返回：{Number}
 
-从该 Buffer 指定的带有特定尾数格式（`readInt16BE()` 返回一个较大的尾数，`readInt16LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个16位整型值。
+从该 Buffer 指定的带有特定尾数格式（`readInt16BE()` 返回一个较大的尾数，`readInt16LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个16位整数值。
 
 设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
 
-从 Buffer 里读取的整型数值会被解释为有符号的2的补码值。
+从 Buffer 里读取的整数数值会被解释执行为有符号的2的补码值。
 
 ```javascript
 const buf = Buffer.from([1, -2, 3, 4]);
@@ -1077,11 +1077,11 @@ buf.readInt16LE(1);
 
 - 返回：{Number}
 
-从该 Buffer 指定的带有特定尾数格式（`readInt32BE()` 返回一个较大的尾数，`readInt32LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个有符号的32位整型值。
+从该 Buffer 指定的带有特定尾数格式（`readInt32BE()` 返回一个较大的尾数，`readInt32LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个有符号的32位整数值。
 
 设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
 
-从 Buffer 里读取的整型数值会被解释为有符号的2的补码值。
+从 Buffer 里读取的整数数值会被解释执行为有符号的2的补码值。
 
 ```javascript
 const buf = Buffer.from([1, -2, 3, 4]);
@@ -1108,7 +1108,7 @@ buf.readInt32LE(1);
 
 - 返回：{Number}
 
-从该 Buffer 指定的 `offset` 位置开始读取 `byteLength` 字节数，并将结果解释为一个无符号的整型值。支持多达48位精度的值。例如：
+从该 Buffer 指定的 `offset` 位置开始读取 `byteLength` 字节数，并将结果解释执行为一个无符号的整数值。支持多达48位精度的值。例如：
 
 ```javascript
 const buf = Buffer.allocUnsafe(6);
@@ -1133,7 +1133,7 @@ buf.readUIntBE(0, 6).toString(16);
 
 - 返回：{Number}
 
-从该 Buffer 指定的 `offset` 位置开始读取一个无符号的8位整型值。
+从该 Buffer 指定的 `offset` 位置开始读取一个无符号的8位整数值。
 
 设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
 
@@ -1158,7 +1158,7 @@ buf.readUInt8(1);
 
 - 返回：{Number}
 
-从该 Buffer 指定的带有特定尾数格式（`readUInt16BE()` 返回一个较大的尾数，`readUInt16LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个无符号的16位整型值。
+从该 Buffer 指定的带有特定尾数格式（`readUInt16BE()` 返回一个较大的尾数，`readUInt16LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个无符号的16位整数值。
 
 设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
 
@@ -1193,7 +1193,7 @@ buf.readUInt16LE(2);
 
 - 返回：{Number}
 
-从该 Buffer 指定的带有特定尾数格式（`readUInt32BE()` 返回一个较大的尾数，`readUInt32LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个无符号的32位整型值。
+从该 Buffer 指定的带有特定尾数格式（`readUInt32BE()` 返回一个较大的尾数，`readUInt32LE()` 返回一个较小的尾数）的 `offset` 位置开始读取一个无符号的32位整数值。
 
 设置 `noAssert` 为 `true` ，将跳过对 `offset` 的验证。这将允许 `offset` 超出缓冲区的末尾。
 
@@ -1206,4 +1206,329 @@ buf.readUInt32BE(0);
 // Returns: 0x03042342
 console.log(buf.readUInt32LE(0));
 // Returns: 0x42230403
+```
+
+
+<div id="write" class="anchor"></div>
+#### buf.write(string[, offset[, length]][, encoding])
+
+- `string` {String} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} 默认：0
+
+- `length` {Number} 默认：`buffer.length - offset`
+
+- `encoding` {String} 默认：`'utf8'`
+
+- 返回：{Number} 被写入的字节数
+
+在 Buffer 的 `offset` 位置使用给定的 `encoding` 写入 `string` 。`length` 参数是写入的字节数。如果 Buffer 没有足够的空间以适应整个字符串，只会写入字符串的一部分，然而，它不会只写入已编码的字符部分。
+
+```javascript
+const buf = Buffer.allocUnsafe(256);
+const len = buf.write('\u00bd + \u00bc = \u00be', 0);
+console.log(`${len} bytes: ${buf.toString('utf8', 0, len)}`);
+// Prints: 12 bytes: ½ + ¼ = ¾
+```
+
+
+<div id="writeIntBE" class="anchor"></div>
+#### buf.writeIntBE(value, offset, byteLength[, noAssert])
+<div id="writeIntLE" class="anchor"></div>
+#### buf.writeIntLE(value, offset, byteLength[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - byteLength`
+
+- `byteLength` {Number} 默认：`0 < byteLength <= 6`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+通过指定的 `offset` 和 `byteLength` 将 `value` 写入到当前 Buffer 中。支持多达 48 位的精度。例如：
+
+```javascript
+const buf1 = Buffer.allocUnsafe(6);
+buf1.writeUIntBE(0x1234567890ab, 0, 6);
+console.log(buf1);
+// Prints: <Buffer 12 34 56 78 90 ab>
+
+const buf2 = Buffer.allocUnsafe(6);
+buf2.writeUIntLE(0x1234567890ab, 0, 6);
+console.log(buf2);
+// Prints: <Buffer ab 90 78 56 34 12>
+```
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+当值不是一个整数时，它的行为是不确定的。
+
+
+<div id="writeFloatBE" class="anchor"></div>
+#### buf.writeFloatBE(value, offset[, noAssert])
+<div id="writeFloatLE" class="anchor"></div>
+#### buf.writeFloatLE(value, offset[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - 4`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+从该 Buffer 指定的带有特定尾数格式（`writeFloatBE()` 写入一个较大的尾数，`writeFloatLE()` 写入一个较小的尾数）的 `offset` 位置开始写入 `value` 。当值不是一个32位浮点值时，它的行为是不确定的。
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+例子：
+
+```javascript
+const buf = Buffer.allocUnsafe(4);
+buf.writeFloatBE(0xcafebabe, 0);
+
+console.log(buf);
+// Prints: <Buffer 4f 4a fe bb>
+
+buf.writeFloatLE(0xcafebabe, 0);
+
+console.log(buf);
+// Prints: <Buffer bb fe 4a 4f>
+```
+
+
+<div id="writeDoubleBE" class="anchor"></div>
+#### buf.writeDoubleBE(value, offset[, noAssert])
+<div id="writeDoubleLE" class="anchor"></div>
+#### buf.writeDoubleLE(value, offset[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - 8`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+从该 Buffer 指定的带有特定尾数格式（`writeDoubleBE()` 写入一个较大的尾数，`writeDoubleLE()` 写入一个较小的尾数）的 `offset` 位置开始写入 `value` 。`value` 参数应当是一个有效的64位双精度值。当值不是一个64位双精度值时，它的行为是不确定的。
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+例子：
+
+```javascript
+const buf = Buffer.allocUnsafe(8);
+buf.writeDoubleBE(0xdeadbeefcafebabe, 0);
+
+console.log(buf);
+// Prints: <Buffer 43 eb d5 b7 dd f9 5f d7>
+
+buf.writeDoubleLE(0xdeadbeefcafebabe, 0);
+
+console.log(buf);
+// Prints: <Buffer d7 5f f9 dd b7 d5 eb 43>
+```
+
+
+<div id="writeInt8" class="anchor"></div>
+#### buf.writeInt8(value, offset[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - 1`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+通过指定的 `offset` 将 `value` 写入到当前 Buffer 中。这个 `value` 应当是一个有效的有符号的8位整数。当值不是一个有符号的8位整数时，它的行为是不确定的。
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+这个 `value` 作为一个2的补码的有符号的整数被解释执行和写入。
+
+```javascript
+const buf = Buffer.allocUnsafe(2);
+buf.writeInt8(2, 0);
+buf.writeInt8(-2, 1);
+console.log(buf);
+// Prints: <Buffer 02 fe>
+```
+
+
+<div id="writeInt16BE" class="anchor"></div>
+#### buf.writeInt16BE(value, offset[, noAssert])
+<div id="writeInt16LE" class="anchor"></div>
+#### buf.writeInt16LE(value, offset[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - 2`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+从该 Buffer 指定的带有特定尾数格式（`writeInt16BE()` 写入一个较大的尾数，`writeInt16LE()` 写入一个较小的尾数）的 `offset` 位置开始写入 `value` 。`value` 参数应当是一个有效的有符号的16位整数。当值不是一个有符号的16位整数时，它的行为是不确定的。
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+这个 `value` 作为一个2的补码的有符号的整数被解释执行和写入。
+
+```javascript
+const buf = Buffer.allocUnsafe(4);
+buf.writeInt16BE(0x0102, 0);
+buf.writeInt16LE(0x0304, 2);
+console.log(buf);
+// Prints: <Buffer 01 02 04 03>
+```
+
+
+<div id="writeInt32BE" class="anchor"></div>
+#### buf.writeInt32BE(value, offset[, noAssert])
+<div id="writeInt32LE" class="anchor"></div>
+#### buf.writeInt32LE(value, offset[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - 4`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+从该 Buffer 指定的带有特定尾数格式（`writeInt32BE()` 写入一个较大的尾数，`writeInt32LE()` 写入一个较小的尾数）的 `offset` 位置开始写入 `value` 。`value` 参数应当是一个有效的有符号的32位整数。当值不是一个有符号的32位整数时，它的行为是不确定的。
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+这个 `value` 作为一个2的补码的有符号的整数被解释执行和写入。
+
+```javascript
+const buf = Buffer.allocUnsafe(8);
+buf.writeInt32BE(0x01020304, 0);
+buf.writeInt32LE(0x05060708, 4);
+console.log(buf);
+// Prints: <Buffer 01 02 03 04 08 07 06 05>
+```
+
+
+<div id="writeUIntBE" class="anchor"></div>
+#### buf.writeUIntBE(value, offset, byteLength[, noAssert])
+<div id="writeUIntLE" class="anchor"></div>
+#### buf.writeUIntLE(value, offset, byteLength[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - byteLength`
+
+- `byteLength` {Number} 默认：`0 < byteLength <= 6`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+通过指定的 `offset` 和 `byteLength` 将 `value` 写入到当前 Buffer 中。支持多达 48 位的精度。例如：
+
+```javascript
+const buf = Buffer.allocUnsafe(6);
+buf.writeUIntBE(0x1234567890ab, 0, 6);
+console.log(buf);
+// Prints: <Buffer 12 34 56 78 90 ab>
+```
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+当值不是一个无符号的整数时，它的行为是不确定的。
+
+
+<div id="writeUInt8" class="anchor"></div>
+#### buf.writeUInt8(value, offset[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - 1`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+通过指定的 `offset` 将 `value` 写入到当前 Buffer 中。这个 `value` 应当是一个有效的无符号的8位整数。当值不是一个无符号的8位整数时，它的行为是不确定的。
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+```javascript
+const buf = Buffer.allocUnsafe(4);
+buf.writeUInt8(0x3, 0);
+buf.writeUInt8(0x4, 1);
+buf.writeUInt8(0x23, 2);
+buf.writeUInt8(0x42, 3);
+
+console.log(buf);
+// Prints: <Buffer 03 04 23 42>
+```
+
+
+<div id="writeUInt16BE" class="anchor"></div>
+#### buf.writeUInt16BE(value, offset[, noAssert])
+<div id="writeUInt16LE" class="anchor"></div>
+#### buf.writeUInt16LE(value, offset[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - 2`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+从该 Buffer 指定的带有特定尾数格式（`writeUInt16BE()` 写入一个较大的尾数，`writeUInt16LE()` 写入一个较小的尾数）的 `offset` 位置开始写入 `value` 。`value` 参数应当是一个有效的无符号的16位整数。当值不是一个无符号的16位整数时，它的行为是不确定的。
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+```javascript
+const buf = Buffer.allocUnsafe(4);
+buf.writeUInt16BE(0xdead, 0);
+buf.writeUInt16BE(0xbeef, 2);
+
+console.log(buf);
+// Prints: <Buffer de ad be ef>
+
+buf.writeUInt16LE(0xdead, 0);
+buf.writeUInt16LE(0xbeef, 2);
+
+console.log(buf);
+// Prints: <Buffer ad de ef be>
+```
+
+
+<div id="writeUInt32BE" class="anchor"></div>
+#### buf.writeUInt32BE(value, offset[, noAssert])
+<div id="writeUInt32LE" class="anchor"></div>
+#### buf.writeUInt32LE(value, offset[, noAssert])
+
+- `value` {Number} 需要被写入到 Buffer 的字节
+
+- `offset` {Number} `0 <= offset <= buf.length - 4`
+
+- `noAssert` {Boolean} 默认：`false`
+
+- 返回：{Number} 偏移加上被写入的字节数
+
+从该 Buffer 指定的带有特定尾数格式（`writeUInt32BE()` 写入一个较大的尾数，`writeUInt32LE()` 写入一个较小的尾数）的 `offset` 位置开始写入 `value` 。`value` 参数应当是一个有效的无符号的32位整数。当值不是一个无符号的32位整数时，它的行为是不确定的。
+
+将 `noAssert` 设为 `true` 将跳过对 `value` 和 `offset` 的验证。这意味着 `value` 可能对于这个特定的函数来说过大，并且 `offset` 可能超出该 Buffer 的末端，导致该值被直接丢弃。除非确定你的内容的正确性否则不应该被使用。
+
+```javascript
+const buf = Buffer.allocUnsafe(4);
+buf.writeUInt32BE(0xfeedface, 0);
+
+console.log(buf);
+// Prints: <Buffer fe ed fa ce>
+
+buf.writeUInt32LE(0xfeedface, 0);
+
+console.log(buf);
+// Prints: <Buffer ce fa ed fe>
 ```
