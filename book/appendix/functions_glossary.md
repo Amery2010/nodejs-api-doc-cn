@@ -242,6 +242,8 @@
 
 [new Buffer(str[, encoding])](../buffer/class_Buffer.md#new_buffer_str)
 
+[new SlowBuffer(size)](../buffer/class_SlowBuffer.md#new_SlowBuffer)
+
 ### O
 
 ### P
@@ -275,6 +277,8 @@
 [setImmediate(callback[, arg][, ...])](../timers/timer.md#setImmediate)
 
 [System Error类](../errors/system_errors.md#class_System_Error)
+
+[SlowBuffer类](../buffer/class_SlowBuffer.md#)
 
 ### T
 

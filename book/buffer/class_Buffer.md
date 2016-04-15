@@ -88,7 +88,7 @@ Buffer 类是一个全局变量类型，用来直接处理2进制数据的。 �
 
 分配一个 `size` 字节大小的新 `Buffer`。`size` 必须小于等于 `require('buffer').kMaxLength`（在64位架构上 `kMaxLength` 的大小是 `(2^31)-1`）的值，否则将抛出一个 [RangeError](../errors/class_RangeError.md#) 的错误。如果 `size` 小于 0 将创建一个特定的 0 长度（zero-length ）的 Buffer。
 
-不像 `ArrayBuffers` ，以这种方式创建的 Buffer 实例的底层内存是*没被优化过*的。新创建的 Buffer 的内容是*未知*的，并*可能包含敏感数据*。通过使用 `buf.fill(0)` 将一个 Buffer 初始化为零。
+不像 `ArrayBuffers` ，以这种方式创建的 Buffer 实例的底层内存是*没被初始化过*的。新创建的 Buffer 的内容是*未知*的，并*可能包含敏感数据*。通过使用 `buf.fill(0)` 将一个 Buffer 初始化为零。
 
 ```javascript
 const buf = new Buffer(5);
@@ -382,7 +382,7 @@ console.log(buf);
 
 分配一个 `size` 字节大小的新的*非零填充（non-zero-filled）*的 `Buffer`。`size` 必须小于等于 `require('buffer').kMaxLength`（在64位架构上 `kMaxLength` 的大小是 `(2^31)-1`）的值，否则将抛出一个 [RangeError](../errors/class_RangeError.md#) 的错误。如果 `size` 小于 0 将创建一个特定的 0 长度（zero-length ）的 Buffer。
 
-以这种方式创建的 Buffer 实例的底层内存是*没被优化过*的。新创建的 Buffer 的内容是*未知*的，并*可能包含敏感数据*。通过使用 `buf.fill(0)` 将这个 `Buffer` 初始化为零。
+以这种方式创建的 Buffer 实例的底层内存是*没被初始化过*的。新创建的 Buffer 的内容是*未知*的，并*可能包含敏感数据*。通过使用 `buf.fill(0)` 将这个 `Buffer` 初始化为零。
 
 ```javascript
 const buf = Buffer.allocUnsafe(5);
