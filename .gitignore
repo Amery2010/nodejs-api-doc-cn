@@ -1,2 +1,3 @@
 /nodejs-api-doc*.json
-/_book
+*/node_modules/
+/_website/

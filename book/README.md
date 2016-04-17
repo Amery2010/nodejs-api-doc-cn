@@ -10,8 +10,6 @@ Node.js v5.x 文档 [中文版](https://github.com/Amery2010/nodejs-api-book/) [
 
 ### 文档阅读
 
-[Github版](/book/SUMMARY.md)
-
 [Gitbook版](http://xiangfa.org/nodejs-api-book/)
 
 ### 许可协议
