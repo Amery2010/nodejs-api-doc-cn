@@ -221,3 +221,106 @@ readable.on('end', () => {
 - {Error}
 
 在接收数据出错时触发。
+
+
+<div id="read" class="anchor"></div>
+#### readable.read([size])
+
+- `size` {Number} 可选参数，指定要读取多少数据。
+
+- 返回：{String} | {Buffer} | {Null}
+
+`read()` 方法从内部缓冲区中拉取并返回一些数据。当没有数据可用，它会返回 `null`。
+
+如果你传了一个 `size` 参数，那么它就会返回多少字节的数据。如果 `size` 字节不可用，那么它将返回 `null`，除非已经到了数据末端，在这种情况下，它将返回保留在缓冲区中的数据。
+
+如果你没有指定 `size` 参数，那么它就会返回内部缓冲区中的所有数据。
+
+该方法应该仅在暂停模式下被调用。在流动模式下，该方法会被自动调用直到内部缓冲区排空。
+
+```javascript
+var readable = getReadableStreamSomehow();
+readable.on('readable', () => {
+    var chunk;
+    while (null !== (chunk = readable.read())) {
+        console.log('got %d bytes of data', chunk.length);
+    }
+});
+```
+
+如果该方法返回了一个数据块，那么它也会触发 ['data'](#readable_event_data) 事件。
+
+请注意，在 ['end' 事件](#readable_event_end)触发后调用 [stream.read([size])](#read) 将会返回 `null`，并且不会产生错误警告。
+
+
+<div id="setEncoding" class="anchor"></div>
+#### readable.setEncoding(encoding)
+
+- `encoding` {String} 要使用的编码。
+
+- 返回：`this`
+
+调用此函数会使得流返回指定编码的字符串而不是 Buffer 对象。例如，如果你使用  `readable.setEncoding('utf8')`，那么输出数据会被作为 UTF-8 数据解析，并作为字符串返回。如果你  `readable.setEncoding('hex')`，那么数据会被编码成十六进制字符串格式。
+
+该方法能妥善处理多字节字符，如果你直接取出 Buffer 并对它们调用 [buf.toString(encoding)](../buffer/class_Buffer.md#toString)，很可能会导致字节错位。如果你想要以字符串形式读取数据，请始终使用该方法。
+
+你还可以使用 `readable.setEncoding(null)` 完全禁用任何编码。如果你在处理二进制数据或将大型的多字节字符串分成多块时，这种做法将非常有用。
+
+```javascript
+var readable = getReadableStreamSomehow();
+readable.setEncoding('utf8');
+readable.on('data', (chunk) => {
+    assert.equal(typeof chunk, 'string');
+    console.log('got %d characters of string data', chunk.length);
+});
+```
+
+
+<div id="pipe" class="anchor"></div>
+#### readable.pipe(destination[, options])
+
+- `destination` {stream.Writable} 写入数据的目标
+
+- `options` {Object} Pipe 选项
+  - `end` {Boolean} 当读取结束时终止写入，默认为 `true`。
+
+该方法从可读流中拉取所有数据，并写入到所提供的目标。该方法能自动控制流量以避免目标被快速读取的可读流所淹没。
+
+可以安全地导流到多个目标。
+
+```javascript
+var readable = getReadableStreamSomehow();
+var writable = fs.createWriteStream('file.txt');
+// All the data from readable goes into 'file.txt'
+readable.pipe(writable);
+```
+
+该函数返回目标的流，因此你可以建立像这样的导流链：
+
+```javascript
+var r = fs.createReadStream('file.txt');
+var z = zlib.createGzip();
+var w = fs.createWriteStream('file.txt.gz');
+r.pipe(z).pipe(w);
+```
+
+例如，模拟 Unix 的 `cat` 命令：
+
+```javascript
+process.stdin.pipe(process.stdout);
+```
+
+默认情况下，当源数据流触发 ['end' 事件](#readable_event_end)时，目标的 [stream.end()](#end) 会被调用，因此 `destination` 不再可写。传入 `{end: false}` 作为 `options` 可以保持目标流的开启状态。
+
+这让 `writer` 保持开启，因此最后可以写入 "Goodbye"。
+
+```javascript
+reader.pipe(writer, {
+    end: false
+});
+reader.on('end', () => {
+    writer.end('Goodbye\n');
+});
+```
+
+请注意 [process.stderr](../process/process.md#stderr) 和 [process.stdout](../process/process.md#stdout) 在进程结束前都不会被关闭，无论是否指定选项。
