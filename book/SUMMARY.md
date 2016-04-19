@@ -63,8 +63,8 @@
   - [Buffers和ES6迭代器](buffer/buffers_and_es6_iteration.md)
   
 * [流(Stream)](stream/README.md)
-  - [面向消费者的API](stream/api_for_stream_consumers.md)
-  - [面向实现者的API](stream/api_for_stream_implementors.md)
+  - [面向流消费者的API](stream/api_for_stream_consumers.md)
+  - [面向流实现者的API](stream/api_for_stream_implementors.md)
   - [简化构造函数API](stream/simplified_constructor_api.md)
   - [Stream内部细节](stream/under_the_hood.md)
 
