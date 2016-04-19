@@ -264,6 +264,24 @@
 
 [ref()](../timers/timer.md#ref)
 
+[readable.read([size])](../stream/api_for_stream_consumers.md#read)
+
+[readable.setEncoding(encoding)](../stream/api_for_stream_consumers.md#setEncoding)
+
+[readable.pipe(destination[, options])](../stream/api_for_stream_consumers.md#pipe)
+
+[readable.unpipe([destination])](../stream/api_for_stream_consumers.md#unpipe)
+
+[readable.unshift(chunk)](../stream/api_for_stream_consumers.md#unshift)
+
+[readable.pause()](../stream/api_for_stream_consumers.md#pause)
+
+[readable.isPaused()](../stream/api_for_stream_consumers.md#isPaused)
+
+[readable.resume()](../stream/api_for_stream_consumers.md#resume)
+
+[readable.wrap(stream)](../stream/api_for_stream_consumers.md#wrap)
+
 ### S
 
 [setTimeout(cb, ms)](../globals/global.md#setTimeout)
@@ -280,6 +298,14 @@
 
 [SlowBuffer类](../buffer/class_SlowBuffer.md#)
 
+[stream.Readable类](../stream/api_for_stream_consumers.md#class_Readable)
+
+[stream.Writable类](../stream/api_for_stream_consumers.md#class_Writable)
+
+[stream.Duplex类](../stream/api_for_stream_consumers.md#class_Duplex)
+
+[stream.Transform类](../stream/api_for_stream_consumers.md#class_Transform)
+
 ### T
 
 ### U
@@ -289,6 +315,16 @@
 ### V
 
 ### W
+
+[writable.write(chunk[, encoding][, callback])](../stream/api_for_stream_consumers.md#write)
+
+[writable.setDefaultEncoding(encoding)](../stream/api_for_stream_consumers.md#setDefaultEncoding)
+
+[writable.cork()](../stream/api_for_stream_consumers.md#cork)
+
+[writable.uncork()](../stream/api_for_stream_consumers.md#uncork)
+
+[writable.end([chunk][, encoding][, callback])](../stream/api_for_stream_consumers.md#end)
 
 ### X
 
