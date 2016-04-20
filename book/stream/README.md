@@ -4,7 +4,7 @@
 
 流是一个被 Node.js 中很多对象所实现的抽象接口。比如[对一个 HTTP 服务器的请求](../http/class_http_IncomingMessage.md#)是一个流，[process.stdout](../process/process.md#stdout) 也是一个流。流是可读、可写或兼具两者的。所有流都是 [EventEmitter](../events/class_EventEmitter.md#) 的实例。
 
-您可以通过 `require('stream')` 加载 `Stream` 基类，这些基类提供了 [Readable](./api_for_stream_consumers.md#class_Readable) 流、[Writable](./api_for_stream_consumers.md#class_Writable) 流、[Duplex](./api_for_stream_consumers.md#class_Duplex) 流和 [Transform](./api_for_stream_consumers.md#class_Transform) 流。
+您可以通过 `require('stream')` 加载 `Stream` 基类，这些基类提供了可读（[Readable](./api_for_stream_consumers.md#class_Readable)）流、可写（[Writable](./api_for_stream_consumers.md#class_Writable)）流、双工（[Duplex](./api_for_stream_consumers.md#class_Duplex)）流和转换（[Transform](./api_for_stream_consumers.md#class_Transform)）流。
 
 本文档分为三个章节：
 
