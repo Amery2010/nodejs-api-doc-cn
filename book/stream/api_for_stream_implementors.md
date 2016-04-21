@@ -15,8 +15,8 @@
 * [stream.Transform类](#class_Transform)
   - [new stream.Transform([options])](#new_Transform)
   - ['finish'和'end'事件](#event_finish_and_end)
-  - [transform._flush(callback)](#_flush)
   - [transform._transform(chunk, encoding, callback)](#_transform)
+  - [transform._flush(callback)](#_flush)
   - [例子：简单的协议分析器 V2](#simpleProtocol_parser_v2)
 * [stream.PassThrough类](#class_PassThrough)
 
@@ -64,7 +64,7 @@
   
   - `read` {Function} 实现 [stream._read()](#_read) 的方法
   
-在拓展可读（Readable）类的类中，请确保调用 Readable 构造函数，以便缓冲设置可以被正确地初始化。
+在拓展自可读（Readable）类的类中，请确保调用 Readable 构造函数，以便缓冲设置可以被正确地初始化。
 
 
 <div id="_read" class="anchor"></div>
@@ -297,13 +297,13 @@ SimpleProtocol.prototype._read = function (n) {
   
   - `writev` {Function} [stream._writev()](#_writev) 方法的实现
   
-在拓展可写（Writable）类的类中，请确保调用 Writable 构造函数，以便缓冲设置可以被正确地初始化。
+在拓展自可写（Writable）类的类中，请确保调用 Writable 构造函数，以便缓冲设置可以被正确地初始化。
 
 
 <div id="_write" class="anchor"></div>
 #### writable._write(chunk, encoding, callback)
 
-- `chunk` {Buffer} | {String} 被写入的（数据）块。**总会是**是一个 buffer ，除非 `decodeStrings` 参数被设置成 `false` 。
+- `chunk` {Buffer} | {String} 被写入的（数据）块。**总会是**一个 buffer ，除非 `decodeStrings` 参数被设置成 `false` 。
 
 - `encoding` {String} 如果该块是一个字符串，那么这是编码类型。如果该块是一个 buffer ，那么这是一个指定的值 -  'buffer'，在这种情况下请忽略它。
 
@@ -311,13 +311,13 @@ SimpleProtocol.prototype._read = function (n) {
 
 所有的 Writable 流实现都必须提供一个 _write 方法用于向底层资源发送数据。
 
-注意：**此函数禁止被直接调用**。它应该由子类来实现，并且仅由内部可写（Writable）类方法调用。
+注意：**此函数禁止被直接调用**。它应该由子类来实现，并且仅被可写（Writable）类的内部方法调用。
 
 该回调函数采用标准的 `callback(error)` 模式来表明写入成功完成还是遇到错误。
 
 如果构造函数选项中设定了 `decodeStrings` 标志，则 `chunk` 可能会是字符串而不是 Buffer，并且 `encoding` 表明了字符串的格式。这种设计是为了支持对某些字符串数据编码提供优化处理的实现。如果您没有明确地将 `decodeStrings` 选项设定为 `false` ，那么您可以安全地忽略 `encoding` 参数，并假定 `chunk` 总是一个 Buffer。
 
-这是一个带有下划线前缀的方法，因为它是在类内部定义的，并且不应该由用户程序直接调用。但是，我们希望你在自己的扩展类中重写此方法。
+这是一个带有下划线前缀的方法，因为它是在类内部定义的，并且不应该由用户程序直接调用。但是，我们**希望**你在自己的扩展类中重写此方法。
 
 
 <div id="_writev" class="anchor"></div>
@@ -327,6 +327,187 @@ SimpleProtocol.prototype._read = function (n) {
 
 - `callback` {Function} 当你处理完成所提供的块时调用此函数（有一个可选的 error 参数）。
 
-注意：**此函数禁止被直接调用**。它可能是由子类实现，并且仅由内部可写（Writable）类方法调用。
+注意：**此函数禁止被直接调用**。它可能是由子类实现，并且仅被可写（Writable）类的内部方法调用。
 
 此函数是完全可选的实现。在大多数情况下，它是不必要的。如果实现，它将被所有滞留在写入队列中的数据块调用。
+
+
+<div id="class_Duplex" class="anchor"></div>
+## stream.Duplex类
+
+“双工”（duplex）流兼具可读和可写特性，比如一个 TCP 嵌套字连接。
+
+值得注意的是，`stream.Duplex` 是一个被设计为拓展底层实现 [stream._read(size)](#_read) 和 [stream._write(chunk, encoding, callback)](#_write) 方法的抽象类，就像你实现可读（Readable）或可写（Writable）类所做的那样。
+
+由于 JavaScript 并不具备多原型继承能力，这个类实际上继承自 Readable，并寄生自 Writable。从而让用户在双工（Duplex）类的拓展中能同时实现低级的 [stream._read(n)](#_read) 和 [stream._write(chunk, encoding, callback)](#_write) 方法。
+
+
+<div id="new_Duplex" class="anchor"></div>
+#### new stream.Duplex(options)
+
+- `options` {Object} 同时传入可读（Readable）和可写（Writable）构造函数。同时有以下字段：
+  
+  - `allowHalfOpen` {Boolean} 默认：`true`。如果设置为 `false`，那么当写入端结束后流将自动结束读取端，反之亦然。
+  
+  - `readableObjectMode` {Boolean} 默认：`false`。设置流读取端的 `objectMode`。如果 `objectMode` 为 `true` 也没有影响。
+  
+  - `writableObjectMode` {Boolean} 默认：`false`。设置流读取端的 `objectMode`。如果 `objectMode` 为 `true` 也没有影响。
+  
+在拓展自双工（Duplex）类的类中，请确保调用其构造函数，以便缓冲设置可以被正确地初始化。
+
+
+<div id="class_Transform" class="anchor"></div>
+## stream.Transform类
+
+“转换”（transform）流实际上是一个输出与输入存在因果关系的双工（duplex）流，比如 [zlib](../zlib/) 流或 [crypto](../crypto/) 流。
+
+它并不要求输入和输出需要相同大小、相同块数或同时到达。例如，一个 Hash 流只会在输入结束时产生一个数据块的输出；一个 zlib 流会产生比输入小得多或大得多的输出。
+
+转换（Transform）类必须实现 [stream._transform()](#_transform) 方法，而不是 [stream._read()](#_read) 和 [stream._write()](#_write) 方法，同时也可以选择性地实现 [stream._flush()](#_flush) 方法。（详见下文。）
+
+
+<div id="new_Transform" class="anchor"></div>
+#### new stream.Transform([options])
+
+- `options` {Object}
+
+  - `transform` {Function} 实现 [stream._transform()](#_transform) 方法
+  
+  - `flush` {Function} 实现 [stream._flush()](#_flush) 方法
+  
+在拓展自转换（Transform）类的类中，请确保调用其构造函数，以便缓冲设置可以被正确地初始化。
+
+
+<div id="event_finish_and_end" class="anchor"></div>
+#### 'finish'和'end'事件
+
+['finish'](./api_for_stream_consumers.md#writable_event_finish) 和 ['end'](./api_for_stream_consumers.md#readable_event_end) 事件分别来自可写（Writable）父类和可读（Readable）父类。`'finish'` 事件在调用 [stream.end()](./api_for_stream_consumers.md#end) 和所有的块都已被 [stream._transform()](#_transform) 处理后触发。`'end'` 在调用回调函数 [stream._flush()](#_flush) 输出所有数据后触发。
+
+
+<div id="_transform" class="anchor"></div>
+#### transform._transform(chunk, encoding, callback)
+
+- `chunk` {Buffer} | {String} 需要被转换的数据块。**总会是**一个 buffer，除非 `decodeStrings` 选项被设置成 `false`。
+
+- `encoding` {String} 如果该块是一个字符串，那么这是编码类型。如果该块是一个 buffer ，那么这是一个指定的值 -  'buffer'，在这种情况下请忽略它。
+
+- `callback` {Function} 当你处理完成所提供的块时调用此函数（有一个可选的 error 参数）
+
+注意：**此函数禁止被直接调用**。它可能是由子类实现，并且仅被转换（Transform）类的内部方法调用。
+
+所有的转换（Transform）流的实现都必须提供一个 `_transform()` 方法用于接受输入并产生输出。
+
+`_transform()` 应当承担特定的 Transform 类中所有处理被写入的字节、并将它们丢给接口的可读部分的职责，进行异步 I/O，处理其它事情等。
+
+调用 `transform.push(outputChunk)` 零次或多次来从输入块生成输出，这取决于你有多少数据块要作为结果输出。
+
+仅在当前块被完全消费后才调用回调函数。需要注意的是，输出可能会也可能不会作为任何特定的输入块的结果。如果提供了回调函数的第二个参数，它会被传递给 push 方法。换言之，以下是等效的：
+
+```javascript
+transform.prototype._transform = function (data, encoding, callback) {
+    this.push(data);
+    callback();
+};
+
+transform.prototype._transform = function (data, encoding, callback) {
+    callback(null, data);
+};
+```
+
+这是一个带有下划线前缀的方法，因为它是在类内部定义的，并且不应该由用户程序直接调用。但是，我们**希望**你在自己的扩展类中重写此方法。
+
+
+<div id="_flush" class="anchor"></div>
+#### transform._flush(callback)
+
+- `callback` {Function} 当你强制刷新任何剩余数据时调用此函数（有一个可选的 error 参数）
+
+注意：**此函数禁止被直接调用**。它可能是由子类实现，如果是这样的话，它仅被转换（Transform）类的内部方法调用。
+
+在一些情景中，你的转换操作可能需要在流的末尾多发一些数据。例如，一个 `Zlib` 压缩流会储存一些内部状态以便更好地压缩输出，但在最后它需要尽可能好地处理剩下的东西以使数据完整。
+
+在这些情况下，你可以实现一个 `_flush()` 方法，它会在所有写入数据被消费后，并且在标志着可读端到达末尾的 ['end'](./api_for_stream_consumers.md#readable_event_end) 事件触发前的最后一刻被调用。和 [stream._transform()](#_transform) 一样，只需在 flush 操作完成时适当地调用 `transform.push(chunk)` 零或多次。
+
+这是一个带有下划线前缀的方法，因为它是在类内部定义的，并且不应该由用户程序直接调用。但是，我们**希望**你在自己的扩展类中重写此方法。
+
+
+<div id="simpleProtocol_parser_v2" class="anchor"></div>
+#### 例子：简单的协议分析器 V2
+
+[这里](#simpleProtocol_v1)的简易协议解析器例子能够很简单地使用高级的 Transform 流类实现，类似于 `parseHeader` 和 `SimpleProtocol v1` 示例。
+
+在这个示例中，输入会被导流到解析器中，而不是作为一个输入的参数提供。这种做法更符合 Node.js 流的惯例。
+
+```javascript
+const util = require('util');
+const Transform = require('stream').Transform;
+util.inherits(SimpleProtocol, Transform);
+
+function SimpleProtocol(options) {
+    if (!(this instanceof SimpleProtocol))
+        return new SimpleProtocol(options);
+
+    Transform.call(this, options);
+    this._inBody = false;
+    this._sawFirstCr = false;
+    this._rawHeader = [];
+    this.header = null;
+}
+
+SimpleProtocol.prototype._transform = function (chunk, encoding, done) {
+    if (!this._inBody) {
+        // check if the chunk has a \n\n
+        var split = -1;
+        for (var i = 0; i < chunk.length; i++) {
+            if (chunk[i] === 10) { // '\n'
+                if (this._sawFirstCr) {
+                    split = i;
+                    break;
+                } else {
+                    this._sawFirstCr = true;
+                }
+            } else {
+                this._sawFirstCr = false;
+            }
+        }
+
+        if (split === -1) {
+            // still waiting for the \n\n
+            // stash the chunk, and try again.
+            this._rawHeader.push(chunk);
+        } else {
+            this._inBody = true;
+            var h = chunk.slice(0, split);
+            this._rawHeader.push(h);
+            var header = Buffer.concat(this._rawHeader).toString();
+            try {
+                this.header = JSON.parse(header);
+            } catch (er) {
+                this.emit('error', new Error('invalid simple protocol data'));
+                return;
+            }
+            // and let them know that we are done parsing the header.
+            this.emit('header', this.header);
+
+            // now, because we got some extra data, emit this first.
+            this.push(chunk.slice(split));
+        }
+    } else {
+        // from there on, just provide the data to our consumer as-is.
+        this.push(chunk);
+    }
+    done();
+};
+
+// Usage:
+// var parser = new SimpleProtocol();
+// source.pipe(parser)
+// Now parser is a readable stream that will emit 'header'
+// with the parsed header data.
+```
+
+
+<div id="class_PassThrough" class="anchor"></div>
+## stream.PassThrough类
+
+这是转换（[Transform](#class_Transform)）流的一个简单实现，将输入的字节简单地传递给输出。它的主要用途是演示和测试，但偶尔也能在构建某种特殊流时派上用场。
