@@ -65,8 +65,8 @@
 * [流(Stream)](stream/README.md)
   - [面向流消费者的API](stream/api_for_stream_consumers.md)
   - [面向流实现者的API](stream/api_for_stream_implementors.md)
-  - [简化构造函数API](stream/simplified_constructor_api.md)
-  - [Stream内部细节](stream/under_the_hood.md)
+  - [简化的构造函数API](stream/simplified_constructor_api.md)
+  - [流的内部细节](stream/under_the_hood.md)
 
 * [编码系统(Punycode)](punycode/README.md)
   - [方法和属性](punycode/punycode.md)

@@ -244,6 +244,14 @@
 
 [new SlowBuffer(size)](../buffer/class_SlowBuffer.md#new_SlowBuffer)
 
+[new stream.Readable([options])](../stream/api_for_stream_implementors.md#new_Readable)
+
+[new stream.Writable([options])](../stream/api_for_stream_implementors.md#new_Writable)
+
+[new stream.Duplex(options)](../stream/api_for_stream_implementors.md#new_Duplex)
+
+[new stream.Transform([options])](../stream/api_for_stream_implementors.md#new_Transform)
+
 ### O
 
 ### P
@@ -282,6 +290,10 @@
 
 [readable.wrap(stream)](../stream/api_for_stream_consumers.md#wrap)
 
+[readable._read(size)](../stream/api_for_stream_implementors.md#_read)
+
+[readable.push(chunk[, encoding])](../stream/api_for_stream_implementors.md#push)
+
 ### S
 
 [setTimeout(cb, ms)](../globals/global.md#setTimeout)
@@ -298,15 +310,29 @@
 
 [SlowBuffer类](../buffer/class_SlowBuffer.md#)
 
-[stream.Readable类](../stream/api_for_stream_consumers.md#class_Readable)
+[stream.Readable类（流消费者）](../stream/api_for_stream_consumers.md#class_Readable)
 
-[stream.Writable类](../stream/api_for_stream_consumers.md#class_Writable)
+[stream.Writable类（流消费者）](../stream/api_for_stream_consumers.md#class_Writable)
 
-[stream.Duplex类](../stream/api_for_stream_consumers.md#class_Duplex)
+[stream.Duplex类（流消费者）](../stream/api_for_stream_consumers.md#class_Duplex)
 
-[stream.Transform类](../stream/api_for_stream_consumers.md#class_Transform)
+[stream.Transform类（流消费者）](../stream/api_for_stream_consumers.md#class_Transform)
+
+[stream.Readable类（流实现者）](../stream/api_for_stream_implementors.md#class_Readable)
+
+[stream.Writable类（流实现者）](../stream/api_for_stream_implementors.md#class_Writable)
+
+[stream.Duplex类（流实现者）](../stream/api_for_stream_implementors.md#class_Duplex)
+
+[stream.Transform类（流实现者）](../stream/api_for_stream_implementors.md#class_Transform)
+
+[stream.PassThrough类（流实现者）](../stream/api_for_stream_implementors.md#class_PassThrough)
 
 ### T
+
+[transform._transform(chunk, encoding, callback)](../stream/api_for_stream_implementors.md#_transform)
+
+[transform._flush(callback)](../stream/api_for_stream_implementors.md#_flush)
 
 ### U
 
@@ -325,6 +351,10 @@
 [writable.uncork()](../stream/api_for_stream_consumers.md#uncork)
 
 [writable.end([chunk][, encoding][, callback])](../stream/api_for_stream_consumers.md#end)
+
+[writable._write(chunk, encoding, callback)](../stream/api_for_stream_implementors.md#_write)
+
+[writable._writev(chunks, callback)](../stream/api_for_stream_implementors.md#_writev)
 
 ### X
 
