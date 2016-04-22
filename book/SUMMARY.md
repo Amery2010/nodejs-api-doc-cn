@@ -68,23 +68,7 @@
   - [简化的构造函数API](stream/simplified_constructor_api.md)
   - [流的内部细节](stream/under_the_hood.md)
 
-* [编码系统(Punycode)](punycode/README.md)
-  - [方法和属性](punycode/punycode.md)
-
-* [加密(Crypto)](crypto/README.md)
-  - [方法和属性](crypto/crypto.md)
-  - [Cipher类](crypto/class_Cipher.md)
-  - [Decipher类](crypto/class_Decipher.md)
-  - [Hash类](crypto/class_Hash.md)
-  - [Hmac类](crypto/class_Hmac.md)
-  - [ECDH类](crypto/class_ECDH.md)
-  - [Sign类](crypto/class_Sign.md)
-  - [DiffieHellman类](crypto/class_DiffieHellman.md)
-  - [Certificate类](crypto/class_Certificate.md)
-  - [Verify类](crypto/class_Verify.md)
-  - [注意](crypto/notes.md)
-
-* [字符串查询(Query Strings)](querystring/README.md)
+* [查询字符串(Query Strings)](querystring/README.md)
   - [方法和属性](querystring/querystring.md)
 
 * [字符串解码(String Decoder)](string_decoder/README.md)
@@ -112,6 +96,19 @@
   - [fs.WriteStream类](fs/class_fs_WriteStream.md)
   - [fs.Stats类](fs/class_fs_Stats.md)
   - [fs.FSWatcher类](fs/class_fs_FSWatcher.md)
+
+* [加密(Crypto)](crypto/README.md)
+  - [方法和属性](crypto/crypto.md)
+  - [Cipher类](crypto/class_Cipher.md)
+  - [Decipher类](crypto/class_Decipher.md)
+  - [Hash类](crypto/class_Hash.md)
+  - [Hmac类](crypto/class_Hmac.md)
+  - [ECDH类](crypto/class_ECDH.md)
+  - [Sign类](crypto/class_Sign.md)
+  - [DiffieHellman类](crypto/class_DiffieHellman.md)
+  - [Certificate类](crypto/class_Certificate.md)
+  - [Verify类](crypto/class_Verify.md)
+  - [注意](crypto/notes.md)
 
 * [压缩解压(ZLIB)](zlib/README.md)
   - [方法和属性](zlib/zlib.md)
@@ -210,6 +207,9 @@
   
 * [实用工具(Utilities)](util/README.md)
   - [方法和属性](util/util.md)
+
+* [Punycode码(Punycode)](punycode/README.md)
+  - [方法和属性](punycode/punycode.md)
 
 * [C/C++扩展(C/C++ Addons)](addons/README.md)
   - [Hello world](addons/hello_world.md)

@@ -172,6 +172,10 @@
 
 ### D
 
+[decoder.write(buffer)](../string_decoder/class_StringDecoder.md#write)
+
+[decoder.end()](../string_decoder/class_StringDecoder.md#end)
+
 ### E
 
 [exports](../globals/global.md#exports)
@@ -254,9 +258,55 @@
 
 ### O
 
+[os.EOL](../os/os.md#EOL)
+
+[os.type()](../os/os.md#type)
+
+[os.release()](../os/os.md#release)
+
+[os.platform()](../os/os.md#platform)
+
+[os.cpus()](../os/os.md#cpus)
+
+[os.arch()](../os/os.md#arch)
+
+[os.endianness()](../os/os.md#endianness)
+
+[os.loadavg()](../os/os.md#loadavg)
+
+[os.totalmem()](../os/os.md#totalmem)
+
+[os.freemem()](../os/os.md#freemem)
+
+[os.uptime()](../os/os.md#uptime)
+
+[os.networkInterfaces()](../os/os.md#networkInterfaces)
+
+[os.hostname()](../os/os.md#hostname)
+
+[os.homedir()](../os/os.md#homedir)
+
+[os.tmpdir()](../os/os.md#tmpdir)
+
 ### P
 
 [process](../globals/global.md#process)
+
+[punycode.version](../punycode/punycode.md#version)
+
+[punycode.ucs2](../punycode/punycode.md#ucs2)
+
+[punycode.ucs2.encode(codePoints)](../punycode/punycode.md#ucs2_encode)
+
+[punycode.ucs2.decode(string)](../punycode/punycode.md#ucs2_decode)
+
+[punycode.encode(string)](../punycode/punycode.md#encode)
+
+[punycode.decode(string)](../punycode/punycode.md#decode)
+
+[punycode.toUnicode(domain)](../punycode/punycode.md#toUnicode)
+
+[punycode.toASCII(domain)](../punycode/punycode.md#toASCII)
 
 ### Q
 
@@ -327,6 +377,8 @@
 [stream.Transform类（流实现者）](../stream/api_for_stream_implementors.md#class_Transform)
 
 [stream.PassThrough类（流实现者）](../stream/api_for_stream_implementors.md#class_PassThrough)
+
+[StringDecoder类](../string_decoder/class_StringDecoder.md#)
 
 ### T
 
