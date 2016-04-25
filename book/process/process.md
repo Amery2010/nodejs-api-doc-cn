@@ -197,3 +197,190 @@ console.log('This will not run.');
 尝试从一个未捕获到异常后恢复正常类似于在升级电脑时拔出电源线——十次里的前九次时间是没有任何反应的——但在第十次的时候系统损坏了。
 
 `'uncaughtException'` 的正确用法是在进程关闭前执行分配资源的同步清理（如，文件描述符、处理程序等）。在 `'uncaughtException'` 事件后恢复正常操作是不安全的。
+
+
+<div id="config" class="anchor"></div>
+## process.config
+
+返回包含了用来编译当前 Node.js 可执行程序的配置选项的 JSON 对象。内容与运行 `./configure` 脚本生成的 `config.gypi` 文件相同。
+
+可能的输出示例如下：
+
+```
+{
+    target_defaults: {
+        cflags: [],
+        default_configuration: 'Release',
+        defines: [],
+        include_dirs: [],
+        libraries: []
+    },
+    variables: {
+        host_arch: 'x64',
+        node_install_npm: 'true',
+        node_prefix: '',
+        node_shared_cares: 'false',
+        node_shared_http_parser: 'false',
+        node_shared_libuv: 'false',
+        node_shared_zlib: 'false',
+        node_use_dtrace: 'false',
+        node_use_openssl: 'true',
+        node_shared_openssl: 'false',
+        strict_aliasing: 'true',
+        target_arch: 'x64',
+        v8_use_snapshot: 'true'
+    }
+}
+```
+
+
+<div id="env" class="anchor"></div>
+## process.env
+
+返回包含用户环境中的对象。详见[environ(7)](http://man7.org/linux/man-pages/man7/environ.7.html)。
+
+此对象的示例如下：
+
+```
+{
+    TERM: 'xterm-256color',
+    SHELL: '/usr/local/bin/bash',
+    USER: 'maciej',
+    PATH: '~/.bin/:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin',
+    PWD: '/Users/maciej',
+    EDITOR: 'vim',
+    SHLVL: '1',
+    HOME: '/Users/maciej',
+    LOGNAME: 'maciej',
+    _: '/usr/local/bin/node'
+}
+```
+
+你可以写入该对象，但修改不会在你的程序之外得到反映。这意味着以下代码不会起作用：
+
+```
+$ node -e 'process.env.foo = "bar"' && echo $foo
+```
+
+但这个是可以的：
+
+```
+process.env.foo = 'bar';
+console.log(process.env.foo);
+```
+
+在 `process.env` 上分配的属性会隐式的将值转换为字符串。
+
+示例：
+
+```
+process.env.test = null;
+console.log(process.env.test);
+// => 'null'
+process.env.test = undefined;
+console.log(process.env.test);
+// => 'undefined'
+```
+
+可以使用 `delete` 删除 `process.env` 上的属性。
+
+示例：
+
+```
+process.env.TEST = 1;
+delete process.env.TEST;
+console.log(process.env.TEST);
+// => undefined
+```
+
+
+<div id="platform" class="anchor"></div>
+## process.platform
+
+你正运行在什么平台上：`'darwin'`, `'freebsd'`, `'linux'`, `'sunos'` 或 `'win32'`。
+
+```
+console.log(`This platform is ${process.platform}`);
+```
+
+
+<div id="arch" class="anchor"></div>
+## process.arch
+
+你正运行在什么处理器架构上：`'arm'`, `'ia32'` 或 `'x64'`。
+
+```
+console.log(`This processor architecture is ${process.arch}`);
+```
+
+
+<div id="release" class="anchor"></div>
+## process.release
+
+一个包含当前版本元数据的对象，包括源码包网址和压缩包头。
+
+`process.release` 包含以下属性：
+
+* `name`：带值的字符串。Node.js 中永远是 `'node'`；io.js 中永远是 `'io.js'`。
+
+* `sourceUrl`：一个指向当前版本的 *.tar.gz* 文件的完整 URL。
+
+* `headersUrl`：一个指向当前版本的 *.tar.gz* 头文件的完整 URL。该文件比完整源文件明显要小，并且可用于编译针对 Node.js 的插件。
+
+* `libUrl`：一个指向匹配当前版本的结构和版本号的 *node.lib* 文件。该文件可用于编译针对 Node.js 的插件。*此属性仅出现在 Windows 版的 Node.js 中，并且不会出现在所有其它平台上*。
+
+例如：
+
+```
+{
+    name: 'node',
+    sourceUrl: 'https://nodejs.org/download/release/v4.0.0/node-v4.0.0.tar.gz',
+    headersUrl: 'https://nodejs.org/download/release/v4.0.0/node-v4.0.0-headers.tar.gz',
+    libUrl: 'https://nodejs.org/download/release/v4.0.0/win-x64/node.lib'
+}
+```
+
+在从源代码树自定义构建的非发布版本中，只可能存在 `name` 属性，附加属性不应该存在。
+
+
+<div id="mainModule" class="anchor"></div>
+## process.mainModule
+
+检索 [require.main](../modules/module.md#) 的另一种方法。不同的是，如果主模块在运行时改变，`require.main` 仍然会指向发生变化之前请求的模块的原始主模块。通常可以安全地假设两个都是指向相同的模块。
+
+针对 `require.main` 而言，如果没有入口脚本，它可能会变成 `undefined`。
+
+
+<div id="title" class="anchor"></div>
+## process.title
+
+获取/设置 (Getter/setter) `ps` 中显示的进程名。
+
+当设置该属性时，所能设置的字符串最大长度视具体平台而定，如果超过的话会自动截断。
+
+在 Linux 和 OS X 上，它受限于名称的字节长度加上命令行参数的长度，因为它覆写了参数内存（argv memory）。
+
+v0.8 版本允许更长的进程标题字符串，也支持覆盖环境内存，但在一些案例中这是潜在的不安全/混淆（很难说清楚）。
+
+
+<div id="pid" class="anchor"></div>
+## process.pid
+
+进程的 PID ：
+
+```
+console.log(`This process is pid ${process.pid}`);
+```
+
+
+<div id="connected" class="anchor"></div>
+## process.connected
+
+- {Boolean} 在调用 [process.disconnect()](disconnect) 后设为 false 。
+
+如果 `process.connected` 为 false，它不再能够发送信息。
+
+
+<div id="exitCode" class="anchor"></div>
+## exitCode
+
