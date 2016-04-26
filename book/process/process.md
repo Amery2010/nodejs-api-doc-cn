@@ -12,22 +12,22 @@
 
 #### 属性
 
+* [process.stdin](#stdin)
+* [process.stdout](#stdout)
+* [process.stderr](#stderr)
+* [process.pid](#pid)
 * [process.config](#config)
 * [process.env](#env)
 * [process.platform](#platform)
 * [process.arch](#arch)
 * [process.release](#release)
-* [process.mainModule](#mainModule)
 * [process.title](#title)
-* [process.pid](#pid)
 * [process.connected](#connected)
 * [process.exitCode](#exitCode)
-* [process.stdin](#stdin)
-* [process.stdout](#stdout)
-* [process.stderr](#stderr)
+* [process.mainModule](#mainModule)
+* [process.argv](#argv)
 * [process.execPath](#execPath)
 * [process.execArgv](#execArgv)
-* [process.argv](#argv)
 * [process.version](#version)
 * [process.versions](#versions)
 
@@ -199,6 +199,85 @@ console.log('This will not run.');
 `'uncaughtException'` 的正确用法是在进程关闭前执行分配资源的同步清理（如，文件描述符、处理程序等）。在 `'uncaughtException'` 事件后恢复正常操作是不安全的。
 
 
+<div id="stdin" class="anchor"></div>
+## process.stdin
+
+一个指向标准输入（`stdin` on fd `0`）的`可读（Readable）流`。
+
+打开标准输入并监听两个事件的示例：
+
+```javascript
+process.stdin.setEncoding('utf8');
+
+process.stdin.on('readable', () => {
+    var chunk = process.stdin.read();
+    if (chunk !== null) {
+        process.stdout.write(`data: ${chunk}`);
+    }
+});
+
+process.stdin.on('end', () => {
+    process.stdout.write('end');
+});
+```
+
+作为流（Stream），`process.stdin` 也可以使用兼容 Node.js v0.10 之前版本编写的脚本的“老”模式。更多信息详见[流的兼容性](../stream/under_the_hood.md#compatibility_with_older_Nodejs_versions)。
+
+在“老”的流模式中，标准输入流默认是暂停状态，所以读取时必须调用 `process.stdin.resume()`。请注意，调用 `process.stdin.resume()` 时也会将流自身转换至“老”模式。
+
+如果你开始一个新项目，你应该更喜欢最“新”的流模式而非“老”模式。
+
+
+<div id="stdout" class="anchor"></div>
+## process.stdout
+
+一个指向标准输出（`stdout` on fd `1`）的`可写（Writable）流`。
+
+例如，`console.log` 的等效写法如下：
+
+```javascript
+console.log = (msg) => {
+    process.stdout.write(`${msg}\n`);
+};
+```
+
+`process.stderr` 和 `process.stdout` 不像 Node.js 中其他的流，它们无法被关闭（`end()` 将会抛出），它们从不触发 `'finish'` 事件，并且当输出重定向到一个文件时可以阻止其写入（虽然磁盘很快并且操作系统通常采用回写式缓存，但它应该确实是一个非常罕见的情况。）。
+
+要检查 Node.js 是否运行在一个 TTY 上下文中，可以使用 `process.stderr`、`process.stdout` 或 `process.stdin` 中 `isTTY` 属性：
+
+```
+$ node -p "Boolean(process.stdin.isTTY)"
+true
+$ echo "foo" | node -p "Boolean(process.stdin.isTTY)"
+false
+
+$ node -p "Boolean(process.stdout.isTTY)"
+true
+$ node -p "Boolean(process.stdout.isTTY)" | cat
+false
+```
+
+更多信息详见[tty文档](../tty/tty.md#)。
+
+
+<div id="stderr" class="anchor"></div>
+## process.stderr
+
+一个指向标准错误（`stderr` on fd `2`）的`可写（Writable）流`。
+
+`process.stderr` 和 `process.stdout` 不像 Node.js 中其他的流，它们无法被关闭（`end()` 将会抛出），它们从不触发 `'finish'` 事件，并且当输出重定向到一个文件时可以阻止其写入（虽然磁盘很快并且操作系统通常采用回写式缓存，但它应该确实是一个非常罕见的情况。）。
+
+
+<div id="pid" class="anchor"></div>
+## process.pid
+
+进程的 PID ：
+
+```
+console.log(`This process is pid ${process.pid}`);
+```
+
+
 <div id="config" class="anchor"></div>
 ## process.config
 
@@ -343,14 +422,6 @@ console.log(`This processor architecture is ${process.arch}`);
 在从源代码树自定义构建的非发布版本中，只可能存在 `name` 属性，附加属性不应该存在。
 
 
-<div id="mainModule" class="anchor"></div>
-## process.mainModule
-
-检索 [require.main](../modules/module.md#) 的另一种方法。不同的是，如果主模块在运行时改变，`require.main` 仍然会指向发生变化之前请求的模块的原始主模块。通常可以安全地假设两个都是指向相同的模块。
-
-针对 `require.main` 而言，如果没有入口脚本，它可能会变成 `undefined`。
-
-
 <div id="title" class="anchor"></div>
 ## process.title
 
@@ -361,16 +432,6 @@ console.log(`This processor architecture is ${process.arch}`);
 在 Linux 和 OS X 上，它受限于名称的字节长度加上命令行参数的长度，因为它覆写了参数内存（argv memory）。
 
 v0.8 版本允许更长的进程标题字符串，也支持覆盖环境内存，但在一些案例中这是潜在的不安全/混淆（很难说清楚）。
-
-
-<div id="pid" class="anchor"></div>
-## process.pid
-
-进程的 PID ：
-
-```
-console.log(`This process is pid ${process.pid}`);
-```
 
 
 <div id="connected" class="anchor"></div>
@@ -384,3 +445,110 @@ console.log(`This process is pid ${process.pid}`);
 <div id="exitCode" class="anchor"></div>
 ## exitCode
 
+当进程正常退出或通过不带指定代码的 [process.exit()](#exit) 退出时，那个代表进程退出代码的数字。
+
+指定 `process.exit(code)` 的代码，将会覆盖任何先前设定的 `process.exitCode`。
+
+
+<div id="mainModule" class="anchor"></div>
+## process.mainModule
+
+检索 [require.main](../modules/module.md#) 的另一种方法。不同的是，如果主模块在运行时改变，`require.main` 仍然会指向发生变化之前请求的模块的原始主模块。通常可以安全地假设两个都是指向相同的模块。
+
+针对 `require.main` 而言，如果没有入口脚本，它可能会变成 `undefined`。
+
+
+<div id="argv" class="anchor"></div>
+## process.argv
+
+一个包含命令行参数的数组。第一个元素会是 'node'，第二个元素会是该 JavaScript 文件的名称。接下来的元素会是任何额外的命令行参数。
+
+```javascript
+// print process.argv
+process.argv.forEach((val, index, array) => {
+    console.log(`${index}: ${val}`);
+});
+```
+
+这将产生：
+
+```
+$ node process-2.js one two=three four
+0: node
+1: /Users/mjr/work/node/process-2.js
+2: one
+3: two=three
+4: four
+```
+
+
+<div id="execPath" class="anchor"></div>
+## process.execPath
+
+这是启动进程可执行文件的绝对路径。
+
+示例：
+
+```
+/usr/local/bin/node
+```
+
+
+<div id="execArgv" class="anchor"></div>
+## process.execArgv
+
+这是启动该进程的指定的 Node.js 可执行文件的命令行参数的设置。这些选项不在 `process.argv` 中显示，并且不包括 Node.js 的可执行文件，脚本名称或任何跟在脚本名称后的参数。这些参数在为了使衍生子进程和父进程有相同的执行环境时非常有用。
+
+示例：
+
+```
+$ node --harmony script.js --version
+```
+
+`process.execArgv` 的结果是：
+
+```
+['--harmony']
+```
+
+`process.argv` 的结果是：
+
+```
+['/usr/local/bin/node', 'script.js', '--version']
+```
+
+
+<div id="version" class="anchor"></div>
+## process.version
+
+一个暴露 `NODE_VERSION` 的编译时的属性。
+
+```javascript
+console.log(`Version: ${process.version}`);
+```
+
+
+<div id="versions" class="anchor"></div>
+## process.versions
+
+一个暴露 Node.js 及其依赖的版本字符串的属性。
+
+```javascript
+console.log(process.versions);
+```
+
+将打印类似于：
+
+```
+{
+    http_parser: '2.3.0',
+    node: '1.1.1',
+    v8: '4.1.0.14',
+    uv: '1.3.0',
+    zlib: '1.2.8',
+    ares: '1.10.0-DEV',
+    modules: '43',
+    icu: '55.1',
+    openssl: '1.0.1k'
+}
+```
