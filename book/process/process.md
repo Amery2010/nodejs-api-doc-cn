@@ -521,7 +521,7 @@ $ node --harmony script.js --version
 <div id="version" class="anchor"></div>
 ## process.version
 
-一个暴露 `NODE_VERSION` 的编译时的属性。
+一个暴露编译时的 `NODE_VERSION` 的属性。
 
 ```javascript
 console.log(`Version: ${process.version}`);
@@ -552,3 +552,102 @@ console.log(process.versions);
     openssl: '1.0.1k'
 }
 ```
+
+
+<div id="send" class="anchor"></div>
+## process.send(message[, sendHandle[, options]][, callback])
+
+- `message` {Object}
+
+- `sendHandle` {Handle object}
+
+- `options` {Object}
+
+- `callback` {Function}
+
+- 返回：{Boolean}
+
+当 Node.js 衍生出一个附加的 IPC 通道时，它可以使用 `process.send()` 向父进程发送信息。每个父进程上的 `ChildProcess` 对象都会收到 ['message'](../child_process/class_ChildProcess.md#event_message) 事件。
+
+注意：*该函数使用 [JSON.stringify()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) 内部序列化 `message`*。
+
+如果 Node.js 没有衍生出一个 IPC 通道，那么 `process.send()` 会是未定义的。
+
+
+<div id="nextTick" class="anchor"></div>
+## process.nextTick(callback[, arg][, ...])
+
+- `callback` {Function}
+
+一旦当前的事件循环完成了一圈的运行，就会调用该回调函数。
+
+这*不是* [setTimeout(fn, 0)](../timers/timer.md#setTimeout) 的一个简单的别名，因为它的效率高多了。在事件循环的后续时间刻度（subsequent ticks）中，它运行在任何附加的 I/O 事件（包括定时器）触发之前。
+
+```javascript
+console.log('start');
+process.nextTick(() => {
+    console.log('nextTick callback');
+});
+console.log('scheduled');
+// Output:
+// start
+// scheduled
+// nextTick callback
+```
+
+如果你想要在对象创建后，但在任何 I/O 操作发生前执行某些操作，那么这个函数对你而言就十分重要了。
+
+```javascript
+function MyThing(options) {
+    this.setupOptions(options);
+
+    process.nextTick(() => {
+        this.startDoingStuff();
+    });
+}
+
+var thing = new MyThing();
+thing.getReadyForStuff();
+
+// thing.startDoingStuff() gets called now, not before.
+```
+
+在使用该函数时，请保证你的函数一定是同步或者一定是异步执行的。请思考这个例子：
+
+```javascript
+// WARNING!  DO NOT USE!  BAD UNSAFE HAZARD!
+function maybeSync(arg, cb) {
+    if (arg) {
+        cb();
+        return;
+    }
+
+    fs.stat('file', cb);
+}
+```
+
+这样执行是很危险。如果你还不清楚上述行为的危害请看下面的例子：
+
+```javascript
+maybeSync(true, () => {
+    foo();
+});
+bar();
+```
+
+那么，使用刚才那个不知道是同步还是异步的操作，在执行时你就会发现，你无法确定到底是 `foo()` 先执行，还是 `bar()` 先执行。
+
+以下是更好的解决方案：
+
+```javascript
+function definitelyAsync(arg, cb) {
+    if (arg) {
+        process.nextTick(cb);
+        return;
+    }
+
+    fs.stat('file', cb);
+}
+```
+
+注意：nextTick 的队列会在完全执行完毕之后才会去完成其他的 I/O 操作。因此，递归设置 nextTick 的回调就像一个 `while(true);` 循环一样，将会阻止任何 I/O 操作的发生。
