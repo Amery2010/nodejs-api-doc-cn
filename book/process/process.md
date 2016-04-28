@@ -651,3 +651,14 @@ function definitelyAsync(arg, cb) {
 ```
 
 注意：nextTick 的队列会在完全执行完毕之后才会去完成其他的 I/O 操作。因此，递归设置 nextTick 的回调就像一个 `while(true);` 循环一样，将会阻止任何 I/O 操作的发生。
+
+
+<div id="disconnect" class="anchor"></div>
+## process.disconnect()
+
+关闭父进程的 IPC 通道，一旦没有进程与其保持连接状态，就会允许子进程正常退出。
+
+等同于父进程的 [ChildProcess.disconnect()](../child_process/class_ChildProcess.md#disconnect)。
+
+如果 Node.js 没有衍生出一个 IPC 通道，那么 `process.disconnect()` 会是未定义的。
+
