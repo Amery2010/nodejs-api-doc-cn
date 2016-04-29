@@ -662,3 +662,22 @@ function definitelyAsync(arg, cb) {
 
 如果 Node.js 没有衍生出一个 IPC 通道，那么 `process.disconnect()` 会是未定义的。
 
+
+<div id="exit" class="anchor"></div>
+## process.exit([code])
+
+通过指定的 `code` 结束进程。如果省略，“成功”退出时将使用代码 `0`。
+
+以失败状态（'failure' code）退出：
+
+```javascript
+process.exit(1);
+```
+
+在执行 Node.js 的 shell 中就可以看到退出代码为 1。
+
+
+<div id="abort" class="anchor"></div>
+## process.abort()
+
+这将导致 Node.js 触发一个 'abort' 事件，这会导致 Node.js 退出并且生成一个核心文件。
