@@ -39,16 +39,16 @@
 * [process.exit([code])](#exit)
 * [process.abort()](#abort)
 * [process.kill(pid[, signal])](#kill)
-* [process.setgid(id)](#setgid)
-* [process.getgid()](#getgid)
 * [process.setuid(id)](#setuid)
 * [process.getuid()](#getuid)
+* [process.setgid(id)](#setgid)
+* [process.getgid()](#getgid)
 * [process.setgroups(groups)](#setgroups)
 * [process.getgroups()](#getgroups)
-* [process.setegid(id)](#setegid)
-* [process.getegid()](#getegid)
 * [process.seteuid(id)](#seteuid)
 * [process.geteuid()](#geteuid)
+* [process.setegid(id)](#setegid)
+* [process.getegid()](#getegid)
 * [process.initgroups(user, extra_group)](#initgroups)
 * [process.uptime()](#uptime)
 * [process.hrtime()](#hrtime)
@@ -681,3 +681,109 @@ process.exit(1);
 ## process.abort()
 
 这将导致 Node.js 触发一个 'abort' 事件，这会导致 Node.js 退出并且生成一个核心文件。
+
+
+<div id="kill" class="anchor"></div>
+## process.kill(pid[, signal])
+
+向进程发送一个信号。`pid` 是进程的 id 而 `signal` 则是描述信号的字符串名称。信号名称都类似于 `SIGINT` 或 `SIGHUP`。如果省略 signal 参数，则默认为 `SIGTERM`。详见[信号事件](./signal_events.md#)和[kill(2)](http://man7.org/linux/man-pages/man2/kill.2.html)。
+
+如果目标不存在将抛出错误。作为一个特殊情况，`0` 信号可以用于测试信号是否存在。如果在 Windows 平台上的 `pid` 被用于杀死一个进程组，那么它将抛出一个错误。
+
+注意，尽管函数名叫 `process.kill`，但它实际上只是一个信号发送器，就像 `kill` 系统调用。信号的发送可能会做除了杀死目标进程以外的一些其他事情。
+
+将信号发送到自己的例子：
+
+```javascript
+process.on('SIGHUP', () => {
+    console.log('Got SIGHUP signal.');
+});
+
+setTimeout(() => {
+    console.log('Exiting.');
+    process.exit(0);
+}, 100);
+
+process.kill(process.pid, 'SIGHUP');
+```
+
+注意：当 SIGUSR1 是由 Node.js 接收时，它将开启调试器，见[信号事件](./signal_events.md#)。
+
+
+<div id="setgid" class="anchor"></div>
+## process.setuid(id)
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+设置进程用户的标识（见 [setuid(2)](http://man7.org/linux/man-pages/man2/setuid.2.html)）。它可以接收数字 ID 或一个用户名的字符串。如果指定了用户名，该方法会阻塞运行直到将它解析为一个数字 ID 为止。
+
+```javascript
+if (process.getuid && process.setuid) {
+    console.log(`Current uid: ${process.getuid()}`);
+    try {
+        process.setuid(501);
+        console.log(`New uid: ${process.getuid()}`);
+    } catch (err) {
+        console.log(`Failed to set uid: ${err}`);
+    }
+}
+```
+
+<div id="getuid" class="anchor"></div>
+## process.getuid()
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+获取进程用户标识（见 [getuid(2)](http://man7.org/linux/man-pages/man2/getuid.2.html)）。这是数字的用户 id，而非用户名。
+
+
+<div id="setgid" class="anchor"></div>
+## process.setgid(id)
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+设置进程组标识（见 [setgid(2)](http://man7.org/linux/man-pages/man2/setgid.2.html)）。它可以接收数字 ID 或一个组名称的字符串。如果指定了组名称，该方法会阻塞运行直到将它解析为一个数字 ID 为止。
+
+```javascript
+if (process.getgid && process.setgid) {
+    console.log(`Current gid: ${process.getgid()}`);
+    try {
+        process.setgid(501);
+        console.log(`New gid: ${process.getgid()}`);
+    } catch (err) {
+        console.log(`Failed to set gid: ${err}`);
+    }
+}
+```
+
+
+<div id="getgid" class="anchor"></div>
+## process.getgid()
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+获取进程组标识（见 [getgid(2)](http://man7.org/linux/man-pages/man2/getgid.2.html)）。这是数字的组 id，而非组名称。
+
+```javascript
+if (process.getgid) {
+    console.log(`Current gid: ${process.getgid()}`);
+}
+```
+
+
+<div id="setgroups" class="anchor"></div>
+## process.setgroups(groups)
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+设置补充群组的 ID。这是一个特权操作，意味着你需要 root 权限或拥有 `CAP_SETGID` 能力。
+
+该列表参数可以包含组 ID、组名称或者混在一起。
+
+
+<div id="getgroups" class="anchor"></div>
+## process.getgroups()
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+返回补充群组的 ID 数组。如果有效的组 ID 在 POSIX 上未指定，但在 Node.js 中会确保它永远都是包含在内的。（POSIX leaves it unspecified if the effective group ID is included but Node.js ensures it always is. 对于该原文的翻译，翻译君已阵亡...）
