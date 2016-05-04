@@ -39,23 +39,23 @@
 * [process.exit([code])](#exit)
 * [process.abort()](#abort)
 * [process.kill(pid[, signal])](#kill)
+* [process.cwd()](#cwd)
+* [process.chdir(directory)](#chdir)
+* [process.memoryUsage()](#memoryUsage)
+* [process.umask([mask])](#umask)
+* [process.uptime()](#uptime)
+* [process.hrtime()](#hrtime)
 * [process.setuid(id)](#setuid)
 * [process.getuid()](#getuid)
 * [process.setgid(id)](#setgid)
 * [process.getgid()](#getgid)
-* [process.setgroups(groups)](#setgroups)
-* [process.getgroups()](#getgroups)
 * [process.seteuid(id)](#seteuid)
 * [process.geteuid()](#geteuid)
 * [process.setegid(id)](#setegid)
 * [process.getegid()](#getegid)
+* [process.setgroups(groups)](#setgroups)
+* [process.getgroups()](#getgroups)
 * [process.initgroups(user, extra_group)](#initgroups)
-* [process.uptime()](#uptime)
-* [process.hrtime()](#hrtime)
-* [process.memoryUsage()](#memoryUsage)
-* [process.umask([mask])](#umask)
-* [process.cwd()](#cwd)
-* [process.chdir(directory)](#chdir)
 
 --------------------------------------------------
 
@@ -710,12 +710,103 @@ process.kill(process.pid, 'SIGHUP');
 注意：当 SIGUSR1 是由 Node.js 接收时，它将开启调试器，见[信号事件](./signal_events.md#)。
 
 
+<div id="cwd" class="anchor"></div>
+## process.cwd()
+
+返回进程的当前工作目录。
+
+```javascript
+console.log(`Current directory: ${process.cwd()}`);
+```
+
+
+<div id="chdir" class="anchor"></div>
+## process.chdir(directory)
+
+改变进程的当前工作目录，如果操作失败，则抛出一个异常。
+
+```javascript
+console.log(`Starting directory: ${process.cwd()}`);
+try {
+    process.chdir('/tmp');
+    console.log(`New directory: ${process.cwd()}`);
+} catch (err) {
+    console.log(`chdir: ${err}`);
+}
+```
+
+
+<div id="uptime" class="anchor"></div>
+## process.uptime()
+
+返回 Node.js 运行的秒数。
+
+
+<div id="hrtime" class="anchor"></div>
+## process.hrtime()
+
+以 `[seconds, nanoseconds]` 元组数组的形式返回当前的高精度真实时间。它相对于过去的任意时间。该值与日期无关，因此不受时钟漂移的影响。主要用途是可以通过精确的时间间隔，来衡量程序的性能。
+
+你可以通过之前调用的 `process.hrtime()` 的结果和当前的 `process.hrtime()` 来获取一个差异读数，这对于基准和衡量时间间隔非常有用：
+
+```javascript
+var time = process.hrtime();
+// [ 1800216, 25 ]
+
+setTimeout(() => {
+    var diff = process.hrtime(time);
+    // [ 1, 552 ]
+
+    console.log('benchmark took %d nanoseconds', diff[0] * 1e9 + diff[1]);
+    // benchmark took 1000000527 nanoseconds
+}, 1000);
+```
+
+
+<div id="memoryUsage" class="anchor"></div>
+## process.memoryUsage()
+
+返回一个描述 Node.js 进程的内存使用量的对象，以字节（bytes）为单位。
+
+```javascript
+const util = require('util');
+
+console.log(util.inspect(process.memoryUsage()));
+```
+
+这会产生：
+
+```javascript
+{
+    rss: 4935680,
+    heapTotal: 1826816,
+    heapUsed: 650472
+}
+```
+
+`heapTotal` 和 `heapUsed` 引用 V8 引擎的内存使用量。
+
+
+<div id="umask" class="anchor"></div>
+## process.umask([mask])
+
+设置或读取进程的文件模式的创建掩码。子进程从父进程中继承掩码。如果设定了 `mask` 参数，则返回旧的掩码，否则返回当前的掩码。
+
+```javascript
+const newmask = 0o022;
+const oldmask = process.umask(newmask);
+console.log(
+    `Changed umask from ${oldmask.toString(8)} to ${newmask.toString(8)}`
+);
+```
+
+
 <div id="setgid" class="anchor"></div>
 ## process.setuid(id)
 
 注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
 
-设置进程用户的标识（见 [setuid(2)](http://man7.org/linux/man-pages/man2/setuid.2.html)）。它可以接收数字 ID 或一个用户名的字符串。如果指定了用户名，该方法会阻塞运行直到将它解析为一个数字 ID 为止。
+设置进程用户的标识（见 [setuid(2)](http://man7.org/linux/man-pages/man2/setuid.2.html)）。它可以接收数字 ID 或一个用户名字符串。如果指定了用户名，该方法会阻塞运行直到将它解析为一个数字 ID 为止。
 
 ```javascript
 if (process.getuid && process.setuid) {
@@ -771,12 +862,80 @@ if (process.getgid) {
 ```
 
 
+<div id="seteuid" class="anchor"></div>
+## process.seteuid(id)
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+设置有效的进程用户的标识（见 [seteuid(2)](http://man7.org/linux/man-pages/man2/seteuid.2.html)）。它可以接收数字 ID 或一个用户名字符串。如果指定了用户名，该方法会阻塞运行直到将它解析为一个数字 ID 为止。
+
+```javascript
+if (process.geteuid && process.seteuid) {
+    console.log(`Current uid: ${process.geteuid()}`);
+    try {
+        process.seteuid(501);
+        console.log(`New uid: ${process.geteuid()}`);
+    } catch (err) {
+        console.log(`Failed to set uid: ${err}`);
+    }
+}
+```
+
+
+<div id="geteuid" class="anchor"></div>
+## process.geteuid()
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+获取有效的进程用户标识（见 [geteuid(2)](http://man7.org/linux/man-pages/man2/geteuid.2.html)）。这是数字的用户 id，而非用户名。
+
+```javascript
+if (process.geteuid) {
+    console.log(`Current uid: ${process.geteuid()}`);
+}
+```
+
+
+<div id="setegid" class="anchor"></div>
+## process.setegid(id)
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+设置有效的进程组标识（见 [setegid(2)](http://man7.org/linux/man-pages/man2/setegid.2.html)）。它可以接收数字 ID 或一个组名称的字符串。如果指定了组名称，该方法会阻塞运行直到将它解析为一个数字 ID 为止。
+
+```javascript
+if (process.getegid && process.setegid) {
+    console.log(`Current gid: ${process.getegid()}`);
+    try {
+        process.setegid(501);
+        console.log(`New gid: ${process.getegid()}`);
+    } catch (err) {
+        console.log(`Failed to set gid: ${err}`);
+    }
+}
+```
+
+
+<div id="getegid" class="anchor"></div>
+## process.getegid()
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+获取有效的进程组标识（见 [getegid(2)](http://man7.org/linux/man-pages/man2/getegid.2.html)）。这是数字的组 id，而非组名称。
+
+```javascript
+if (process.getegid) {
+    console.log(`Current gid: ${process.getegid()}`);
+}
+```
+
+
 <div id="setgroups" class="anchor"></div>
 ## process.setgroups(groups)
 
 注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
 
-设置补充群组的 ID。这是一个特权操作，意味着你需要 root 权限或拥有 `CAP_SETGID` 能力。
+设置补充群组的 ID。这是一个特权操作，意味着你需要使用 root 账户或拥有 `CAP_SETGID` 能力。
 
 该列表参数可以包含组 ID、组名称或者混在一起。
 
@@ -786,4 +945,24 @@ if (process.getgid) {
 
 注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
 
-返回补充群组的 ID 数组。如果有效的组 ID 在 POSIX 上未指定，但在 Node.js 中会确保它永远都是包含在内的。（POSIX leaves it unspecified if the effective group ID is included but Node.js ensures it always is. 对于该原文的翻译，翻译君已阵亡...）
+返回补充群组的 ID 数组。如果有效的组 ID 在 POSIX 上未指定，但在 Node.js 中会确保它永远都是包含在内的。（POSIX leaves it unspecified if the effective group ID is included but Node.js ensures it always is. [翻译君](https://github.com/Amery2010)表示已阵亡...）
+
+
+<div id="initgroups" class="anchor"></div>
+## process.initgroups(user, extra_group)
+
+注意：该函数仅在 POSIX 平台（如，非 Windows 和 Android）上有效。
+
+读取 /etc/group 并通过该用户所在的所有分组初始化组（group）访问列表。这是一个特权操作，意味着你需要使用 root 账户或拥有 `CAP_SETGID` 能力。
+
+`user` 是一个用户名或用户 ID。`extra_group` 是一个群组名称或群组 ID。
+
+当你在注销权限时有时需要注意。例如：
+
+```javascript
+console.log(process.getgroups());         // [ 0 ]
+process.initgroups('bnoordhuis', 1000);   // switch user
+console.log(process.getgroups());         // [ 27, 30, 46, 1000, 0 ]
+process.setgid(1000);                     // drop root gid
+console.log(process.getgroups());         // [ 27, 30, 46, 1000 ]
+```

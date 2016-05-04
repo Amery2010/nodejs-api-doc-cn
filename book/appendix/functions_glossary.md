@@ -308,6 +308,88 @@
 
 [punycode.toASCII(domain)](../punycode/punycode.md#toASCII)
 
+[process.stdin](../process/process.md#stdin)
+
+[process.stdout](../process/process.md#stdout)
+
+[process.stderr](../process/process.md#stderr)
+
+[process.pid](../process/process.md#pid)
+
+[process.config](../process/process.md#config)
+
+[process.env](../process/process.md#env)
+
+[process.platform](../process/process.md#platform)
+
+[process.arch](../process/process.md#arch)
+
+[process.release](../process/process.md#release)
+
+[process.title](../process/process.md#title)
+
+[process.connected](../process/process.md#connected)
+
+[process.exitCode](../process/process.md#exitCode)
+
+[process.mainModule](../process/process.md#mainModule)
+
+[process.argv](../process/process.md#argv)
+
+[process.execPath](../process/process.md#execPath)
+
+[process.execArgv](../process/process.md#execArgv)
+
+[process.version](../process/process.md#version)
+
+[process.versions](../process/process.md#versions)
+
+[process.send(message[, sendHandle[, options]][, callback])](../process/process.md#send)
+
+[process.nextTick(callback[, arg][, ...])](../process/process.md#nextTick)
+
+[process.disconnect()](../process/process.md#disconnect)
+
+[process.exit([code])](../process/process.md#exit)
+
+[process.abort()](../process/process.md#abort)
+
+[process.kill(pid[, signal])](../process/process.md#kill)
+
+[process.cwd()](../process/process.md#cwd)
+
+[process.chdir(directory)](../process/process.md#chdir)
+
+[process.memoryUsage()](../process/process.md#memoryUsage)
+
+[process.umask([mask])](../process/process.md#umask)
+
+[process.uptime()](../process/process.md#uptime)
+
+[process.hrtime()](../process/process.md#hrtime)
+
+[process.setuid(id)](../process/process.md#setuid)
+
+[process.getuid()](../process/process.md#getuid)
+
+[process.setgid(id)](../process/process.md#setgid)
+
+[process.getgid()](../process/process.md#getgid)
+
+[process.seteuid(id)](../process/process.md#seteuid)
+
+[process.geteuid()](../process/process.md#geteuid)
+
+[process.setegid(id)](../process/process.md#setegid)
+
+[process.getegid()](../process/process.md#getegid)
+
+[process.setgroups(groups)](../process/process.md#setgroups)
+
+[process.getgroups()](../process/process.md#getgroups)
+
+[process.initgroups(user, extra_group)](../process/process.md#initgroups)
+
 ### Q
 
 ### R
