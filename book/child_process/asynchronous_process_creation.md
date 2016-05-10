@@ -258,4 +258,32 @@ child.on('error', (err) => {
 
 1. `'pipe'` - 创建一个子进程和父进程之间的管道。在管道的父端以 `ChildProcess.stdio[fd]` 的形式将父进程作为 `child_process` 对象上的一个属性暴露给外界。为 fd 创建的管道 0-2 分别替换为 `ChildProcess.stdin`、 `ChildProcess.stdout` 和 `ChildProcess.stderr` 也同样有效。
 
-2. `'ipc'` 创建一个父进程和子进程之间的 IPC 通道用以传递消息和文件描述符。一个 Child_Process 可能最多只能有*一个* IPC 标准输入输出文件描述符。设置该选项可启用 `ChildProcess.send()` 方法。
+2. `'ipc'` - 创建一个父进程和子进程之间的 IPC 通道用以传递消息和文件描述符。一个 Child_Process 可能最多只能有*一个* IPC 标准输入输出文件描述符。设置该选项可启用 `ChildProcess.send()` 方法。如果子进程写了 JSON 信息到此文件描述符，`ChildProcess.on('message')` 事件处理器会被父进程触发。如果子进程是一个 Node.js 进程，一个已存在的 IPC 通道将可以在子进程中使用 `process.send()`、 `process.disconnect()`、 `process.on('disconnect')` 和 `process.on('message')`。
+
+3. `'ignore'` - 指示 Node.js 在子进程中忽略 fd 。由于 Node.js 总是会为它衍生的进程打开 fds 0-2 ，将  fd 设置为 `'ignore'` 会引起 Node.js 打开 `/dev/null` 并将它附加到子进程的 fd 上。
+
+4. `Stream` 对象 - 共享一个指向子进程的 tty、文件、socket 或管道的可读或可写流。流的底层文件描述符在子进程中重复着到对应该 `stdio` 数组的索引的 fd 。需要注意的是，该流必须要有一个底层描述符（文件流在发生 `'open'` 事件前不需要）。
+
+5. 正整数 - 整数值被解释为正在父进程中打开的文件描述符。它和子进程共享，类似于 `Stream` 是如何被共享的。
+
+6. `null`、`undefined` - 使用默认值。对于 stdio fds 0、1 和 2 （换句话说，stdin、stdout 和 stderr）而言是创建了一个管道。对于 fd 3 及以上而言，它的默认值为 `'ignore'`。
+
+例子：
+
+```javascript
+const spawn = require('child_process').spawn;
+
+// Child will use parent's stdios
+spawn('prg', [], { stdio: 'inherit' });
+
+// Spawn child sharing only stderr
+spawn('prg', [], { stdio: ['pipe', 'pipe', process.stderr] });
+
+// Open an extra fd=4, to interact with programs presenting a
+// startd-style interface.
+spawn('prg', [], { stdio: ['pipe', null, null, null, 'pipe'] });
+```
+
+*值得注意的是，当在父进程和子进程之间建立了一个 IPC 信道，并且子进程是一个 Node.js 进程，子进程的启动未引用（使用 `unref()`）该 IPC 通道，直到子进程为 `process.on('disconnected')` 事件注册了一个事件处理器。这运行子进程在没有进程的情况下正常退出通过开放的 IPC 通道保持开放状态。*
+
+也可以看看：[child_process.exec()](#exec) 和 [child_process.fork()](#fork) 。
