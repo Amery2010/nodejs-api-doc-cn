@@ -258,7 +258,7 @@ child.on('error', (err) => {
 
 1. `'pipe'` - 创建一个子进程和父进程之间的管道。在管道的父端以 `ChildProcess.stdio[fd]` 的形式将父进程作为 `child_process` 对象上的一个属性暴露给外界。为 fd 创建的管道 0-2 分别替换为 `ChildProcess.stdin`、 `ChildProcess.stdout` 和 `ChildProcess.stderr` 也同样有效。
 
-2. `'ipc'` - 创建一个父进程和子进程之间的 IPC 通道用以传递消息和文件描述符。一个 Child_Process 可能最多只能有*一个* IPC 标准输入输出文件描述符。设置该选项可启用 `ChildProcess.send()` 方法。如果子进程写了 JSON 信息到此文件描述符，`ChildProcess.on('message')` 事件处理器会被父进程触发。如果子进程是一个 Node.js 进程，一个已存在的 IPC 通道将可以在子进程中使用 `process.send()`、 `process.disconnect()`、 `process.on('disconnect')` 和 `process.on('message')`。
+2. `'ipc'` - 创建一个父进程和子进程之间的 IPC 信道用以传递消息和文件描述符。一个 Child_Process 可能最多只能有*一个* IPC 标准输入输出文件描述符。设置该选项可启用 `ChildProcess.send()` 方法。如果子进程写了 JSON 信息到此文件描述符，`ChildProcess.on('message')` 事件处理器会被父进程触发。如果子进程是一个 Node.js 进程，一个已存在的 IPC 信道将可以在子进程中使用 `process.send()`、 `process.disconnect()`、 `process.on('disconnect')` 和 `process.on('message')`。
 
 3. `'ignore'` - 指示 Node.js 在子进程中忽略 fd 。由于 Node.js 总是会为它衍生的进程打开 fds 0-2 ，将  fd 设置为 `'ignore'` 会引起 Node.js 打开 `/dev/null` 并将它附加到子进程的 fd 上。
 
@@ -284,6 +284,47 @@ spawn('prg', [], { stdio: ['pipe', 'pipe', process.stderr] });
 spawn('prg', [], { stdio: ['pipe', null, null, null, 'pipe'] });
 ```
 
-*值得注意的是，当在父进程和子进程之间建立了一个 IPC 信道，并且子进程是一个 Node.js 进程，子进程的启动未引用（使用 `unref()`）该 IPC 通道，直到子进程为 `process.on('disconnected')` 事件注册了一个事件处理器。这运行子进程在没有进程的情况下正常退出通过开放的 IPC 通道保持开放状态。*
+*值得注意的是，当在父进程和子进程之间建立了一个 IPC 信道，并且子进程是一个 Node.js 进程，子进程的启动未引用（使用 `unref()`）该 IPC 信道，直到子进程为 `process.on('disconnected')` 事件注册了一个事件处理器。这运行子进程在没有进程的情况下正常退出通过开放的 IPC 信道保持开放状态。*
 
 也可以看看：[child_process.exec()](#exec) 和 [child_process.fork()](#fork) 。
+
+
+<div id="detached" class="anchor"></div>
+#### options.detached
+
+在 Windows 上，将 `options.detached` 设置为 `true`，使得子进程在父进程退出后继续运行成为可能。子进程将拥有自己的控制台窗口。*一旦启用一个子进程，它将不能被禁用。*
+
+在非 Windows 平台上，如果将 `options.detached` 设置为 `true`，那么子进程将成为新的进程组和会话的领导者。请注意，子进程在父进程退出后可以继续运行，不管它们是否被分离。更多信息详见 `setsid(2)`。
+
+默认情况下，父进程会等子进程被分离后才退出。为了防止父进程等待给定的 `child`，请使用 `child.unref()` 方法。这样做会导致父进程的事件循环不包括子进程的引用计数，这将允许父进程独立子进程退出，除非子进程和父进程之间建立了一个 IPC 信道。
+
+当使用 `detached` 选项来启动一个长期运行的进程时，该进程不会在父进程退出后保持后台运行状态，除非它提供了一个不连接到父进程的 `stdio` 配置。如果该父进程的 `stdio` 被继承时，子进程会保持连接到控制终端。
+
+一个长期运行的进程的例子，为了无视父母的终止，通过分离并且同时忽略其父进程的 `stdio` 文件描述符来实现：
+
+```javascript
+const spawn = require('child_process').spawn;
+
+const child = spawn(process.argv[0], ['child_program.js'], {
+    detached: true,
+    stdio: ['ignore']
+});
+
+child.unref();
+```
+
+另外，你可以将子进程的输出重定向到文件：
+
+```javascript
+const fs = require('fs');
+const spawn = require('child_process').spawn;
+const out = fs.openSync('./out.log', 'a');
+const err = fs.openSync('./out.log', 'a');
+
+const child = spawn('prg', [], {
+    detached: true,
+    stdio: ['ignore', out, err]
+});
+
+child.unref();
+```
