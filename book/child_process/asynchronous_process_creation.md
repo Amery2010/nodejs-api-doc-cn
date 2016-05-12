@@ -328,3 +328,39 @@ const child = spawn('prg', [], {
 
 child.unref();
 ```
+
+
+<div id="fork" class="anchor"></div>
+## child_process.fork(modulePath[, args][, options])
+
+- `modulePath` {String} 在子进程中运行的模块
+
+- `args` {Array} 字符串参数列表
+
++ `options` {Object}
+
+  - `cwd` {String} 子进程的当前工作目录
+  
+  - `env` {Object} 环境变量键值对
+  
+  - `execPath` {String} 用来创建子进程的可执行文件
+  
+  - `execArgv` {Array} 传递给可执行文件的字符串参数列表（默认：`process.execArgv`）
+  
+  - `silent` {Boolean} 如果为 `true`，子进程中的 stdin、 stdout 和 stderr 会被导流到父进程中，否则它们会继承自父进程，详见 [child_process.spawn()](#spawn) 的 [stdio](#stdio) 中的 `'pipe'` 和 `'inherit'` 选项了解更多信息（默认是 `false`）
+  
+  - `uid` {Number} 设置该进程的用户标识。（详见 [setuid(2)](http://man7.org/linux/man-pages/man2/setuid.2.html)）
+  
+  - `gid` {Number} 设置该进程的组标识。（详见 [setgid(2)](http://man7.org/linux/man-pages/man2/setgid.2.html)）
+  
+- 返回：{ChildProcess}
+
+`child_process.fork()` 方法是 [child_process.spawn()](#spawn) 的一种特殊情况，它被专门用于衍生新的 Node.js 进程。像 `child_process.spawn()` 一样，返回一个 `ChildProcess` 对象。返回的 `ChildProcess` 会有一个额外的内置的通信通道，它允许消息在父进程和子进程之间来回传递。查看 [ChildProcess#send()](./class_ChildProcess.md#send) 了解跟多细节。
+
+牢记衍生的 Node.js 子进程与两者之间建立的 IPC 通信信道的异常是独立于父进程的，这一点非常重要。每个进程都有它自己的进程，使用自己的 V8 实例。由于需要额外的资源分配，因此不推荐衍生一大批 Node.js 子进程。
+
+默认情况下，`child_process.fork() ` 会使用父进程中的 `process.execPath` 衍生新的 Node.js 实例。在 `options` 对象中的 `execPath` 属性允许替代要使用的执行路径。
+
+Node.js 进程使用自定义的 `execPath` 启动会使用子进程的环境变量 `NODE_CHANNEL_FD` 中确定的文件描述符（fd）与父进程通信。 fd 上的输入和输出预计被分割成一行一行的 JSON 对象。
+
+注意，不像 POSIX 系统回调中的 `fork()`，[child_process.fork()](#fork) 不会克隆当前进程。
