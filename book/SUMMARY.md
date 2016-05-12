@@ -80,7 +80,7 @@
 * [进程(Process)](process/README.md)
   - [方法和属性](process/process.md)
   - [信号事件](process/signal_events.md)
-  - [退出代码(Exit Codes)](process/exit_codes.md)
+  - [退出码](process/exit_codes.md)
 
 * [子进程(Child Processes)](child_process/README.md)
   - [ChildProcess类](child_process/class_ChildProcess.md)

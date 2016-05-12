@@ -369,7 +369,7 @@ Node.js 进程使用自定义的 `execPath` 启动会使用子进程的环境变
 <div id="spawning_bat_and_cmd_files_on_windows" class="anchor"></div>
 ## 在 Windows 上衍生 .bat 和 .cmd 文件
 
-`child_process.exec()` 和 `child_process.execFile()` 之间最重要的区别是可以基于平台。在类 Unix 的操作平台（Unix、 Linux、 OSX）上，`child_process.execFile()` 更有效，因为它不需要衍生一个 shell。在 Windows 上，尽管 `.bat` 和 `.cmd` 文件在没有终端的情况下，它们自己不可自执行，因此不能使用 `child_process.execFile()` 启动。当在 Windows 下运行时，`.bat` 和 `.cmd` 文件可以被调用通过使用设置的 shell 选项的 `child_process.spawn()`，`child_process.exec()` 或通过将 `.bat` 和 `.cmd` 文件作为一个参数传给 `cmd.exe` 进行衍生（`shell` 选项和 `child_process.exec()` 所做的工作）。
+`child_process.exec()` 和 `child_process.execFile()` 之间最重要的区别是可以基于平台。在类 Unix 的操作平台（Unix、 Linux、 OSX）上，`child_process.execFile()` 更有效，因为它不需要衍生一个 shell。在 Windows 上，尽管 `.bat` 和 `.cmd` 文件在没有终端的情况下，它们自己不可自执行，因此不能使用 `child_process.execFile()` 启动。当在 Windows 下运行时，通过使用设置的 shell 选项的 `child_process.spawn()`，`child_process.exec()` 或通过将 `.bat` 和 `.cmd` 文件作为一个参数传给 `cmd.exe` 进行衍生（`shell` 选项和 `child_process.exec()` 所做的工作），这些操作可以调用 `.bat` 和 `.cmd` 文件。
 
 ```javascript
 // On Windows Only ...
