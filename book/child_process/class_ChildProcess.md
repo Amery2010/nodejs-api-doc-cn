@@ -178,3 +178,62 @@ assert.equal(child.stdio[2], child.stderr);
 如果衍生的子进程的 `stdio[2]` 设置任何不是 `'pipe'` 的值，那么这会是 `undefined`。
 
 `child.stderr` 是 `child.stdio[2]` 的一个别名。这两个属性都会指向相同的值。
+
+
+<div id="send" class="anchor"></div>
+## child.send(message[, sendHandle[, options]][, callback])
+
+- `message` {Object}
+
+- `sendHandle` {Handle}
+
+- `options` {Object}
+
+- `callback` {Function}
+
+- 返回：{Boolean}
+
+当在父进程和子进程之间建立了一个 IPC 通道时（例如，当使用 [child_process.fork()](./asynchronous_process_creation.md#fork) 时），该 `child.send()` 方法可以用于将消息发送到子进程。当该进程是一个 Node.js 实例时，该信息可以通过 `process.on('message')` 事件接收到。
+
+例如，在父脚本：
+
+```javascript
+const cp = require('child_process');
+const n = cp.fork(`${__dirname}/sub.js`);
+
+n.on('message', (m) => {
+    console.log('PARENT got message:', m);
+});
+
+n.send({
+    hello: 'world'
+});
+```
+
+然后是子进程脚本，`'sub.js'` 可能看上去像这样：
+
+```javascript
+process.on('message', (m) => {
+    console.log('CHILD got message:', m);
+});
+
+process.send({
+    foo: 'bar'
+});
+```
+
+Node.js 中的子进程有自己的一个 `process.send()` 方法，该方法允许子进程将信息发送回父进程。
+
+当发送的是 `{cmd: 'NODE_foo'}` 消息时，则是一个特例。所有在 `cmd` 属性里包含前缀为 `NODE_` 的属性被认为是预留给 Node.js 核心代码内部使用的，并且不会触发子进程的 `process.on('message')` 事件。相反，这种消息被用于触发 `process.on('internalMessage')` 事件，并且被 Node.js 内部消费。应用程序应避免使用这样的消息或监听 `'internalMessage'` 事件作为不通知该变化的依据。
+
+可选的 `sendHandle` 参数可能被传给 `child.send()`，它是用于将一个 TCP 服务器或 socket 对象传给子进程。子进程会将收到的这个对象作为第二个参数传给注册在 `process.on('message')` 事件上的回调函数。
+
+该 `options` 参数，如果存在的话，是用于发送某些类型的处理程序的参数对象。`options` 支持以下属性：
+
+* `keepOpen` - 当传 `net.Socket` 时的一个可使用的 Boolean 值。当它为 `true` 时，socket 在发送进程中保持开启状态。默认为 `false`。
+
+可选的 `callback` 是一个函数，它在信息发送后，但在子进程可能收到信息之前被调用。该函数被调用后只有一个参数：成功时是 `null`，或在失败时是一个 [Error](../errors/class_Error.md#) 对象。
+
+如果没有提供 `callback` 函数，并且信息没被发送，一个 `'error'` 事件将被 `ChildProcess` 对象触发。这是有可能发生的，例如，当子进程已经退出时。
+
+如果该通道已关闭或当未发送的信息积压超过阈值，使得它无法发送更多时，`child.send()` 将会返回 `false`。除此以外，该方法返回 `true`。该 `callback` 函数可用于实现流量控制。
