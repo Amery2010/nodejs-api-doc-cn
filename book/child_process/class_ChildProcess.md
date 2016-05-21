@@ -237,3 +237,133 @@ Node.js 中的子进程有自己的一个 `process.send()` 方法，该方法允
 如果没有提供 `callback` 函数，并且信息没被发送，一个 `'error'` 事件将被 `ChildProcess` 对象触发。这是有可能发生的，例如，当子进程已经退出时。
 
 如果该通道已关闭或当未发送的信息积压超过阈值，使得它无法发送更多时，`child.send()` 将会返回 `false`。除此以外，该方法返回 `true`。该 `callback` 函数可用于实现流量控制。
+
+
+<div id="sending_a_server_object" class="anchor"></div>
+#### 例子：发送服务器对象
+
+例如，`sendHandle` 参数可以用于将一个 TCP 服务器的处理程序传递给子进程，如下所示：
+
+```javascript
+const child = require('child_process').fork('child.js');
+
+// Open up the server object and send the handle.
+const server = require('net').createServer();
+server.on('connection', (socket) => {
+    socket.end('handled by parent');
+});
+server.listen(1337, () => {
+    child.send('server', server);
+});
+```
+
+那么子进程将会得到该服务器对象：
+
+```javascript
+process.on('message', (m, server) => {
+    if (m === 'server') {
+        server.on('connection', (socket) => {
+            socket.end('handled by child');
+        });
+    }
+});
+```
+
+一旦服务器现在是在父进程和子进程之间共享，那么一些连接可以由父进程处理，一些可以由子进程来处理。
+
+虽然上面的例子使用了 `net` 模块创建了一个服务器，使用 `dgram` 模块创建的服务器使用完全相同的工作流程，不同的是它监听一个 `'message'` 事件而不是 `'connection'` 事件并使用 `server.bind` 替代 `server.listen`。但是，目前仅 UNIX 平台支持这一点。
+
+
+<div id="sending_a_socket_object" class="anchor"></div>
+#### 例子：发送 socket 对象
+
+同样，`sendHandle` 参数可以用于将一个 socket 处理程序传递给子进程。以下的例子衍生了两个子进程分别用于处理 "normal" 连接或优先处理 "special" 连接：
+
+```javascript
+const normal = require('child_process').fork('child.js', ['normal']);
+const special = require('child_process').fork('child.js', ['special']);
+
+// Open up the server and send sockets to child
+const server = require('net').createServer();
+server.on('connection', (socket) => {
+
+    // If this is special priority
+    if (socket.remoteAddress === '74.125.127.100') {
+        special.send('socket', socket);
+        return;
+    }
+    // This is normal priority
+    normal.send('socket', socket);
+});
+server.listen(1337);
+```
+
+该 `child.js` 会收到一个 socket 处理器作为第二个参数传递给事件回调函数：
+
+```javascript
+process.on('message', (m, socket) => {
+    if (m === 'socket') {
+        socket.end(`Request handled with ${process.argv[2]} priority`);
+    }
+});
+```
+
+一旦一个 socket 被传递给了子进程，父进程不再能够跟踪套接字何时被销毁。为了说明这一点，`.connections` 属性会变成 `null`。当发生这种情况时，建议不要使用 `.maxConnections`。
+
+*注意，该函数内部使用 [JSON.stringify()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) 序列化 `message`。*
+
+
+<div id="disconnect" class="anchor"></div>
+## child.disconnect()
+
+关闭父进程与子进程之间的 IPC 通道，一旦没有其他的连接使保持它活着，将允许子进程正常退出。在调用该方法后，分别在父进程和子进程上的 `child.connected` 和 `process.connected` 属性都会被设置为 `false`，并且它将不再能够在进程之间传递消息。
+
+当正在接收的进程中没有消息时，将会触发 `'disconnect'` 事件。这经常在调用 `child.disconnect()` 后立即被触发。
+
+请注意，当子进程是一个 Node.js 实例（例如，使用 [child_process.fork()](./asynchronous_process_creation.md#fork) 衍生）时，最好在子进程内部调用 `process.disconnect()` 方法来关闭 IPC 通道。
+
+
+<div id="kill" class="anchor"></div>
+## child.kill([signal])
+
+- `signal` {String}
+
+`child.kill()` 方法向子进程发送一个信号。如果没有给定参数，该进程将会发送 `'SIGTERM'` 信号。可以在 `signal(7)` 中查阅可用的信号列表。
+
+```javascript
+const spawn = require('child_process').spawn;
+const grep = spawn('grep', ['ssh']);
+
+grep.on('close', (code, signal) => {
+    console.log(`child process terminated due to receipt of signal ${signal}`);
+});
+
+// Send SIGHUP to process
+grep.kill('SIGHUP');
+```
+
+如果信号没有被送达，`ChildProcess` 对象可能会触发一个 `'error'` 事件。向一个已经退出的进程发送一个信号不是一个错误，但可能有无法预知的后果。特别是如果该进程的 id 已经被其他程序注册时，信号会被发送到该进程，反而它可能会有意想不到的结果。
+
+请注意，当函数被调用 `kill` 时，发送到子进程处理的信号实际上可能没有终止该进程。
+
+见 `kill(2)`，以供参考。
+
+还要注意：当试图杀死他们的父进程时，子进程的子进程不会被终止。这可能发生在当在一个 shell 中运行一个新进程时或使用 `ChildProcess` 中的 `shell` 选项时，如本示例所示：
+
+```javascript
+'use strict';
+const spawn = require('child_process').spawn;
+
+let child = spawn('sh', ['-c',
+  `node -e "setInterval(() => {
+      console.log(process.pid + 'is alive')
+    }, 500);"`
+  ], {
+    stdio: ['inherit', 'inherit', 'inherit']
+});
+
+setTimeout(() => {
+    child.kill(); // does not terminate the node process in the shell
+}, 2000);
+```
+
