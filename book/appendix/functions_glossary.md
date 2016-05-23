@@ -170,6 +170,40 @@
 
 [clearImmediate(immediateObject)](../timers/timer.md#clearImmediate)
 
+[child_process.exec(command[, options][, callback])](../child_process/asynchronous_process_creation.md#exec)
+
+[child_process.execFile(file[, args][, options][, callback])](../child_process/asynchronous_process_creation.md#execFile)
+
+[child_process.spawn(command[, args][, options])](../child_process/asynchronous_process_creation.md#spawn)
+
+[child_process.fork(modulePath[, args][, options])](../child_process/asynchronous_process_creation.md#fork)
+
+[child_process.execSync(command[, options])](../child_process/synchronous_process_creation.md#execSync)
+
+[child_process.execFileSync(file[, args][, options])](../child_process/synchronous_process_creation.md#execFileSync)
+
+[child_process.spawnSync(command[, args][, options])](../child_process/synchronous_process_creation.md#spawnSync)
+
+[ChildProcess类](../child_process/class_ChildProcess.md#)
+
+[child.pid](../child_process/class_ChildProcess.md#pid)
+
+[child.connected](../child_process/class_ChildProcess.md#connected)
+
+[child.stdio](../child_process/class_ChildProcess.md#stdio)
+
+[child.stdin](../child_process/class_ChildProcess.md#stdin)
+
+[child.stdout](../child_process/class_ChildProcess.md#stdout)
+
+[child.stderr](../child_process/class_ChildProcess.md#stderr)
+
+[child.send(message[, sendHandle[, options]][, callback])](../child_process/class_ChildProcess.md#send)
+
+[child.disconnect()](../child_process/class_ChildProcess.md#disconnect)
+
+[child.kill([signal])](../child_process/class_ChildProcess.md#kill)
+
 ### D
 
 [decoder.write(buffer)](../string_decoder/class_StringDecoder.md#write)

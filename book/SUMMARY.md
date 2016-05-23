@@ -86,6 +86,7 @@
   - [ChildProcess类](child_process/class_ChildProcess.md)
   - [创建异步进程](child_process/asynchronous_process_creation.md)
   - [创建同步进程](child_process/synchronous_process_creation.md)
+  - [maxBuffer和Unicode](child_process/maxbuffer_and_unicode.md)
 
 * [路径(Path)](path/README.md)
   - [方法和属性](path/path.md)

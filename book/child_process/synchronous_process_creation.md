@@ -1,6 +1,6 @@
 # 创建同步进程
 
-* [child_process.execSync(command[, options])](execSync)
+* [child_process.execSync(command[, options])](#execSync)
 * [child_process.execFileSync(file[, args][, options])](#execFileSync)
 * [child_process.spawnSync(command[, args][, options])](#spawnSync)
 
