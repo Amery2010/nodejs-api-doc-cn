@@ -424,6 +424,26 @@
 
 [process.initgroups(user, extra_group)](../process/process.md#initgroups)
 
+[path.resolve([from ...], to)](../path/path.md#resolve)
+
+[path.relative(from, to)](../path/path.md#relative)
+
+[path.format(pathObject)](../path/path.md#format)
+
+[path.parse(pathString)](../path/path.md#parse)
+
+[path.join([path1][, path2][, ...])](../path/path.md#join)
+
+[path.normalize(p)](../path/path.md#normalize)
+
+[path.dirname(p)](../path/path.md#dirname)
+
+[path.basename(p[, ext])](../path/path.md#basename)
+
+[path.extname(p)](../path/path.md#extname)
+
+[path.isAbsolute(path)](../path/path.md#isAbsolute)
+
 ### Q
 
 ### R
