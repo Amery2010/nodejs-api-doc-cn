@@ -114,8 +114,8 @@
 * [压缩解压(ZLIB)](zlib/README.md)
   - [方法和属性](zlib/zlib.md)
   - [压缩解压类](zlib/zlib_class.md)
-  - [常量](zlib/constants.md)
   - [类参数](zlib/class_options.md)
+  - [常量](zlib/constants.md)
   - [优化内存占用](zlib/memory_usage_tuning.md)
   - [示例](zlib/examples.md)
 
