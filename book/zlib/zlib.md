@@ -1,8 +1,8 @@
 # 方法和属性
 
 * [zlib.createGzip([options])](#createGzip)
-* [zlib.createUnzip([options])](#createUnzip)
 * [zlib.createGunzip([options])](#createGunzip)
+* [zlib.createUnzip([options])](#createUnzip)
 * [zlib.createDeflate([options])](#createDeflate)
 * [zlib.createInflate([options])](#createInflate)
 * [zlib.createDeflateRaw([options])](#createDeflateRaw)
@@ -12,10 +12,10 @@
 
 * [zlib.gzip(buf[, options], callback)](#gzip)
 * [zlib.gzipSync(buf[, options])](#gzipSync)
-* [zlib.unzip(buf[, options], callback)](#unzip)
-* [zlib.unzipSync(buf[, options])](#unzipSync)
 * [zlib.gunzip(buf[, options], callback)](#gunzip)
 * [zlib.gunzipSync(buf[, options])](#gunzipSync)
+* [zlib.unzip(buf[, options], callback)](#unzip)
+* [zlib.unzipSync(buf[, options])](#unzipSync)
 * [zlib.deflate(buf[, options], callback)](#deflate)
 * [zlib.deflateSync(buf[, options])](#deflateSync)
 * [zlib.inflate(buf[, options], callback)](#inflate)
@@ -34,16 +34,16 @@
 返回一个用 [options](./class_options.md#) 生成的新的 [Gzip](./zlib_class.md#Gzip) 对象。
 
 
-<div id="createUnzip" class="anchor"></div>
-## zlib.createUnzip([options])
-
-返回一个用 [options](./class_options.md#) 生成的新的 [Unzip](./zlib_class.md#Unzip) 对象。
-
-
 <div id="createGunzip" class="anchor"></div>
 ## zlib.createGunzip([options])
 
 返回一个用 [options](./class_options.md#) 生成的新的 [Gunzip](./zlib_class.md#Gunzip) 对象。
+
+
+<div id="createUnzip" class="anchor"></div>
+## zlib.createUnzip([options])
+
+返回一个用 [options](./class_options.md#) 生成的新的 [Unzip](./zlib_class.md#Unzip) 对象。
 
 
 <div id="createDeflate" class="anchor"></div>
@@ -78,20 +78,20 @@
 通过 Gzip 来压缩一个 Buffer 或字符串。
 
 
-<div id="unzip" class="anchor"></div>
-### zlib.unzip(buf[, options], callback)
-<div id="unzipSync" class="anchor"></div>
-### zlib.unzipSync(buf[, options])
-
-通过 Unzip 来解压缩一个 Buffer 或字符串。
-
-
 <div id="gunzip" class="anchor"></div>
 ### zlib.gunzip(buf[, options], callback)
 <div id="gunzipSync" class="anchor"></div>
 ### zlib.gunzipSync(buf[, options])
 
 通过 Gunzip 来解压缩一个 Buffer 或字符串。
+
+
+<div id="unzip" class="anchor"></div>
+### zlib.unzip(buf[, options], callback)
+<div id="unzipSync" class="anchor"></div>
+### zlib.unzipSync(buf[, options])
+
+通过 Unzip 来解压缩一个 Buffer 或字符串。
 
 
 <div id="deflate" class="anchor"></div>

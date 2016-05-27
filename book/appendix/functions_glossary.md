@@ -550,6 +550,70 @@
 
 ### Z
 
+[zlib.Zlib 类](../zlib/zlib_class.md#Zlib)
+
+[zlib.Gzip 类](../zlib/zlib_class.md#Gzip)
+
+[zlib.Gunzip 类](../zlib/zlib_class.md#Gunzip)
+
+[zlib.Unzip 类](../zlib/zlib_class.md#Unzip)
+
+[zlib.Deflate 类](../zlib/zlib_class.md#Deflate)
+
+[zlib.Inflate 类](../zlib/zlib_class.md#Inflate)
+
+[zlib.DeflateRaw 类](../zlib/zlib_class.md#DeflateRaw)
+
+[zlib.InflateRaw 类](../zlib/zlib_class.md#InflateRaw)
+
+[zlib.flush([kind], callback)](../zlib/zlib_class.md#flush)
+
+[zlib.params(level, strategy, callback)](../zlib/zlib_class.md#params)
+
+[zlib.reset()](../zlib/zlib_class.md#reset)
+
+[zlib.createGzip([options])](../zlib/zlib.md#createGzip)
+
+[zlib.createGunzip([options])](../zlib/zlib.md#createGunzip)
+
+[zlib.createUnzip([options])](../zlib/zlib.md#createUnzip)
+
+[zlib.createDeflate([options])](../zlib/zlib.md#createDeflate)
+
+[zlib.createInflate([options])](../zlib/zlib.md#createInflate)
+
+[zlib.createDeflateRaw([options])](../zlib/zlib.md#createDeflateRaw)
+
+[zlib.createInflateRaw([options])](../zlib/zlib.md#createInflateRaw)
+
+[zlib.gzip(buf[, options], callback)](../zlib/zlib.md#gzip)
+
+[zlib.gzipSync(buf[, options])](../zlib/zlib.md#gzipSync)
+
+[zlib.gunzip(buf[, options], callback)](../zlib/zlib.md#gunzip)
+
+[zlib.gunzipSync(buf[, options])](../zlib/zlib.md#gunzipSync)
+
+[zlib.unzip(buf[, options], callback)](../zlib/zlib.md#unzip)
+
+[zlib.unzipSync(buf[, options])](../zlib/zlib.md#unzipSync)
+
+[zlib.deflate(buf[, options], callback)](../zlib/zlib.md#deflate)
+
+[zlib.deflateSync(buf[, options])](../zlib/zlib.md#deflateSync)
+
+[zlib.inflate(buf[, options], callback)](../zlib/zlib.md#inflate)
+
+[zlib.inflateSync(buf[, options])](../zlib/zlib.md#inflateSync)
+
+[zlib.deflateRaw(buf[, options], callback)](../zlib/zlib.md#deflateRaw)
+
+[zlib.deflateRawSync(buf[, options])](../zlib/zlib.md#deflateRawSync)
+
+[zlib.inflateRaw(buf[, options], callback)](../zlib/zlib.md#inflateRaw)
+
+[zlib.inflateRawSync(buf[, options])](../zlib/zlib.md#inflateRawSync)
+
 ### 其他
 
 [__dirname](../globals/global.md#dirname)

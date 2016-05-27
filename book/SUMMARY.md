@@ -117,6 +117,7 @@
   - [类参数](zlib/class_options.md)
   - [常量](zlib/constants.md)
   - [优化内存占用](zlib/memory_usage_tuning.md)
+  - [Flushing](zlib/flushing.md)
   - [示例](zlib/examples.md)
 
 * [网络(Net)](net/README.md)
