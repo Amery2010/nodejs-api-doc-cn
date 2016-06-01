@@ -128,7 +128,7 @@
 * [域名服务(DNS)](dns/README.md)
   - [方法和属性](dns/dns.md)
   - [错误代码](dns/error_codes.md)
-  - [注意](dns/implementation_considerations.md)
+  - [实现中的注意事项](dns/implementation_considerations.md)
 
 * [域(Domain)](domain/README.md)
   - [方法和属性](domain/domain.md)
