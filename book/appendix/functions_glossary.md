@@ -210,6 +210,34 @@
 
 [decoder.end()](../string_decoder/class_StringDecoder.md#end)
 
+[dns.setServers(servers)](../dns/dns.md#setServers)
+
+[dns.getServers()](../dns/dns.md#getServers)
+
+[dns.resolve(hostname[, rrtype], callback)](../dns/dns.md#resolve)
+
+[dns.resolve4(hostname, callback)](../dns/dns.md#resolve4)
+
+[dns.resolve6(hostname, callback)](../dns/dns.md#resolve6)
+
+[dns.resolveMx(hostname, callback)](../dns/dns.md#resolveMx)
+
+[dns.resolveTxt(hostname, callback)](../dns/dns.md#resolveTxt)
+
+[dns.resolveSrv(hostname, callback)](../dns/dns.md#resolveSrv)
+
+[dns.resolveNs(hostname, callback)](../dns/dns.md#resolveNs)
+
+[dns.resolveCname(hostname, callback)](../dns/dns.md#resolveCname)
+
+[dns.resolveSoa(hostname, callback)](../dns/dns.md#resolveSoa)
+
+[dns.reverse(ip, callback)](../dns/dns.md#reverse)
+
+[dns.lookup(hostname[, options], callback)](../dns/dns.md#lookup)
+ 
+[dns.lookupService(address, port, callback)](../dns/dns.md#lookupService)
+
 ### E
 
 [exports](../globals/global.md#exports)
