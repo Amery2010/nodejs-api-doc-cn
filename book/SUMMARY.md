@@ -130,14 +130,6 @@
   - [错误代码](dns/error_codes.md)
   - [实现中的注意事项](dns/implementation_considerations.md)
 
-* [域(Domain)](domain/README.md)
-  - [方法和属性](domain/domain.md)
-  - [Domain类](domain/class_Domain.md)
-  - [特殊错误属性](domain/additions_to_error_objects.md)
-  - [隐式绑定](domain/implicit_binding.md)
-  - [显式绑定](domain/explicit_binding.md)
-  - [警告: 不要忽视错误!](domain/do_not_ignore_errors.md)
-
 * [HTTP(HTTP)](http/README.md)
   - [方法和属性](http/http.md)
   - [http.Agent类](http/class_http_Agent.md)
@@ -203,6 +195,14 @@
   - [工作原理](cluster/how_it_works.md)
   - [方法和属性](cluster/cluster.md)
   - [Worker类](cluster/class_Worker.md)
+  
+* [域(Domain)](domain/README.md)
+  - [方法和属性](domain/domain.md)
+  - [Domain类](domain/class_Domain.md)
+  - [特殊错误属性](domain/additions_to_error_objects.md)
+  - [隐式绑定](domain/implicit_binding.md)
+  - [显式绑定](domain/explicit_binding.md)
+  - [警告: 不要忽视错误!](domain/do_not_ignore_errors.md)
 
 * [断言测试(Assertion Testing)](assert/README.md)
   - [方法和属性](assert/assert.md)
