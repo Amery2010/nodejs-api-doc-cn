@@ -556,12 +556,6 @@
 
 ### V
 
-[v8.setFlagsFromString(string)](../v8/v8.md#setFlagsFromString)
-
-[v8.getHeapStatistics()](../v8/v8.md#getHeapStatistics)
-
-[v8.getHeapSpaceStatistics()](../v8/v8.md#getHeapSpaceStatistics)
-
 ### W
 
 [writable.write(chunk[, encoding][, callback])](../stream/api_for_stream_consumers.md#write)
