@@ -184,7 +184,7 @@
   - [示例：Tiny CLI](readline/tiny_cli.md)
   - [示例：Read File Stream Line-by-Line](readline/read_file_stream_line_by_line.md)
 
-* [V8引擎(V8)](v8/README.md)
+* [V8(V8)](v8/README.md)
   - [方法和属性](v8/v8.md)
 
 * [虚拟机(VM)](vm/README.md)
@@ -213,7 +213,7 @@
 * [Punycode码(Punycode)](punycode/README.md)
   - [方法和属性](punycode/punycode.md)
 
-* [C/C++扩展(C/C++ Addons)](addons/README.md)
+* [C/C++插件(C/C++ Addons)](addons/README.md)
   - [Hello world](addons/hello_world.md)
   - [插件实例](addons/addon_examples.md)
   - [Node.js的原生抽象](addons/native_abstractions_for_nodejs.md)
