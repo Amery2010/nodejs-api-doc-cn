@@ -72,3 +72,40 @@ NODE_MODULE(module_name, Initialize)
     ]
 }
 ```
+
+*注意：一个实用的 `node-gyp` 版本作为 `npm` 的一部分，通过 Node.js 捆绑和发行。此版本没有做出可以直接供开发者使用的版本，目的只是为了支持使用 `npm install` 命令编译并安装插件的能力。希望直接使用 `node-gyp` 的开发者可以使用 `npm install -g node-gyp` 命令进行安装。查阅 `node-gyp` [安装说明](https://github.com/nodejs/node-gyp#installation)了解更多详情，包括平台特定的要求。*
+
+一旦 `binding.gyp` 文件被创建，使用 `node-gyp configure` 为当前平台生成相应项目的构建文件。这会在 `build/` 目录下生成一个 `Makefile` (在 Unix 平台上)或 `vcxproj` 文件（在 Windows 上）。
+
+下一步，调用 `node-gyp build` 命令生成 `addon.node` 的编译文件。这会被放到 `build/Release/` 目录下。
+
+当使用 `npm install` 安装一个 Node.js 插件时，npm 使用自身捆绑的 `node-gyp` 版本来执行同样的一套动作，为用户的需要的平台产生一个插件的编译版本。
+
+一旦构建完成，二进制插件就可以通过 `require()` 指向内置的 `addon.node` 模块在 Node.js 内部使用：
+
+```javascript
+// hello.js
+const addon = require('./build/Release/addon');
+
+console.log(addon.hello()); // 'world'
+```
+
+请参阅下面例子获取详细信息或在 [https://github.com/arturadib/node-qt](https://github.com/arturadib/node-qt) 了解关于生产环境中的例子。
+
+因为编译后的二进制插件的确切路径可能取决于它是如何编译的（如，有时它可能在 `./build/Debug/`），插件可以使用[绑定](https://github.com/TooTallNate/node-bindings)包加载已编译的模块。
+
+请注意，虽然 `bindings` 包在如何定位插件模块的实现上更精细，但它本质上是使用类似于一个 `try-catch` 的模式：
+
+```javascript
+try {
+    return require('./build/Release/addon.node');
+} catch (err) {
+    return require('./build/Debug/addon.node');
+}
+```
+
+
+<div id="linking_to_nodejs_own_dependencies" class="anchor"></div>
+### 链接到 Node.js 自己的依赖
+
+Node.js 使用了一些静态链接库，比如 V8 引擎、libuv 和 OpenSSL。
