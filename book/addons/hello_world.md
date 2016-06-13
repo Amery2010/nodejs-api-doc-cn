@@ -108,4 +108,16 @@ try {
 <div id="linking_to_nodejs_own_dependencies" class="anchor"></div>
 ### 链接到 Node.js 自己的依赖
 
-Node.js 使用了一些静态链接库，比如 V8 引擎、libuv 和 OpenSSL。
+Node.js 使用了一些静态链接库，比如 V8 引擎、libuv 和 OpenSSL。所有的插件都需要链接到 V8，并且也可能链接到任何其他的依赖。通常情况下，只要简单的包含相应的 `#include <...>` 声明（如，`#include <v8.h>`），并且 `node-gyp` 会找到适当的头。不过，也有一些注意事项需要注意：
+
+* 当 `node-gyp` 运行时，它会检测 Node.js 的具体发行版本，并下载完整源码包，或只是头。如果下载了全部的源码，插件将会有完整的权限去访问 Node.js 的全套依赖。然而，如果只下载了 Node.js 的头，则仅由 Node.js 导出的标记可用。
+
+* `node-gyp` 可以使用指向本地 Node.js 源代码信息的 `--nodedir` 标识来运行。使用此选项，插件将有机会访问全套依赖。
+
+
+<div id="loading_addons" class="anchor"></div>
+### 使用 require() 加载插件
+
+编译后的二进制插件的文件扩展名是 `.node`（而不是 `.dll` 或 `.so`）。[require()](../globals/global.md#require) 函数是被用于查找具有 `.node` 文件扩展名的文件，并初始化这些作为动态链接库。
+
+当调用 [require()](../globals/global.md#require) 时，`.node` 拓展名通常是可以省略的，Node.js 仍可以发现并初始化该插件。警告，然而，Node.js 会首先尝试查找并加载模块或碰巧共享相同的基本名称的 JavaScript 文件。例如，如果有一个 `addon.js` 文件与二进制 `addon.node`在同一目录下，那么 [require('addon')](../globals/global.md#require) 将优先考虑 `addon.js` 文件并加载它来代替 `addon.node`。
