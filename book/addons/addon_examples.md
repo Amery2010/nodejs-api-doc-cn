@@ -163,3 +163,454 @@ addon((msg) => {
 ```
 
 需要注意的是，在这个例子中，回调函数是同步调用的。
+
+
+<div id="object_factory" class="anchor"></div>
+## 对象工厂
+
+插件可以创建和=并从如下示例中所示的 C++ 函数中返回新对象。一个对象被创建并返回 `msg` 属性，该属性是传递给 `createObject()` 的相呼应的字符串：
+
+```c++
+// addon.cc
+#include <node.h>
+
+namespace demo {
+
+using v8::FunctionCallbackInfo;
+using v8::Isolate;
+using v8::Local;
+using v8::Object;
+using v8::String;
+using v8::Value;
+
+void CreateObject(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  Local<Object> obj = Object::New(isolate);
+  obj->Set(String::NewFromUtf8(isolate, "msg"), args[0]->ToString());
+
+  args.GetReturnValue().Set(obj);
+}
+
+void Init(Local<Object> exports, Local<Object> module) {
+  NODE_SET_METHOD(module, "exports", CreateObject);
+}
+
+NODE_MODULE(addon, Init)
+
+}  // namespace demo
+```
+
+在 JavaScript 中测试它：
+
+```javascript
+// test.js
+const addon = require('./build/Release/addon');
+
+var obj1 = addon('hello');
+var obj2 = addon('world');
+console.log(obj1.msg + ' ' + obj2.msg); // 'hello world'
+```
+
+
+<div id="function_factory" class="anchor"></div>
+## 函数工厂
+
+另一种常见情况是创建 JavaScript 函数来包装 C++ 函数，并返回那些使其回到 JavaScript：
+
+```c++
+// addon.cc
+#include <node.h>
+
+namespace demo {
+
+using v8::Function;
+using v8::FunctionCallbackInfo;
+using v8::FunctionTemplate;
+using v8::Isolate;
+using v8::Local;
+using v8::Object;
+using v8::String;
+using v8::Value;
+
+void MyFunction(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+  args.GetReturnValue().Set(String::NewFromUtf8(isolate, "hello world"));
+}
+
+void CreateFunction(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, MyFunction);
+  Local<Function> fn = tpl->GetFunction();
+
+  // omit this to make it anonymous
+  fn->SetName(String::NewFromUtf8(isolate, "theFunction"));
+
+  args.GetReturnValue().Set(fn);
+}
+
+void Init(Local<Object> exports, Local<Object> module) {
+  NODE_SET_METHOD(module, "exports", CreateFunction);
+}
+
+NODE_MODULE(addon, Init)
+
+}  // namespace demo
+```
+
+去测试：
+
+```javascript
+// test.js
+const addon = require('./build/Release/addon');
+
+var fn = addon();
+console.log(fn()); // 'hello world'
+```
+
+
+<div id="wrapping_C_plus_plus_objects" class="anchor"></div>
+## 包装 C++ 对象
+
+另外，也可以包装 C++ 对象/类允许以使用 JavaScript 的 `new` 操作的方式来创建新的实例：
+
+```c++
+// addon.cc
+#include <node.h>
+#include "myobject.h"
+
+namespace demo {
+
+using v8::Local;
+using v8::Object;
+
+void InitAll(Local<Object> exports) {
+  MyObject::Init(exports);
+}
+
+NODE_MODULE(addon, InitAll)
+
+}  // namespace demo
+```
+
+那么，在 `myobject.h` 中，包装类继承自 `node::ObjectWrap`：
+
+```c++
+// myobject.h
+#ifndef MYOBJECT_H
+#define MYOBJECT_H
+
+#include <node.h>
+#include <node_object_wrap.h>
+
+namespace demo {
+
+class MyObject : public node::ObjectWrap {
+ public:
+  static void Init(v8::Local<v8::Object> exports);
+
+ private:
+  explicit MyObject(double value = 0);
+  ~MyObject();
+
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void PlusOne(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Persistent<v8::Function> constructor;
+  double value_;
+};
+
+}  // namespace demo
+
+#endif
+```
+
+在 `myobject.cc` 中，实现要被暴露的各种方法。下面，`plusOne()` 方法是通过将其添加到构造函数的原型来暴露的：
+
+```c++
+// myobject.cc
+#include "myobject.h"
+
+namespace demo {
+
+using v8::Function;
+using v8::FunctionCallbackInfo;
+using v8::FunctionTemplate;
+using v8::Isolate;
+using v8::Local;
+using v8::Number;
+using v8::Object;
+using v8::Persistent;
+using v8::String;
+using v8::Value;
+
+Persistent<Function> MyObject::constructor;
+
+MyObject::MyObject(double value) : value_(value) {
+}
+
+MyObject::~MyObject() {
+}
+
+void MyObject::Init(Local<Object> exports) {
+  Isolate* isolate = exports->GetIsolate();
+
+  // Prepare constructor template
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
+  tpl->SetClassName(String::NewFromUtf8(isolate, "MyObject"));
+  tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+  // Prototype
+  NODE_SET_PROTOTYPE_METHOD(tpl, "plusOne", PlusOne);
+
+  constructor.Reset(isolate, tpl->GetFunction());
+  exports->Set(String::NewFromUtf8(isolate, "MyObject"),
+               tpl->GetFunction());
+}
+
+void MyObject::New(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  if (args.IsConstructCall()) {
+    // Invoked as constructor: `new MyObject(...)`
+    double value = args[0]->IsUndefined() ? 0 : args[0]->NumberValue();
+    MyObject* obj = new MyObject(value);
+    obj->Wrap(args.This());
+    args.GetReturnValue().Set(args.This());
+  } else {
+    // Invoked as plain function `MyObject(...)`, turn into construct call.
+    const int argc = 1;
+    Local<Value> argv[argc] = { args[0] };
+    Local<Function> cons = Local<Function>::New(isolate, constructor);
+    args.GetReturnValue().Set(cons->NewInstance(argc, argv));
+  }
+}
+
+void MyObject::PlusOne(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  MyObject* obj = ObjectWrap::Unwrap<MyObject>(args.Holder());
+  obj->value_ += 1;
+
+  args.GetReturnValue().Set(Number::New(isolate, obj->value_));
+}
+
+}  // namespace demo
+```
+
+要构建这个例子，`myobject.cc` 文件必须被添加到 `binding.gyp`：
+
+```c++
+{
+    "targets": [
+        {
+            "target_name": "addon",
+            "sources": [
+                "addon.cc",
+                "myobject.cc"
+            ]
+        }
+   ]
+}
+```
+
+测试：
+
+```javascript
+// test.js
+const addon = require('./build/Release/addon');
+
+var obj = new addon.MyObject(10);
+console.log(obj.plusOne()); // 11
+console.log(obj.plusOne()); // 12
+console.log(obj.plusOne()); // 13
+```
+
+
+<div id="factory_of_wrapped_objects" class="anchor"></div>
+## 包装对象的工厂
+
+另外，它可以使用一个工厂模式，以避免显式地使用 JavaScript 的 `new` 操作来创建对象的实例：
+
+```javascript
+var obj = addon.createObject();
+// instead of:
+// var obj = new addon.Object();
+```
+
+首先，在 `addon.cc` 中实现 `createObject()` 方法：
+
+```c++
+// addon.cc
+#include <node.h>
+#include "myobject.h"
+
+namespace demo {
+
+using v8::FunctionCallbackInfo;
+using v8::Isolate;
+using v8::Local;
+using v8::Object;
+using v8::String;
+using v8::Value;
+
+void CreateObject(const FunctionCallbackInfo<Value>& args) {
+  MyObject::NewInstance(args);
+}
+
+void InitAll(Local<Object> exports, Local<Object> module) {
+  MyObject::Init(exports->GetIsolate());
+
+  NODE_SET_METHOD(module, "exports", CreateObject);
+}
+
+NODE_MODULE(addon, InitAll)
+
+}  // namespace demo
+```
+
+在 `myobject.h` 中，添加静态方法 `NewInstance()` 来处理实例化对象。这种方法需要在 JavaScript 中使用 `new`：
+
+```c++
+// myobject.h
+#ifndef MYOBJECT_H
+#define MYOBJECT_H
+
+#include <node.h>
+#include <node_object_wrap.h>
+
+namespace demo {
+
+class MyObject : public node::ObjectWrap {
+ public:
+  static void Init(v8::Isolate* isolate);
+  static void NewInstance(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+ private:
+  explicit MyObject(double value = 0);
+  ~MyObject();
+
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void PlusOne(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Persistent<v8::Function> constructor;
+  double value_;
+};
+
+}  // namespace demo
+
+#endif
+```
+
+在 `myobject.cc` 中的实现类似与之前的例子：
+
+```c++
+// myobject.cc
+#include <node.h>
+#include "myobject.h"
+
+namespace demo {
+
+using v8::Function;
+using v8::FunctionCallbackInfo;
+using v8::FunctionTemplate;
+using v8::Isolate;
+using v8::Local;
+using v8::Number;
+using v8::Object;
+using v8::Persistent;
+using v8::String;
+using v8::Value;
+
+Persistent<Function> MyObject::constructor;
+
+MyObject::MyObject(double value) : value_(value) {
+}
+
+MyObject::~MyObject() {
+}
+
+void MyObject::Init(Isolate* isolate) {
+  // Prepare constructor template
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
+  tpl->SetClassName(String::NewFromUtf8(isolate, "MyObject"));
+  tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+  // Prototype
+  NODE_SET_PROTOTYPE_METHOD(tpl, "plusOne", PlusOne);
+
+  constructor.Reset(isolate, tpl->GetFunction());
+}
+
+void MyObject::New(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  if (args.IsConstructCall()) {
+    // Invoked as constructor: `new MyObject(...)`
+    double value = args[0]->IsUndefined() ? 0 : args[0]->NumberValue();
+    MyObject* obj = new MyObject(value);
+    obj->Wrap(args.This());
+    args.GetReturnValue().Set(args.This());
+  } else {
+    // Invoked as plain function `MyObject(...)`, turn into construct call.
+    const int argc = 1;
+    Local<Value> argv[argc] = { args[0] };
+    Local<Function> cons = Local<Function>::New(isolate, constructor);
+    args.GetReturnValue().Set(cons->NewInstance(argc, argv));
+  }
+}
+
+void MyObject::NewInstance(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { args[0] };
+  Local<Function> cons = Local<Function>::New(isolate, constructor);
+  Local<Object> instance = cons->NewInstance(argc, argv);
+
+  args.GetReturnValue().Set(instance);
+}
+
+void MyObject::PlusOne(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  MyObject* obj = ObjectWrap::Unwrap<MyObject>(args.Holder());
+  obj->value_ += 1;
+
+  args.GetReturnValue().Set(Number::New(isolate, obj->value_));
+}
+
+}  // namespace demo
+```
+
+再来一次，建立这个例子，`myobject.cc` 文件必须被添加到 `binding.gyp`：
+
+```javascript
+{
+    "targets": [
+        {
+            "target_name": "addon",
+            "sources": [
+                "addon.cc",
+                "myobject.cc"
+            ]
+        }
+   ]
+}
+```
+
+测试它：
+
+```javascript
+// test.js
+const createObject = require('./build/Release/addon');
+
+var obj = createObject(10);
+console.log(obj.plusOne()); // 11
+console.log(obj.plusOne()); // 12
+console.log(obj.plusOne()); // 13
+
+var obj2 = createObject(20);
+console.log(obj2.plusOne()); // 21
+console.log(obj2.plusOne()); // 22
+console.log(obj2.plusOne()); // 23
+```
