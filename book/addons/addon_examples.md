@@ -168,7 +168,7 @@ addon((msg) => {
 <div id="object_factory" class="anchor"></div>
 ## 对象工厂
 
-插件可以创建和=并从如下示例中所示的 C++ 函数中返回新对象。一个对象被创建并返回 `msg` 属性，该属性是传递给 `createObject()` 的相呼应的字符串：
+插件从如下示例中所示的 C++ 函数中创建和返回新对象。一个带有 `msg` 属性的对象被创建和返回，该属性是传递给 `createObject()` 的相呼应的字符串：
 
 ```c++
 // addon.cc
@@ -613,4 +613,246 @@ var obj2 = createObject(20);
 console.log(obj2.plusOne()); // 21
 console.log(obj2.plusOne()); // 22
 console.log(obj2.plusOne()); // 23
+```
+
+
+<div id="passing_wrapped_objects_around" class="anchor"></div>
+## 传递包装的对象
+
+除了包装和返回的 C++ 对象，也有可能是通过 Node.js 的辅助函数 `node::ObjectWrap::Unwrap` 展开传过来的包装对象。下面的例子显示了一个 `add()` 函数可以采用两个 `MyObject` 对象作为输入参数：
+
+```c++
+// addon.cc
+#include <node.h>
+#include <node_object_wrap.h>
+#include "myobject.h"
+
+namespace demo {
+
+using v8::FunctionCallbackInfo;
+using v8::Isolate;
+using v8::Local;
+using v8::Number;
+using v8::Object;
+using v8::String;
+using v8::Value;
+
+void CreateObject(const FunctionCallbackInfo<Value>& args) {
+  MyObject::NewInstance(args);
+}
+
+void Add(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  MyObject* obj1 = node::ObjectWrap::Unwrap<MyObject>(
+      args[0]->ToObject());
+  MyObject* obj2 = node::ObjectWrap::Unwrap<MyObject>(
+      args[1]->ToObject());
+
+  double sum = obj1->value() + obj2->value();
+  args.GetReturnValue().Set(Number::New(isolate, sum));
+}
+
+void InitAll(Local<Object> exports) {
+  MyObject::Init(exports->GetIsolate());
+
+  NODE_SET_METHOD(exports, "createObject", CreateObject);
+  NODE_SET_METHOD(exports, "add", Add);
+}
+
+NODE_MODULE(addon, InitAll)
+
+}  // namespace demo
+```
+
+在 `myobject.h` 中，添加了一个公共方法以允许在展开对象后访问私有值。
+
+```c++
+// myobject.h
+#ifndef MYOBJECT_H
+#define MYOBJECT_H
+
+#include <node.h>
+#include <node_object_wrap.h>
+
+namespace demo {
+
+class MyObject : public node::ObjectWrap {
+ public:
+  static void Init(v8::Isolate* isolate);
+  static void NewInstance(const v8::FunctionCallbackInfo<v8::Value>& args);
+  inline double value() const { return value_; }
+
+ private:
+  explicit MyObject(double value = 0);
+  ~MyObject();
+
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Persistent<v8::Function> constructor;
+  double value_;
+};
+
+}  // namespace demo
+
+#endif
+```
+
+在 `myobject.cc` 中的实现类似与之前的例子：
+
+```c++
+// myobject.cc
+#include <node.h>
+#include "myobject.h"
+
+namespace demo {
+
+using v8::Function;
+using v8::FunctionCallbackInfo;
+using v8::FunctionTemplate;
+using v8::Isolate;
+using v8::Local;
+using v8::Object;
+using v8::Persistent;
+using v8::String;
+using v8::Value;
+
+Persistent<Function> MyObject::constructor;
+
+MyObject::MyObject(double value) : value_(value) {
+}
+
+MyObject::~MyObject() {
+}
+
+void MyObject::Init(Isolate* isolate) {
+  // Prepare constructor template
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
+  tpl->SetClassName(String::NewFromUtf8(isolate, "MyObject"));
+  tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+  constructor.Reset(isolate, tpl->GetFunction());
+}
+
+void MyObject::New(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  if (args.IsConstructCall()) {
+    // Invoked as constructor: `new MyObject(...)`
+    double value = args[0]->IsUndefined() ? 0 : args[0]->NumberValue();
+    MyObject* obj = new MyObject(value);
+    obj->Wrap(args.This());
+    args.GetReturnValue().Set(args.This());
+  } else {
+    // Invoked as plain function `MyObject(...)`, turn into construct call.
+    const int argc = 1;
+    Local<Value> argv[argc] = { args[0] };
+    Local<Function> cons = Local<Function>::New(isolate, constructor);
+    args.GetReturnValue().Set(cons->NewInstance(argc, argv));
+  }
+}
+
+void MyObject::NewInstance(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = args.GetIsolate();
+
+  const unsigned argc = 1;
+  Local<Value> argv[argc] = { args[0] };
+  Local<Function> cons = Local<Function>::New(isolate, constructor);
+  Local<Object> instance = cons->NewInstance(argc, argv);
+
+  args.GetReturnValue().Set(instance);
+}
+
+}  // namespace demo
+```
+
+测试：
+
+```javascript
+// test.js
+const addon = require('./build/Release/addon');
+
+var obj1 = addon.createObject(10);
+var obj2 = addon.createObject(20);
+var result = addon.add(obj1, obj2);
+
+console.log(result); // 30
+```
+
+
+<div id="AtExit_hooks" class="anchor"></div>
+## AtExit 挂钩
+
+“AtExit” 挂钩是一个函数，它是在 Node.js 事件循环结束后，但在 JavaScript 虚拟机被终止或 Node.js 关闭前调用。“AtExit” 挂钩使用 `node::AtExit` API 注册。
+
+
+<div id="AtExit" class="anchor"></div>
+### void AtExit(callback, args)
+
+* `callback`：`void (*)(void*)` - 一个退出时调用的函数的指针。
+
+* `args`：`void*` - 一个退出时传递给回调的指针。
+
+注册在事件循环结束后并在虚拟机被终止前运行的退出挂钩。
+
+AtExit 有两个参数：指向一个在退出运行的回调函数，和要传递给该回调的无类型的上下文数据的指针。
+
+回调按照后进先出的顺序执行。
+
+下面的 `addon.cc` 实现了 AtExit：
+
+```c++
+// addon.cc
+#undef NDEBUG
+#include <assert.h>
+#include <stdlib.h>
+#include <node.h>
+
+namespace demo {
+
+using node::AtExit;
+using v8::HandleScope;
+using v8::Isolate;
+using v8::Local;
+using v8::Object;
+
+static char cookie[] = "yum yum";
+static int at_exit_cb1_called = 0;
+static int at_exit_cb2_called = 0;
+
+static void at_exit_cb1(void* arg) {
+  Isolate* isolate = static_cast<Isolate*>(arg);
+  HandleScope scope(isolate);
+  Local<Object> obj = Object::New(isolate);
+  assert(!obj.IsEmpty()); // assert VM is still alive
+  assert(obj->IsObject());
+  at_exit_cb1_called++;
+}
+
+static void at_exit_cb2(void* arg) {
+  assert(arg == static_cast<void*>(cookie));
+  at_exit_cb2_called++;
+}
+
+static void sanity_check(void*) {
+  assert(at_exit_cb1_called == 1);
+  assert(at_exit_cb2_called == 2);
+}
+
+void init(Local<Object> exports) {
+  AtExit(sanity_check);
+  AtExit(at_exit_cb2, cookie);
+  AtExit(at_exit_cb2, cookie);
+  AtExit(at_exit_cb1, exports->GetIsolate());
+}
+
+NODE_MODULE(addon, init);
+
+}  // namespace demo
+```
+
+在 JavaScript 中运行测试：
+
+```javascript
+// test.js
+const addon = require('./build/Release/addon');
 ```
