@@ -554,6 +554,58 @@
 
 [unref()](../timers/timer.md#unref)
 
+[util.isBoolean(object)](../util/util.md#isBoolean)
+
+[util.isNumber(object)](../util/util.md#isNumber)
+
+[util.isString(object)](../util/util.md#isString)
+
+[util.isObject(object)](../util/util.md#isObject)
+
+[util.isArray(object)](../util/util.md#isArray)
+
+[util.isFunction(object)](../util/util.md#isFunction)
+
+[util.isNull(object)](../util/util.md#isNull)
+
+[util.isUndefined(object)](../util/util.md#isUndefined)
+
+[util.isNullOrUndefined(object)](../util/util.md#isNullOrUndefined)
+
+[util.isSymbol(object)](../util/util.md#isSymbol)
+
+[util.isError(object)](../util/util.md#isError)
+
+[util.isRegExp(object)](../util/util.md#isRegExp)
+
+[util.isDate(object)](../util/util.md#isDate)
+
+[util.isBuffer(object)](../util/util.md#isBuffer)
+
+[util.isPrimitive(object)](../util/util.md#isPrimitive)
+
+[util.inspect(object[, options])](../util/util.md#inspect)
+
+[util.format(format[, ...])](../util/util.md#format)
+
+[util.inherits(constructor, superConstructor)](../util/util.md#inherits)
+
+[util.log(string)](../util/util.md#log)
+
+[util.error([...])](../util/util.md#error)
+
+[util.debug(string)](../util/util.md#debug)
+
+[util.debuglog(section)](../util/util.md#debuglog)
+
+[util.print([...])](../util/util.md#print)
+
+[util.puts([...])](../util/util.md#puts)
+
+[util.pump(readableStream, writableStream[, callback])](../util/util.md#pump)
+
+[util.deprecate(function, string)](../util/util.md#deprecate)
+
 ### V
 
 [v8.setFlagsFromString(string)](../v8/v8.md#setFlagsFromString)
