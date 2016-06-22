@@ -3,6 +3,8 @@
     "generator": "site",
     "plugins": [
         "-search",
+        "-fontsettings",
+        "-sharing",
         "regexplace"
     ],
     "pluginsConfig": {
