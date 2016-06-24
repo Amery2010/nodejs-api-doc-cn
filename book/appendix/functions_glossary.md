@@ -2,6 +2,34 @@
 
 ### A
 
+[assert(value[, message])](../assert/assert.md#assert)
+
+[assert.equal(actual, expected[, message])](../assert/assert.md#equal)
+
+[assert.strictEqual(actual, expected[, message])](../assert/assert.md#strictEqual)
+
+[assert.notEqual(actual, expected[, message])](../assert/assert.md#notEqual)
+
+[assert.notStrictEqual(actual, expected[, message])](../assert/assert.md#notStrictEqual)
+
+[assert.deepEqual(actual, expected[, message])](../assert/assert.md#deepEqual)
+
+[assert.deepStrictEqual(actual, expected[, message])](../assert/assert.md#deepStrictEqual)
+
+[assert.notDeepEqual(actual, expected[, message])](../assert/assert.md#notDeepEqual)
+
+[assert.notDeepStrictEqual(actual, expected[, message])](../assert/assert.md#notDeepStrictEqual)
+
+[assert.ok(value[, message])](../assert/assert.md#ok)
+
+[assert.fail(actual, expected, message, operator)](../assert/assert.md#fail)
+
+[assert.ifError(value)](../assert/assert.md#ifError)
+
+[assert.throws(block[, error][, message])](../assert/assert.md#throws)
+
+[assert.doesNotThrow(block[, error][, message])](../assert/assert.md#doesNotThrow)
+
 ### B
 
 [Buffer类](../buffer/class_Buffer.md#)
