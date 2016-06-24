@@ -250,3 +250,158 @@ assert.notDeepStrictEqual({a:1}, {a:'1'});
 ```
 
 如果这两个值深度严格相等，将会抛出一个带有 `message` 属性（等于该 `message` 参数的值）的 `AssertionError`。如果 `message` 参数为 `undefined`，将会分配一个默认的错误消息。
+
+
+<div id="ok" class="anchor"></div>
+## assert.ok(value[, message])
+
+测试 `value` 是否为真值。它等同于 `assert.equal(!!value, true, message)`。
+
+如果 `value` 不是真值，将会抛出一个带有 `message` 属性（等于该 `message` 参数的值）的 `AssertionError`。如果 `message` 参数为 `undefined`，将会分配一个默认的错误消息。
+
+```javascript
+const assert = require('assert');
+
+assert.ok(true);  // OK
+assert.ok(1);     // OK
+assert.ok(false);
+  // throws "AssertionError: false == true"
+assert.ok(0);
+  // throws "AssertionError: 0 == true"
+assert.ok(false, 'it\'s false');
+  // throws "AssertionError: it's false"
+```
+
+
+<div id="fail" class="anchor"></div>
+## assert.fail(actual, expected, message, operator)
+
+抛出一个 `AssertionError`。如果 `message` 是假值，错误信息会被设置为被 `operator` 分隔在两边 `actual` 和 `expected` 的值。否则，该错误信息会是 `message` 的值。
+
+```javascript
+const assert = require('assert');
+
+assert.fail(1, 2, undefined, '>');
+  // AssertionError: 1 > 2
+
+assert.fail(1, 2, 'whoops', '>');
+  // AssertionError: whoops
+```
+
+
+<div id="ifError" class="anchor"></div>
+## assert.ifError(value)
+
+如果 `value` 为真值时，抛出 `value`。当测试在回调函数里的参数 `error` 时非常有用。
+
+```javascript
+const assert = require('assert');
+
+assert.ifError(0); // OK
+assert.ifError(1); // Throws 1
+assert.ifError('error') // Throws 'error'
+assert.ifError(new Error()); // Throws Error
+```
+
+
+<div id="throws" class="anchor"></div>
+## assert.throws(block[, error][, message])
+
+期望 `block` 函数抛出一个错误。
+
+如果指定 `error`，它可以是一个构造函数、正则表达式或验证函数。
+
+如果指定 `message`，如果 block 因为失败而抛出错误，`message` 会是由 `AssertionError` 提供的值。
+
+验证使用构造函数实例：
+
+```javascript
+assert.throws(
+    () => {
+        throw new Error('Wrong value');
+    },
+    Error
+);
+```
+
+使用 RegExp 验证错误信息：
+
+```javascript
+assert.throws(
+    () => {
+        throw new Error('Wrong value');
+    },
+    /value/
+);
+```
+
+自定义错误验证：
+
+```javascript
+assert.throws(
+    () => {
+        throw new Error('Wrong value');
+    },
+    function (err) {
+        if ((err instanceof Error) && /value/.test(err)) {
+            return true;
+        }
+    },
+    'unexpected error'
+);
+```
+
+请注意，`Error` 不能是字符串。如果字符串是作为第二个参数，那么 `error` 会被假定省略，字符串将会使用 `message` 替代。这很容易导致丢失错误：
+
+```javascript
+// THIS IS A MISTAKE! DO NOT DO THIS!
+assert.throws(myFunction, 'missing foo', 'did not throw with expected message');
+
+// Do this instead.
+assert.throws(myFunction, /missing foo/, 'did not throw with expected message');
+```
+
+
+<div id="doesNotThrow" class="anchor"></div>
+## assert.doesNotThrow(block[, error][, message])
+
+断言 `block` 函数不会抛出错误。查阅 [assert.throws()](#throws) 了解更多详情。
+
+当调用 `assert.doesNotThrow()` 时，它会立即调用 `block` 函数。
+
+如果抛出错误，并且与 `error` 参数指定的类型相同，那么将会抛出一个 `AssertionError`。如果是不同类型的错误，或 `error` 参数是 `undefined`，那么错误会回传给调用者。
+
+以下例子将会引发 [TypeError](../errors/class_TypeError.md#)，因为在断言中没有匹配的错误类型：
+
+```javascript
+assert.doesNotThrow(
+    () => {
+        throw new TypeError('Wrong value');
+    },
+    SyntaxError
+);
+```
+
+然而，以下将会导致一个带有 'Got unwanted exception (TypeError)..' 信息的 `AssertionError`。
+
+```javascript
+assert.doesNotThrow(
+    () => {
+        throw new TypeError('Wrong value');
+    },
+    TypeError
+);
+```
+
+如果抛出了一个 `AssertionError`，并且一个值被作为 `message` 参数，`message` 的值会被追加到 `AssertionError` 的消息中：
+
+```javascript
+assert.doesNotThrow(
+    () => {
+        throw new TypeError('Wrong value');
+    },
+    TypeError,
+    'Whoops'
+);
+// Throws: AssertionError: Got unwanted exception (TypeError). Whoops
+```
