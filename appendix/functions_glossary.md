@@ -266,6 +266,26 @@
  
 [dns.lookupService(address, port, callback)](../dns/dns.md#lookupService)
 
+[domain.create()](../domain/domain.md#create)
+
+[domain.members](../domain/class_Domain.md#members)
+
+[domain.bind(callback)](../domain/class_Domain.md#bind)
+
+[domain.intercept(callback)](../domain/class_Domain.md#intercept)
+
+[domain.run(fn[, arg][, ...])](../domain/class_Domain.md#run)
+
+[domain.add(emitter)](../domain/class_Domain.md#add)
+
+[domain.remove(emitter)](../domain/class_Domain.md#remove)
+
+[domain.enter()](../domain/class_Domain.md#enter)
+
+[domain.exit()](../domain/class_Domain.md#exit)
+
+[domain.dispose()](../domain/class_Domain.md#dispose)
+
 ### E
 
 [exports](../globals/global.md#exports)
