@@ -232,6 +232,12 @@
 
 [child.kill([signal])](../child_process/class_ChildProcess.md#kill)
 
+[cluster.setupMaster([settings])](../cluster/cluster.md#setupMaster)
+
+[cluster.fork([env])](../cluster/cluster.md#fork)
+
+[cluster.disconnect([callback])](../cluster/cluster.md#disconnect)
+
 ### D
 
 [decoder.write(buffer)](../string_decoder/class_StringDecoder.md#write)
@@ -677,6 +683,16 @@
 [writable._write(chunk, encoding, callback)](../stream/api_for_stream_implementors.md#_write)
 
 [writable._writev(chunks, callback)](../stream/api_for_stream_implementors.md#_writev)
+
+[worker.send(message[, sendHandle][, callback])](../cluster/class_Worker.md#send)
+
+[worker.disconnect()](../cluster/class_Worker.md#disconnect)
+
+[worker.kill([signal='SIGTERM'])](../cluster/class_Worker.md#kill)
+
+[worker.isConnected()](../cluster/class_Worker.md#isConnected)
+
+[worker.isDead()](../cluster/class_Worker.md#isDead)
 
 ### X
 
