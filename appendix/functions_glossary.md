@@ -598,6 +598,14 @@
 
 [StringDecoder类](../string_decoder/class_StringDecoder.md#)
 
+[Script类](../vm/class_Script.md#)
+
+[script.runInThisContext([options])](../vm/class_Script.md#runInThisContext)
+
+[script.runInContext(contextifiedSandbox[, options])](../vm/class_Script.md#runInContext)
+
+[script.runInNewContext([sandbox][, options])](../vm/class_Script.md#runInNewContext)
+
 ### T
 
 [transform._transform(chunk, encoding, callback)](../stream/api_for_stream_implementors.md#_transform)
@@ -667,6 +675,18 @@
 [v8.getHeapStatistics()](../v8/v8.md#getHeapStatistics)
 
 [v8.getHeapSpaceStatistics()](../v8/v8.md#getHeapSpaceStatistics)
+
+[vm.createContext([sandbox])](../vm/vm.md#createContext)
+
+[vm.isContext(sandbox)](../vm/vm.md#isContext)
+
+[vm.runInThisContext(code[, options])](../vm/vm.md#runInThisContext)
+
+[vm.runInContext(code, contextifiedSandbox[, options])](../vm/vm.md#runInContext)
+
+[vm.runInNewContext(code[, sandbox][, options])](../vm/vm.md#runInNewContext)
+
+[vm.runInDebugContext(code)](../vm/vm.md#runInDebugContext)
 
 ### W
 
