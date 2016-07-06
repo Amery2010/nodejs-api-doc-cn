@@ -93,6 +93,7 @@
 
 * [文件系统(File System)](./fs/README.md)
   - [方法和属性](./fs/fs.md)
+  - [Buffer API](./fs/buffer_api.md)
   - [fs.ReadStream类](./fs/class_fs_ReadStream.md)
   - [fs.WriteStream类](./fs/class_fs_WriteStream.md)
   - [fs.Stats类](./fs/class_fs_Stats.md)
