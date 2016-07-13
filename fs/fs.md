@@ -191,3 +191,93 @@ fs.symlink('./foo', './new-port');
 ## fs.unlinkSync(path)
 
 同步的 [unlink(2)](http://man7.org/linux/man-pages/man2/unlink.2.html)。返回 `undefined`。
+
+
+<div id="lchmod" class="anchor"></div>
+## fs.lchmod(path, mode, callback)
+
+异步的 [lchmod(2)](https://www.freebsd.org/cgi/man.cgi?query=lchmod&sektion=2)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+
+仅在 Mac OS X 上有效。
+
+
+<div id="lchmodSync" class="anchor"></div>
+## fs.lchmodSync(path, mode)
+
+同步的 [lchmod(2)](https://www.freebsd.org/cgi/man.cgi?query=lchmod&sektion=2)。返回 `undefined`。
+
+
+<div id="lchown" class="anchor"></div>
+## fs.lchown(path, uid, gid, callback)
+
+异步的 [lchown(2)](http://man7.org/linux/man-pages/man2/lchown.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+
+
+<div id="lchownSync" class="anchor"></div>
+## fs.lchownSync(path, uid, gid)
+
+同步的 [lchown(2)](http://man7.org/linux/man-pages/man2/lchown.2.html)。返回 `undefined`。
+
+
+<div id="lstat" class="anchor"></div>
+## fs.lstat(path, callback)
+
+异步的 [lstat(2)](http://man7.org/linux/man-pages/man2/lstat.2.html)。该回调函数带有两个参数 `(err, stats)`，其中 `stats` 是一个 `fs.Stats` 对象。`lstat()` 等同于 `stat()`，除非 `path` 是一个 symbolic 链接，那么自身就是该链接，它指向的并不是文件。
+
+
+<div id="lstatSync" class="anchor"></div>
+## fs.lstatSync(path)
+
+同步的 [lstat(2)](http://man7.org/linux/man-pages/man2/lstat.2.html)。返回一个 `fs.Stats` 实例。
+
+
+<div id="createReadStream" class="anchor"></div>
+## fs.createReadStream(path[, options])
+
+返回一个新的 [ReadStream](./class_fs_ReadStream.md#) 对象（详见 [可读流章节](./stream/api_for_stream_consumers.md#class_Readable)）。
+
+要知道，不同于在一个可读流上设置的 `highWaterMark` 默认值（16 kb），此方法在相同参数下返回的流具有 64 kb 的默认值。
+
+`options` 是一个对象或字符串带有以下默认值：
+
+``` javascript
+{
+    flags: 'r',
+    encoding: null,
+    fd: null,
+    mode: 0 o666,
+    autoClose: true
+}
+```
+
+`options` 可以包括 `start` 和 `end` 值，从文件而不是整个文件读取字节范围。`start` 和 `end` 都需要包括在内，并且起始值都是 0。`encoding` 可以是任何可以被 [Buffer](./buffer/buffer.md#) 接受的值。
+
+如果指定了 `fd`，`ReadStream` 会忽略 `path` 参数并且将使用指定的文件描述符。这也意味着不会触发 `'open'` 事件。请注意，`fd` 应该是阻塞的；非阻塞的 `fd` 们应该传给 [net.Socket](./net/class_net_Socket.md#)。
+
+如果 `autoClose` 是 `false`，那么文件描述符将不能被关闭，即使有错误。将其关闭是你的职责，并且需要确保没有文件描述符泄漏。如果 `autoClose` 被设置为 true（默认行为），在 `error` 或 `end` 时，文件描述符将被自动关闭。
+
+`mode` 用于设置文件模式（权限和粘滞位），但仅在创建该文件时有效。
+
+一个例子来读取 100 字节长的文件的最后 10 个字节：
+
+``` javascript
+fs.createReadStream('sample.txt', {start: 90, end: 99});
+```
+
+如果 `options` 是一个字符串，那么它指定了编码。
+
+
+<div id="read" class="anchor"></div>
+## fs.read(fd, buffer, offset, length, position, callback)
+
+从 `fd` 指定的文件中读取数据。
+
+`buffer` 是该数据将被写入到的 buffer。
+
+`offset` 是在 buffer 中开始写入的偏移量。
+
+`length` 是一个整数，指定要读取的字节的数目。
+
+`position` 是一个整数，指定从该文件中开始读取的位置。如果 `position` 是 `null`，数据将从当前文件位置读取。
+
+回调给出的三个参数 `(err, bytesRead, buffer)`。
