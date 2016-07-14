@@ -245,7 +245,7 @@ fs.symlink('./foo', './new-port');
     flags: 'r',
     encoding: null,
     fd: null,
-    mode: 0 o666,
+    mode: 0o666,
     autoClose: true
 }
 ```
@@ -254,7 +254,7 @@ fs.symlink('./foo', './new-port');
 
 如果指定了 `fd`，`ReadStream` 会忽略 `path` 参数并且将使用指定的文件描述符。这也意味着不会触发 `'open'` 事件。请注意，`fd` 应该是阻塞的；非阻塞的 `fd` 们应该传给 [net.Socket](./net/class_net_Socket.md#)。
 
-如果 `autoClose` 是 `false`，那么文件描述符将不能被关闭，即使有错误。将其关闭是你的职责，并且需要确保没有文件描述符泄漏。如果 `autoClose` 被设置为 true（默认行为），在 `error` 或 `end` 时，文件描述符将被自动关闭。
+如果 `autoClose` 是 `false`，那么文件描述符将不会被关闭，即使有错误。将其关闭是你的职责，并且需要确保没有文件描述符泄漏。如果 `autoClose` 被设置为 true（默认行为），在 `error` 或 `end` 时，文件描述符将被自动关闭。
 
 `mode` 用于设置文件模式（权限和粘滞位），但仅在创建该文件时有效。
 
@@ -281,3 +281,40 @@ fs.createReadStream('sample.txt', {start: 90, end: 99});
 `position` 是一个整数，指定从该文件中开始读取的位置。如果 `position` 是 `null`，数据将从当前文件位置读取。
 
 回调给出的三个参数 `(err, bytesRead, buffer)`。
+
+
+<div id="readSync" class="anchor"></div>
+## fs.readSync(fd, buffer, offset, length, position)
+
+同步版的 [fs.read()](#read)。返回 `bytesRead` 的数。
+
+
+<div id="createWriteStream" class="anchor"></div>
+## fs.createWriteStream(path[, options])
+
+返回一个新的 [WriteStream](./class_fs_WriteStream.md#) 对象（详见 [可写流章节](./stream/api_for_stream_consumers.md#class_Writable)）。
+
+`options` 是一个对象或字符串带有以下默认值：
+
+``` javascript
+{
+    flags: 'w',
+    defaultEncoding: 'utf8',
+    fd: null,
+    mode: 0o666,
+    autoClose: true
+}
+```
+
+`options` 也可以包括一个 `start` 选项以允许在以前的文件开头部分的位置写入数据。如果是修改文件而不是替换它的话可能需要 `r+` 的 `flags` 模式而不是默认的 `w` 模式。`defaultEncoding` 可以是任何可以被 [Buffer](./buffer/buffer.md#) 接受的值。
+
+如果 `autoClose` 被设置为 true（默认行为），在文件描述符发生 `error` 或 `end` 事件时，会被自动关闭。如果 `autoClose` 是 false，那么文件描述符将不会被关闭，即使有错误。将其关闭是你的职责，并且需要确保没有文件描述符泄漏。
+
+类似 [ReadStream](./class_fs_ReadStream.md#)，如果指定了 `fd`，`WriteStream` 会忽略 `path` 参数，并且将使用指定的文件描述符。。这也意味着不会触发 `'open'` 事件。请注意，`fd` 应该是阻塞的；非阻塞的 `fd` 们应该传给 [net.Socket](./net/class_net_Socket.md#)。
+
+如果 `options` 是一个字符串，那么它指定了编码。
+
+
+<div id="write_data" class="anchor"></div>
+## fs.write(fd, data[, position[, encoding]], callback)
+
