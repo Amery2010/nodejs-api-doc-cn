@@ -318,3 +318,44 @@ fs.createReadStream('sample.txt', {start: 90, end: 99});
 <div id="write_data" class="anchor"></div>
 ## fs.write(fd, data[, position[, encoding]], callback)
 
+写入 `data` 到由 `fd` 指定的文件。如果 `data` 不是一个 Buffer 实例，那么该值将被强制转换为字符串。
+
+`position` 指向该数据应从哪里写入的文件的开头的偏移量。如果 `typeof position !== 'number'` 该数据将在当前位置被写入。详见 [pwrite(2)](http://man7.org/linux/man-pages/man2/pwrite.2.html)。
+
+`encoding` 是预期的字符串编码。
+
+该回调将接收 `(err, written, string)` 参数，`written` 用于指定传递过来的字符串需要被写入多少字节。请注意，写入字节与字符串中的字符不同。详见 [Buffer.byteLength](../buffer/class_Buffer.md#Buffer_byteLength)。
+
+与写入 `buffer` 不同，整个字符串必须写入。无子字符串可以指定。这是因为字节所得到的数据的偏移量可能与字符串的偏移量不同。
+
+需要注意的是使用 `fs.write` 在不等待回调的情况下对同一文件进行多次写入，这是不安全的操作。对于这种情况，我们强烈推荐使用 `fs.createWriteStream` 方法。
+
+在 Linux 上，当文件以追加模式打开时，位置写入不起作用。内核会忽略位置参数，并总是将数据附加到文件的末尾。
+
+
+<div id="write_data_sync" class="anchor"></div>
+## fs.writeSync(fd, data[, position[, encoding]])
+
+同步版的 [fs.write()](#write_data)。返回写入的字节数。
+
+
+<div id="write_buffer" class="anchor"></div>
+## fs.write(fd, buffer, offset, length[, position], callback)
+
+写入 `buffer` 到由 `fd` 指定的文件。
+
+`offset` 和 `length` 确定该 buffer 被写入的部分。
+
+`position` 指向该数据应从哪里写入的文件的开头的偏移量。如果 `typeof position !== 'number'` 该数据将在当前位置被写入。详见 [pwrite(2)](http://man7.org/linux/man-pages/man2/pwrite.2.html)。
+
+该回调会给出三个参数 `(err, written, buffer) `，`written` 用于指定从 `buffer` 中写入多少*字节*。
+
+需要注意的是使用 `fs.write` 在不等待回调的情况下对同一文件进行多次写入，这是不安全的操作。对于这种情况，我们强烈推荐使用 `fs.createWriteStream` 方法。
+
+在 Linux 上，当文件以追加模式打开时，位置写入不起作用。内核会忽略位置参数，并总是将数据附加到文件的末尾。
+
+
+<div id="write_buffer_sync" class="anchor"></div>
+## fs.writeSync(fd, buffer, offset, length[, position])
+
+同步版的 [fs.write()](#write_buffer)。返回写入的字节数。
