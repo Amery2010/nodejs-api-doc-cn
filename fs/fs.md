@@ -32,7 +32,6 @@
 * [fs.writeSync(fd, buffer, offset, length[, position])](#write_buffer_sync)
 * [fs.truncate(path, len, callback)](#truncate)
 * [fs.truncateSync(path, len)](#truncateSync)
-* [fs.watch(filename[, options][, listener])](#watch)
 * [fs.stat(path, callback)](#stat)
 * [fs.statSync(path)](#statSync)
 * [fs.chmod(path, mode, callback)](#chmod)
@@ -41,14 +40,19 @@
 * [fs.chownSync(path, uid, gid)](#chownSync)
 * [fs.utimes(path, atime, mtime, callback)](#utimes)
 * [fs.utimesSync(path, atime, mtime)](#utimesSync)
+* [fs.exists(path, callback)](#exists)
+* [fs.existsSync(path)](#existsSync)
 * [fs.open(path, flags[, mode], callback)](#open)
 * [fs.openSync(path, flags[, mode])](#openSync)
 * [fs.close(fd, callback)](#close)
 * [fs.closeSync(fd)](#closeSync)
-* [fs.exists(path, callback)](#exists)
-* [fs.existsSync(path)](#existsSync)
+* [fs.access(path[, mode], callback)](#access)
+* [fs.accessSync(path[, mode])](#accessSync)
 * [fs.rename(oldPath, newPath, callback)](#rename)
 * [fs.renameSync(oldPath, newPath)](#renameSync)
+* [fs.watch(filename[, options][, listener])](#watch)
+* [fs.watchFile(filename[, options], listener)](#watchFile)
+* [fs.unwatchFile(filename[, listener])](#unwatchFile)
 * [fs.readFile(file[, options], callback)](#readFile)
 * [fs.readFileSync(file[, options])](#readFileSync)
 * [fs.writeFile(file, data[, options], callback)](#writeFile)
@@ -57,12 +61,8 @@
 * [fs.appendFileSync(file, data[, options])](#appendFileSync)
 * [fs.ftruncate(fd, len, callback)](#ftruncate)
 * [fs.ftruncateSync(fd, len)](#ftruncateSync)
-* [fs.watchFile(filename[, options], listener)](#watchFile)
-* [fs.unwatchFile(filename[, listener])](#unwatchFile)
 * [fs.fstat(fd, callback)](#fstat)
 * [fs.fstatSync(fd)](#fstatSync)
-* [fs.access(path[, mode], callback)](#access)
-* [fs.accessSync(path[, mode])](#accessSync)
 * [fs.fchmod(fd, mode, callback)](#fchmod)
 * [fs.fchmodSync(fd, mode)](#fchmodSync)
 * [fs.fchown(fd, uid, gid, callback)](#fchown)
@@ -80,43 +80,43 @@
 <div id="readdir" class="anchor"></div>
 ## fs.readdir(path, callback)
 
-异步的 [readdir(3)](http://man7.org/linux/man-pages/man3/readdir.3.html)。读取目录的内容。回调带有两个参数 `(err, files)`，`files` 是该目录中不包括 `'.'` 和 `'..'` 的文件名的数组。
+异步版的 [readdir(3)](http://man7.org/linux/man-pages/man3/readdir.3.html)。读取目录的内容。回调带有两个参数 `(err, files)`，`files` 是该目录中不包括 `'.'` 和 `'..'` 的文件名的数组。
 
 
 <div id="readdirSync" class="anchor"></div>
 ## fs.readdirSync(path)
 
-同步的 [readdir(3)](http://man7.org/linux/man-pages/man3/readdir.3.html)。返回一个不包括 `'.'` 和 `'..'` 的文件名的数组。
+同步版的 [readdir(3)](http://man7.org/linux/man-pages/man3/readdir.3.html)。返回一个不包括 `'.'` 和 `'..'` 的文件名的数组。
 
 
 <div id="mkdir" class="anchor"></div>
 ## fs.mkdir(path[, mode], callback)
 
-异步的 [mkdir(2)](http://man7.org/linux/man-pages/man2/mkdir.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。`mode` 默认为 `0o777`。
+异步版的 [mkdir(2)](http://man7.org/linux/man-pages/man2/mkdir.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。`mode` 默认为 `0o777`。
 
 
 <div id="mkdirSync" class="anchor"></div>
 ## fs.mkdirSync(path[, mode])
 
-同步的 [mkdir(2)](http://man7.org/linux/man-pages/man2/mkdir.2.html)。返回 `undefined`。
+同步版的 [mkdir(2)](http://man7.org/linux/man-pages/man2/mkdir.2.html)。返回 `undefined`。
 
 
 <div id="rmdir" class="anchor"></div>
 ## fs.rmdir(path, callback)
 
-异步的 [rmdir(2)](http://man7.org/linux/man-pages/man2/rmdir.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+异步版的 [rmdir(2)](http://man7.org/linux/man-pages/man2/rmdir.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
 
 
 <div id="rmdirSync" class="anchor"></div>
 ## fs.rmdirSync(path)
 
-同步的 [rmdir(2)](http://man7.org/linux/man-pages/man2/rmdir.2.html)。返回 `undefined`。
+同步版的 [rmdir(2)](http://man7.org/linux/man-pages/man2/rmdir.2.html)。返回 `undefined`。
 
 
 <div id="realpath" class="anchor"></div>
 ## fs.realpath(path[, cache], callback)
 
-异步的 [realpath(2)](http://man7.org/linux/man-pages/man2/realpath.2.html)。`callback` 有两个参数 `(err, resolvedPath)`。可以使用 `process.cwd` 解析相对路径。`cache` 是一个对象字面映射路径可用于强制一个特定路径的解析或避免 `fs.stat` 对已知的真实路径的额外调用。
+异步版的 [realpath(2)](http://man7.org/linux/man-pages/man2/realpath.2.html)。`callback` 有两个参数 `(err, resolvedPath)`。可以使用 `process.cwd` 解析相对路径。`cache` 是一个对象字面映射路径可用于强制一个特定路径的解析或避免 `fs.stat` 对已知的真实路径的额外调用。
 
 例子：
 
@@ -134,25 +134,25 @@ fs.realpath('/etc/passwd', cache, (err, resolvedPath) => {
 <div id="realpathSync" class="anchor"></div>
 ## fs.realpathSync(path[, cache])
 
-同步的 [realpath(2)](http://man7.org/linux/man-pages/man2/realpath.2.html)。返回解析的路径。`cache` 是一个对象字面映射路径可用于强制一个特定路径的解析或避免 `fs.stat` 对已知的真实路径的额外调用。
+同步版的 [realpath(2)](http://man7.org/linux/man-pages/man2/realpath.2.html)。返回解析的路径。`cache` 是一个对象字面映射路径可用于强制一个特定路径的解析或避免 `fs.stat` 对已知的真实路径的额外调用。
 
 
 <div id="link" class="anchor"></div>
 ## fs.link(srcpath, dstpath, callback)
 
-异步的 [link(2)](http://man7.org/linux/man-pages/man2/link.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+异步版的 [link(2)](http://man7.org/linux/man-pages/man2/link.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
 
 
 <div id="linkSync" class="anchor"></div>
 ## fs.linkSync(srcpath, dstpath)
 
-同步的 [link(2)](http://man7.org/linux/man-pages/man2/link.2.html)。返回 `undefined`。
+同步版的 [link(2)](http://man7.org/linux/man-pages/man2/link.2.html)。返回 `undefined`。
 
 
 <div id="symlink" class="anchor"></div>
 ## fs.symlink(target, path[, type], callback)
 
-异步的 [symlink(2)](http://man7.org/linux/man-pages/man2/symlink.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。`type` 参数可以设置为 `'dir'`、`'file'` 或 `'junction'`（默认为 `'file'`）并且仅在 Windows 上可用（在其他平台上忽略）。请注意，Windows 交接点需要的目标路径是绝对的。当使用 `'junction'` 时，`target` 参数会被自动归到绝对路径。
+异步版的 [symlink(2)](http://man7.org/linux/man-pages/man2/symlink.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。`type` 参数可以设置为 `'dir'`、`'file'` 或 `'junction'`（默认为 `'file'`）并且仅在 Windows 上可用（在其他平台上忽略）。请注意，Windows 交接点需要的目标路径是绝对的。当使用 `'junction'` 时，`target` 参数会被自动归到绝对路径。
 
 这里有以下例子：
 
@@ -166,37 +166,37 @@ fs.symlink('./foo', './new-port');
 <div id="symlinkSync" class="anchor"></div>
 ## fs.symlinkSync(target, path[, type])
 
-同步的 [symlink(2)](http://man7.org/linux/man-pages/man2/symlink.2.html)。返回 `undefined`。
+同步版的 [symlink(2)](http://man7.org/linux/man-pages/man2/symlink.2.html)。返回 `undefined`。
 
 
 <div id="readlink" class="anchor"></div>
 ## fs.readlink(path, callback)
 
-异步的 [readlink(2)](http://man7.org/linux/man-pages/man2/readlink.2.html)。回调参数有两个参数 `(err, linkString)`。
+异步版的 [readlink(2)](http://man7.org/linux/man-pages/man2/readlink.2.html)。回调参数有两个参数 `(err, linkString)`。
 
 
 <div id="readlinkSync" class="anchor"></div>
 ## fs.readlinkSync(path)
 
-同步的 [readlink(2)](http://man7.org/linux/man-pages/man2/readlink.2.html)。返回符号链接字符串值。
+同步版的 [readlink(2)](http://man7.org/linux/man-pages/man2/readlink.2.html)。返回符号链接字符串值。
 
 
 <div id="unlink" class="anchor"></div>
 ## fs.unlink(path, callback)
 
-异步的 [unlink(2)](http://man7.org/linux/man-pages/man2/unlink.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+异步版的 [unlink(2)](http://man7.org/linux/man-pages/man2/unlink.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
 
 
 <div id="unlinkSync" class="anchor"></div>
 ## fs.unlinkSync(path)
 
-同步的 [unlink(2)](http://man7.org/linux/man-pages/man2/unlink.2.html)。返回 `undefined`。
+同步版的 [unlink(2)](http://man7.org/linux/man-pages/man2/unlink.2.html)。返回 `undefined`。
 
 
 <div id="lchmod" class="anchor"></div>
 ## fs.lchmod(path, mode, callback)
 
-异步的 [lchmod(2)](https://www.freebsd.org/cgi/man.cgi?query=lchmod&sektion=2)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+异步版的 [lchmod(2)](https://www.freebsd.org/cgi/man.cgi?query=lchmod&sektion=2)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
 
 仅在 Mac OS X 上有效。
 
@@ -204,31 +204,31 @@ fs.symlink('./foo', './new-port');
 <div id="lchmodSync" class="anchor"></div>
 ## fs.lchmodSync(path, mode)
 
-同步的 [lchmod(2)](https://www.freebsd.org/cgi/man.cgi?query=lchmod&sektion=2)。返回 `undefined`。
+同步版的 [lchmod(2)](https://www.freebsd.org/cgi/man.cgi?query=lchmod&sektion=2)。返回 `undefined`。
 
 
 <div id="lchown" class="anchor"></div>
 ## fs.lchown(path, uid, gid, callback)
 
-异步的 [lchown(2)](http://man7.org/linux/man-pages/man2/lchown.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+异步版的 [lchown(2)](http://man7.org/linux/man-pages/man2/lchown.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
 
 
 <div id="lchownSync" class="anchor"></div>
 ## fs.lchownSync(path, uid, gid)
 
-同步的 [lchown(2)](http://man7.org/linux/man-pages/man2/lchown.2.html)。返回 `undefined`。
+同步版的 [lchown(2)](http://man7.org/linux/man-pages/man2/lchown.2.html)。返回 `undefined`。
 
 
 <div id="lstat" class="anchor"></div>
 ## fs.lstat(path, callback)
 
-异步的 [lstat(2)](http://man7.org/linux/man-pages/man2/lstat.2.html)。该回调函数带有两个参数 `(err, stats)`，其中 `stats` 是一个 `fs.Stats` 对象。`lstat()` 等同于 `stat()`，除非 `path` 是一个 symbolic 链接，那么自身就是该链接，它指向的并不是文件。
+异步版的 [lstat(2)](http://man7.org/linux/man-pages/man2/lstat.2.html)。该回调函数带有两个参数 `(err, stats)`，其中 `stats` 是一个 `fs.Stats` 对象。`lstat()` 等同于 `stat()`，除非 `path` 是一个 symbolic 链接，那么自身就是该链接，它指向的并不是文件。
 
 
 <div id="lstatSync" class="anchor"></div>
 ## fs.lstatSync(path)
 
-同步的 [lstat(2)](http://man7.org/linux/man-pages/man2/lstat.2.html)。返回一个 `fs.Stats` 实例。
+同步版的 [lstat(2)](http://man7.org/linux/man-pages/man2/lstat.2.html)。返回一个 `fs.Stats` 实例。
 
 
 <div id="createReadStream" class="anchor"></div>
@@ -359,3 +359,157 @@ fs.createReadStream('sample.txt', {start: 90, end: 99});
 ## fs.writeSync(fd, buffer, offset, length[, position])
 
 同步版的 [fs.write()](#write_buffer)。返回写入的字节数。
+
+
+<div id="truncate" class="anchor"></div>
+## fs.truncate(path, len, callback)
+
+异步版的 [truncate(2)](http://man7.org/linux/man-pages/man2/truncate.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。文件描述符也可以作为第一个参数传递。在这种情况下，`fs.ftruncate()` 被调用。
+
+
+<div id="truncateSync" class="anchor"></div>
+## fs.truncateSync(path, len)
+
+同步版的 [truncate(2)](http://man7.org/linux/man-pages/man2/truncate.2.html)。返回 `undefined`。
+
+
+<div id="ftruncate" class="anchor"></div>
+## fs.ftruncate(fd, len, callback)
+
+异步版的 [ftruncate(2)](http://man7.org/linux/man-pages/man2/ftruncate.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+
+
+<div id="ftruncateSync" class="anchor"></div>
+## fs.ftruncateSync(fd, len)
+
+同步版的 [ftruncate(2)](http://man7.org/linux/man-pages/man2/ftruncate.2.html)。返回 `undefined`。
+
+
+<div id="stat" class="anchor"></div>
+## fs.stat(path, callback)
+
+异步版的 [stat(2)](http://man7.org/linux/man-pages/man2/stat.2.html)。回调有两个参数 `(err, stats)`，其中 `stats` 是一个 [fs.Stats](./class_fs_Stats.md#) 对象。详见 [fs.Stats](./class_fs_Stats.md#) 章节了解更多信息。
+
+
+<div id="statSync" class="anchor"></div>
+## fs.statSync(path)
+
+同步版的 [stat(2)](http://man7.org/linux/man-pages/man2/stat.2.html)。返回一个 [fs.Stats](./class_fs_Stats.md#) 实例。
+
+
+<div id="chmod" class="anchor"></div>
+## fs.chmod(path, mode, callback)
+
+异步版的 [chmod(2)](http://man7.org/linux/man-pages/man2/chmod.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+
+
+<div id="chmodSync" class="anchor"></div>
+## fs.chmodSync(path, mode)
+
+同步版的 [chmod(2)](http://man7.org/linux/man-pages/man2/chmod.2.html)。返回 `undefined`。
+
+
+<div id="chown" class="anchor"></div>
+## fs.chown(path, uid, gid, callback)
+
+异步版的 [chown(2)](http://man7.org/linux/man-pages/man2/chown.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+
+
+<div id="chownSync" class="anchor"></div>
+## fs.chownSync(path, uid, gid)
+
+同步版的 [chown(2)](http://man7.org/linux/man-pages/man2/chown.2.html)。返回 `undefined`。
+
+
+<div id="utimes" class="anchor"></div>
+## fs.utimes(path, atime, mtime, callback)
+
+改变由 `path` 提供的路径所引用的文件的文件时间戳。
+
+注意：`atime` 和 `mtime` 参数跟随的相关函数是否遵循以下规则：
+
+* 如果值是一个像 `'123456789'` 那样的可以数值化的字符串，该值会得到转换为对应的数值。
+
+* 如果值是 `NaN` 或 `Infinity`，该值将被转换为 `Date.now()`。
+
+
+<div id="utimesSync" class="anchor"></div>
+## fs.utimesSync(path, atime, mtime)
+
+同步版的 [fs.utimes()](#utimes)。返回 `undefined`。
+
+
+<div id="exists" class="anchor"></div>
+## fs.exists(path, callback)
+
+> 稳定度：0 - 已废弃：使用 [fs.stat()](#stat) 或 [fs.access()](#access) 代替。
+
+通过使用文件系统检查是否存在给定的路径的测试。然后回调给 `callback` 的参数 `true` 或 `false`。例如：
+
+``` javascript
+fs.exists('/etc/passwd', (exists) => {
+    console.log(exists ? 'it\'s there' : 'no passwd!');
+});
+```
+
+在调用 `fs.open()` 前，`fs.exists()` 不应该被用于检测文件是否存在。这样做会形成一种竞争状态，因为其他进程可能会在两个调用之间改变文件的状态。反而，用户代码应直接调用 `fs.open()` 并处理如果该文件不存在引发的错误。
+
+
+<div id="existsSync" class="anchor"></div>
+## fs.existsSync(path)
+
+> 稳定度：0 - 已废弃：使用 [fs.statSync()](#statSync) 或 [fs.accessSync()](#accessSync) 代替。
+
+同步版的 [fs.exists()](#exists)。如果文件存在则返回 `true`，否则返回 `false`。
+
+
+<div id="open" class="anchor"></div>
+## fs.open(path, flags[, mode], callback)
+
+异步打开文件。详见 [open(2)](http://man7.org/linux/man-pages/man2/open.2.html)。
+
+`flags` 可以是：
+
+* `'r'` - 以读取模式打开文件。如果该文件不存在会发生异常。
+
+* `'r+'` - 以读写模式打开文件。如果该文件不存在会发生异常。
+
+* `'rs'` - 以同步读取模式打开文件。指示操作系统绕过本地文件系统的高速缓存。
+
+    这对 NFS 挂载模式下打开文件很有用，因为它可以让你跳过潜在的陈旧的本地缓存。它会对 I/O 的性能产生明显地影响，所以除非你需要，否则请不要使用此标志。
+    
+    请注意，这不会转换 `fs.open()` 进入同步阻塞调用。如果这是你想要的，那么你应该使用 `fs.openSync()`。
+    
+* `'rs+'` - 以读写模式打开文件，告知操作系统同步打开。详见 `'rs'` 中的有关的注意点。
+
+* `'w'` - 以写入模式打开文件。将被创建（如果文件不存在）或截断（如果文件存在）。
+
+* `'wx'` - 类似于 `'w'`，但如果 `path` 存在，将会导致失败。
+
+* `'w+'` - 以读写模式打开文件。将被创建（如果文件不存在）或截断（如果文件存在）。
+
+* `'wx+'` - 类似于 `'w+'`，但如果 `path` 存在，将会导致失败。
+
+* `'a'` - 以追加模式打开文件。如果不存在，该文件会被创建。
+
+* `'ax'` - 类似于 `'a'`，但如果 `path` 存在，将会导致失败。
+
+* `'a+'` - 以读取和追加模式打开文件。如果不存在，该文件会被创建。
+
+* `'ax+'` - 类似于 `'a+'`，但如果 `path` 存在，将会导致失败。
+
+`mode` 设置文件模式（权限和粘滞位），但只有当文件被创建时有效。它默认为 `0666`，可读写。
+
+该回调有两个参数 `(err, fd)`。
+
+独家标志 `'x'`（在 [open(2)](http://man7.org/linux/man-pages/man2/open.2.html) 中的 `O_EXCL` 标志）确保 `path` 是新创建的。在 POSIX 操作系统中，哪怕是一个符号链接到一个不存在的文件，`path` 也会被视为存在。独家标志有可能可以在网络文件系统中工作。
+
+`flags` 也可以是一个记录在 [open(2)](http://man7.org/linux/man-pages/man2/open.2.html) 中的数字；常用的辅音可从 `require('constants')` 获取。在 Windows 中，标志被转换为它们等同的替代，可适用如 `O_WRONLY` 到 `FILE_GENERIC_WRITE`，或 `O_EXCL|O_CREAT` 到 `CREATE_NEW` 通过 CreateFileW 接受。
+
+在 Linux 中，当文件以追加模式打开时，位置写入不起作用。内核忽略位置参数，并总是将数据附加到文件的末尾。
+
+
+<div id="openSync" class="anchor"></div>
+## fs.openSync(path, flags[, mode])
+
+同步版的 [fs.open()](#open)。返回表示文件描述符的整数。
