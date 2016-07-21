@@ -51,6 +51,10 @@
 * [fs.rename(oldPath, newPath, callback)](#rename)
 * [fs.renameSync(oldPath, newPath)](#renameSync)
 * [fs.watch(filename[, options][, listener])](#watch)
+  - [注意事项](#caveats)
+    - [可用性](#availability)
+    - [索引节点](#inodes)
+    - [文件名参数](#filename_argument)
 * [fs.watchFile(filename[, options], listener)](#watchFile)
 * [fs.unwatchFile(filename[, listener])](#unwatchFile)
 * [fs.readFile(file[, options], callback)](#readFile)
@@ -513,3 +517,96 @@ fs.exists('/etc/passwd', (exists) => {
 ## fs.openSync(path, flags[, mode])
 
 同步版的 [fs.open()](#open)。返回表示文件描述符的整数。
+
+
+<div id="close" class="anchor"></div>
+## fs.close(fd, callback)
+
+异步版的 [close(2)](http://man7.org/linux/man-pages/man2/close.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+
+
+<div id="closeSync" class="anchor"></div>
+## fs.closeSync(fd)
+
+同步版的 [close(2)](http://man7.org/linux/man-pages/man2/close.2.html)。返回 `undefined`。
+
+
+<div id="access" class="anchor"></div>
+## fs.access(path[, mode], callback)
+
+测试由 `path` 指定的文件的用户权限。`mode` 是一个可选的整数，指定要执行的辅助检查。以下常量定义 `mode` 的可能值。有可能产生由位或和两个或更多个值组成的掩码。
+
+* `fs.F_OK` - 文件对调用进程可见。这在确定文件是否存在时很有用，但只字未提 rwx 权限。如果 `mode` 没被指定，默认为该值。
+
+* `fs.R_OK` - 文件可以通过调用进程读取。
+
+* `fs.W_OK` - 文件可以通过调用进程写入。
+
+* `fs.X_OK` - 文件可以通过调用进程执行。这对 Windows 没有影响（行为类似 `fs.F_OK`）。
+
+最后一个参数 `callback` 是一个回调函数，调用时可能带有一个 error 参数。如果有任何辅助检查失败，错误参数将被填充。下面的例子将检查 `/etc/passwd` 文件是否可以被读取并被当前进程写入。
+
+``` javascript
+fs.access('/etc/passwd', fs.R_OK | fs.W_OK, (err) => {
+    console.log(err ? 'no access!' : 'can read/write');
+});
+```
+
+
+<div id="accessSync" class="anchor"></div>
+## fs.accessSync(path[, mode])
+
+同步版的 [fs.access()](#access)。如果有任何辅助检查失败将抛出错误，否则什么也不做。
+
+
+<div id="rename" class="anchor"></div>
+## fs.rename(oldPath, newPath, callback)
+
+异步版的 [rename(2)](http://man7.org/linux/man-pages/man2/rename.2.html)。除了一个可能的异常参数外没有其他参数会给到完成时的回调。
+
+
+<div id="renameSync" class="anchor"></div>
+## fs.renameSync(oldPath, newPath)
+
+同步版的 [rename(2)](http://man7.org/linux/man-pages/man2/rename.2.html)。返回 `undefined`。
+
+
+<div id="watch" class="anchor"></div>
+## fs.watch(filename[, options][, listener])
+
+监视 `filename` 的变化，`filename` 既可以是一个文件也可以是一个目录。返回的对象是一个 [fs.FSWatcher](./class_fs_FSWatcher.md#) 实例。
+
+第二个参数是可选的。如果提供的话，`options` 应该是一个对象。支持的布尔成员是 `persistent` 和 `recursive`。`persistent` 表示当文件被监视时，该进程是否应该持续运行。`recursive` 表示所有子目录是否应该关注，或仅当前目录。只有在支持的平台（参见[注意事项](#caveats)）上可以指定目录适用。
+
+默认为 `{ persistent: true, recursive: false }`。
+
+该监听回调获得两个参数 `(event, filename)`。`event` 既可以是 `'rename'` 也可以是 `'change'`，并且 `filename` 是其中触发事件的文件的名称。
+
+
+<div id="caveats" class="anchor"></div>
+### 注意事项
+
+该 `fs.watch` API 不是 100％ 的跨平台一致，并且在某些情况下不可用。
+
+递归选项只支持 OS X 和 Windows。
+
+
+<div id="availability" class="anchor"></div>
+#### 可用性
+
+此功能依赖于底层操作系统提供的一种方法来通知文件系统的变化。
+
+* 在 Linux 系统中，使用 `inotify`。
+
+* 在 BSD 系统中，使用 `kqueue`。
+
+* 在 OS X 系统中，对文件使用 `kqueue`，对目录使用 `'FSEvents'`。
+
+* 在 SunOS 系统（包括 Solaris 和 SmartOS）中，使用 `event ports`。
+
+* 在 Windows 系统中，此功能取决于 `ReadDirectoryChangesW`。
+
+如果底层功能出于某种原因不可用，那么 `fs.watch` 也将无法正常工作。例如，在网络文件系统（ZFS，SMB 等）中监视文件或目录往往并不可靠或都不可靠。
+
+你可以仍然使用 `fs.watchFile`，它使用状态查询，但它较慢和不可靠。
+
