@@ -610,3 +610,60 @@ fs.access('/etc/passwd', fs.R_OK | fs.W_OK, (err) => {
 
 你可以仍然使用 `fs.watchFile`，它使用状态查询，但它较慢和不可靠。
 
+
+<div id="inodes" class="anchor"></div>
+#### 索引节点
+
+在 Linux 或 OS X 系统中，`fs.watch()` 解析路径到一个[索引节点](http://www.linux.org/threads/intro-to-inodes.4130)，并监视该索引节点。如果监视的路径被删除或重建，它会被赋予一个新的索引节点。监视器会发出一个删除事件，但会继续监视该*原始*索引节点。新建索引节点的事件不会被触发。这是正常现象。
+
+
+<div id="filename_argument" class="anchor"></div>
+#### 文件名参数
+
+在回调中提供 `filename` 参数，仅在 Linux 和 Windows 系统上支持。即使在支持的平台中，`filename` 也不能保证提供。因此，不要以为 `filename` 参数总是在回调中提供，并在它是 null 的情况下，提供一定的后备逻辑。
+
+``` javascript
+fs.watch('somedir', (event, filename) => {
+    console.log(`event is: ${event}`);
+    if (filename) {
+        console.log(`filename provided: ${filename}`);
+    } else {
+        console.log('filename not provided');
+    }
+});
+```
+
+
+<div id="watchFile" class="anchor"></div>
+## fs.watchFile(filename[, options], listener)
+
+监视 `filename` 的变化。`listener` 回调在每次访问文件时会被调用。
+
+`options` 参数可被省略。如果提供的话，它应该是一个对象。`options` 对象可能包含一个名为 `persistent` 的布尔值，表示当文件被监视时，该进程是否应该持续运行。`options` 对象可以指定一个 `interval` 属性，表示目标多久应以毫秒为单位进行查询。该默认值为 `{ persistent: true, interval: 5007 }`。
+
+`listener` 有两个参数，当前的状态对象和以前的状态对象：
+
+``` javascript
+fs.watchFile('message.text', (curr, prev) => {
+    console.log(`the current mtime is: ${curr.mtime}`);
+    console.log(`the previous mtime was: ${prev.mtime}`);
+});
+```
+
+这里的状态对象是 `fs.Stat` 的实例。
+
+如果你想在文件被修改时得到通知，不只是访问，你也需要比较 `curr.mtime` 和 `prev.mtime`。
+
+*注意：当 `fs.watchFile` 的运行结果属于一个 `ENOENT` 错误时，它将以所有字段为零（或日期、Unix 纪元）调用监听器一次。在 Windows 中，`blksize` 和 `blocks` 字段会是 `undefined`，而不是零。如果文件是在那之后创建的，监听器会被再次以最新的状态对象进行调用。这是在 v0.10 版之后在功能上的变化。*
+
+*注意：[fs.watch()](#watch) 比 `fs.watchFile` 和 `fs.watchFile` 更高效。可能的话，`fs.watch` 应当被用来代替 `fs.watchFile` 和 `fs.unwatchFile`。*
+
+
+<div id="unwatchFile" class="anchor"></div>
+## fs.unwatchFile(filename[, listener])
+
+停止监视 `filename` 的变化。如果指定了 `listener`，只会移除特定的监视器。否则，*所有*的监视器都会被移除，并且你已经有效地停止监视 `filename`。
+
+带有一个没有被监视的文件名来调用 `fs.unwatchFile()` 是一个空操作，而不是一个错误。
+
+*注意：[fs.watch()](#watch) 比 `fs.watchFile` 和 `fs.watchFile` 更高效。可能的话，`fs.watch` 应当被用来代替 `fs.watchFile` 和 `fs.unwatchFile`。*
