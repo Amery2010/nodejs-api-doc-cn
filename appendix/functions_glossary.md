@@ -460,6 +460,14 @@
 
 [fs.fdatasyncSync(fd)](./fs/fs.md#fdatasyncSync)
 
+[fs.ReadStream 类](./fs/class_fs_ReadStream.md#)
+
+[fs.WriteStream 类](./fs/class_fs_WriteStream.md#)
+
+[fs.Stats 类](./fs/class_fs_Stats.md#)
+
+[fs.FSWatcher 类](./fs/class_fs_FSWatcher.md#)
+
 ### G
 
 [global](../globals/global.md#global)

@@ -238,7 +238,7 @@ fs.symlink('./foo', './new-port');
 <div id="createReadStream" class="anchor"></div>
 ## fs.createReadStream(path[, options])
 
-返回一个新的 [ReadStream](./class_fs_ReadStream.md#) 对象（详见 [可读流章节](./stream/api_for_stream_consumers.md#class_Readable)）。
+返回一个新的 [ReadStream](../class_fs_ReadStream.md#) 对象（详见 [可读流章节](../stream/api_for_stream_consumers.md#class_Readable)）。
 
 要知道，不同于在一个可读流上设置的 `highWaterMark` 默认值（16 kb），此方法在相同参数下返回的流具有 64 kb 的默认值。
 
@@ -254,9 +254,9 @@ fs.symlink('./foo', './new-port');
 }
 ```
 
-`options` 可以包括 `start` 和 `end` 值，从文件而不是整个文件读取字节范围。`start` 和 `end` 都需要包括在内，并且起始值都是 0。`encoding` 可以是任何可以被 [Buffer](./buffer/buffer.md#) 接受的值。
+`options` 可以包括 `start` 和 `end` 值，从文件而不是整个文件读取字节范围。`start` 和 `end` 都需要包括在内，并且起始值都是 0。`encoding` 可以是任何可以被 [Buffer](../buffer/buffer.md#) 接受的值。
 
-如果指定了 `fd`，`ReadStream` 会忽略 `path` 参数并且将使用指定的文件描述符。这也意味着不会触发 `'open'` 事件。请注意，`fd` 应该是阻塞的；非阻塞的 `fd` 们应该传给 [net.Socket](./net/class_net_Socket.md#)。
+如果指定了 `fd`，`ReadStream` 会忽略 `path` 参数并且将使用指定的文件描述符。这也意味着不会触发 `'open'` 事件。请注意，`fd` 应该是阻塞的；非阻塞的 `fd` 们应该传给 [net.Socket](../net/class_net_Socket.md#)。
 
 如果 `autoClose` 是 `false`，那么文件描述符将不会被关闭，即使有错误。将其关闭是你的职责，并且需要确保没有文件描述符泄漏。如果 `autoClose` 被设置为 true（默认行为），在 `error` 或 `end` 时，文件描述符将被自动关闭。
 
@@ -296,7 +296,7 @@ fs.createReadStream('sample.txt', {start: 90, end: 99});
 <div id="createWriteStream" class="anchor"></div>
 ## fs.createWriteStream(path[, options])
 
-返回一个新的 [WriteStream](./class_fs_WriteStream.md#) 对象（详见 [可写流章节](./stream/api_for_stream_consumers.md#class_Writable)）。
+返回一个新的 [WriteStream](../class_fs_WriteStream.md#) 对象（详见 [可写流章节](../stream/api_for_stream_consumers.md#class_Writable)）。
 
 `options` 是一个对象或字符串带有以下默认值：
 
@@ -310,11 +310,11 @@ fs.createReadStream('sample.txt', {start: 90, end: 99});
 }
 ```
 
-`options` 也可以包括一个 `start` 选项以允许在以前的文件开头部分的位置写入数据。如果是修改文件而不是替换它的话可能需要 `r+` 的 `flags` 模式而不是默认的 `w` 模式。`defaultEncoding` 可以是任何可以被 [Buffer](./buffer/buffer.md#) 接受的值。
+`options` 也可以包括一个 `start` 选项以允许在以前的文件开头部分的位置写入数据。如果是修改文件而不是替换它的话可能需要 `r+` 的 `flags` 模式而不是默认的 `w` 模式。`defaultEncoding` 可以是任何可以被 [Buffer](../buffer/buffer.md#) 接受的值。
 
 如果 `autoClose` 被设置为 true（默认行为），在文件描述符发生 `error` 或 `end` 事件时，会被自动关闭。如果 `autoClose` 是 false，那么文件描述符将不会被关闭，即使有错误。将其关闭是你的职责，并且需要确保没有文件描述符泄漏。
 
-类似 [ReadStream](./class_fs_ReadStream.md#)，如果指定了 `fd`，`WriteStream` 会忽略 `path` 参数，并且将使用指定的文件描述符。。这也意味着不会触发 `'open'` 事件。请注意，`fd` 应该是阻塞的；非阻塞的 `fd` 们应该传给 [net.Socket](./net/class_net_Socket.md#)。
+类似 [ReadStream](../class_fs_ReadStream.md#)，如果指定了 `fd`，`WriteStream` 会忽略 `path` 参数，并且将使用指定的文件描述符。。这也意味着不会触发 `'open'` 事件。请注意，`fd` 应该是阻塞的；非阻塞的 `fd` 们应该传给 [net.Socket](../net/class_net_Socket.md#)。
 
 如果 `options` 是一个字符串，那么它指定了编码。
 
@@ -380,13 +380,13 @@ fs.createReadStream('sample.txt', {start: 90, end: 99});
 <div id="stat" class="anchor"></div>
 ## fs.stat(path, callback)
 
-异步的 [stat(2)](http://man7.org/linux/man-pages/man2/stat.2.html)。回调有两个参数 `(err, stats)`，其中 `stats` 是一个 [fs.Stats](./class_fs_Stats.md#) 对象。详见 [fs.Stats](./class_fs_Stats.md#) 章节了解更多信息。
+异步的 [stat(2)](http://man7.org/linux/man-pages/man2/stat.2.html)。回调有两个参数 `(err, stats)`，其中 `stats` 是一个 [fs.Stats](../class_fs_Stats.md#) 对象。详见 [fs.Stats](../class_fs_Stats.md#) 章节了解更多信息。
 
 
 <div id="statSync" class="anchor"></div>
 ## fs.statSync(path)
 
-同步的 [stat(2)](http://man7.org/linux/man-pages/man2/stat.2.html)。返回一个 [fs.Stats](./class_fs_Stats.md#) 实例。
+同步的 [stat(2)](http://man7.org/linux/man-pages/man2/stat.2.html)。返回一个 [fs.Stats](../class_fs_Stats.md#) 实例。
 
 
 <div id="chmod" class="anchor"></div>
@@ -562,7 +562,7 @@ fs.access('/etc/passwd', fs.R_OK | fs.W_OK, (err) => {
 <div id="watch" class="anchor"></div>
 ## fs.watch(filename[, options][, listener])
 
-监视 `filename` 的变化，`filename` 既可以是一个文件也可以是一个目录。返回的对象是一个 [fs.FSWatcher](./class_fs_FSWatcher.md#) 实例。
+监视 `filename` 的变化，`filename` 既可以是一个文件也可以是一个目录。返回的对象是一个 [fs.FSWatcher](../class_fs_FSWatcher.md#) 实例。
 
 第二个参数是可选的。如果提供的话，`options` 应该是一个对象。支持的布尔成员是 `persistent` 和 `recursive`。`persistent` 表示当文件被监视时，该进程是否应该持续运行。`recursive` 表示所有子目录是否应该关注，或仅当前目录。只有在支持的平台（参见[注意事项](#caveats)）上可以指定目录适用。
 
