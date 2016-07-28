@@ -526,6 +526,26 @@
 
 [new stream.Transform([options])](../stream/api_for_stream_implementors.md#new_Transform)
 
+[net.createServer([options][, connectionListener])](../net/net.md#createServer)
+
+[net.createConnection(options[, connectListener])](../net/net.md#createConnection_options)
+
+[net.createConnection(path[, connectListener])](../net/net.md#createConnection_path)
+
+[net.createConnection(port[, host][, connectListener])](../net/net.md#createConnection_port)
+
+[net.connect(options[, connectListener])](../net/net.md#connect_options)
+
+[net.connect(path[, connectListener])](../net/net.md#connect_path)
+
+[net.connect(port[, host][, connectListener])](../net/net.md#connect_port)
+
+[net.isIP(input)](../net/net.md#isIP)
+
+[net.isIPv4(input)](../net/net.md#isIPv4)
+
+[net.isIPv6(input)](../net/net.md#isIPv6)
+
 ### O
 
 [os.EOL](../os/os.md#EOL)
