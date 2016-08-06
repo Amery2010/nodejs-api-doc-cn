@@ -546,6 +546,8 @@
 
 [net.isIPv6(input)](../net/net.md#isIPv6)
 
+[net.Server 类](../net/class_net_Server.md#)
+
 ### O
 
 [os.EOL](../os/os.md#EOL)
@@ -779,6 +781,30 @@
 [script.runInContext(contextifiedSandbox[, options])](../vm/class_Script.md#runInContext)
 
 [script.runInNewContext([sandbox][, options])](../vm/class_Script.md#runInNewContext)
+
+[server.maxConnections](../net/class_net_Server.md#servermaxConnections)
+
+[server.connections](../net/class_net_Server.md#serverconnections)
+
+[server.listening](../net/class_net_Server.md#serverlistening)
+
+[server.getConnections(callback)](../net/class_net_Server.md#servergetConnectionscallback)
+
+[server.listen(port[, hostname][, backlog][, callback])](../net/class_net_Server.md#serverlistenport-hostname-backlog-callback)
+
+[server.listen(path[, backlog][, callback])](../net/class_net_Server.md#serverlistenpath-backlog-callback)
+
+[server.listen(handle[, backlog][, callback])](../net/class_net_Server.md#serverlistenhandle-backlog-callback)
+
+[server.listen(options[, callback])](../net/class_net_Server.md#serverlistenoptions-callback)
+
+[server.address()](../net/class_net_Server.md#serveraddress)
+
+[server.close([callback])](../net/class_net_Server.md#serverclosecallback)
+
+[server.unref()](../net/class_net_Server.md#serverunref)
+
+[server.ref()](../net/class_net_Server.md#serverref)
 
 ### T
 
