@@ -1,20 +1,19 @@
 # 方法和属性
 
-* [net.createServer([options][, connectionListener])](#createServer)
-* [net.createConnection(options[, connectListener])](#createConnection_options)
-* [net.createConnection(path[, connectListener])](#createConnection_path)
-* [net.createConnection(port[, host][, connectListener])](#createConnection_port)
-* [net.connect(options[, connectListener])](#connect_options)
-* [net.connect(path[, connectListener])](#connect_path)
-* [net.connect(port[, host][, connectListener])](#connect_port)
-* [net.isIP(input)](#isIP)
-* [net.isIPv4(input)](#isIPv4)
-* [net.isIPv6(input)](#isIPv6)
+* [net.createServer([options][, connectionListener])](#netcreateserveroptions)
+* [net.createConnection(options[, connectListener])](#netcreateconnectionoptions_connectListener)
+* [net.createConnection(path[, connectListener])](#netcreateconnectionpath_connectListener)
+* [net.createConnection(port[, host][, connectListener])](#netcreateconnectionport_host_connectListener)
+* [net.connect(options[, connectListener])](#netconnectoptions_connectListener)
+* [net.connect(path[, connectListener])](#netconnectpath_connectListener)
+* [net.connect(port[, host][, connectListener])](#netconnectport_host_connectListener)
+* [net.isIP(input)](#netisip_input)
+* [net.isIPv4(input)](#netisipv4_input)
+* [net.isIPv6(input)](#netisipv6_input)
 
 --------------------------------------------------
 
 
-<div id="createServer" class="anchor"></div>
 ## net.createServer([options][, connectionListener])
 
 创建一个新的服务器。`connectionListener` 参数自动设置为 ['connection' 事件](./class_net_Server.md#event_connection) 的一个监听器。
@@ -74,7 +73,6 @@ nc -U /tmp/echo.sock
 ```
 
 
-<div id="createConnection_options" class="anchor"></div>
 ## net.createConnection(options[, connectListener])
 
 一个工厂函数，返回一个新的 [net.Socket](./class_net_Socket.md#) 实例，并使用提供的 `options` 自动连接。
@@ -110,7 +108,6 @@ const client = net.createConnection({path: '/tmp/echo.sock'});
 ```
 
 
-<div id="createConnection_path" class="anchor"></div>
 ## net.createConnection(path[, connectListener])
 
 一个工厂函数，返回一个新的 unix [net.Socket](./class_net_Socket.md#) 实例，并使用提供的 `path` 自动连接。
@@ -118,7 +115,6 @@ const client = net.createConnection({path: '/tmp/echo.sock'});
 `connectListener` 参数会被添加为 ['connect' 事件](./class_net_Socket.md#event_connect) 的监听器一次。
 
 
-<div id="createConnection_port" class="anchor"></div>
 ## net.createConnection(port[, host][, connectListener])
 
 一个工厂函数，返回一个新的 [net.Socket](./class_net_Socket.md#) 实例，并使用提供的 `path` 和 `host` 自动连接。
@@ -128,7 +124,6 @@ const client = net.createConnection({path: '/tmp/echo.sock'});
 `connectListener` 参数会被添加为 ['connect' 事件](./class_net_Socket.md#event_connect) 的监听器一次。
 
 
-<div id="connect_options" class="anchor"></div>
 ## net.connect(options[, connectListener])
 
 一个工厂函数，返回一个新的 [net.Socket](./class_net_Socket.md#) 实例，并使用提供的 `options` 自动连接。
@@ -164,7 +159,6 @@ const client = net.connect({path: '/tmp/echo.sock'});
 ```
 
 
-<div id="connect_path" class="anchor"></div>
 ## net.connect(path[, connectListener])
 
 一个工厂函数，返回一个新的 unix [net.Socket](./class_net_Socket.md#) 实例，并使用提供的 `path` 自动连接。
@@ -172,7 +166,6 @@ const client = net.connect({path: '/tmp/echo.sock'});
 `connectListener` 参数会被添加为 ['connect' 事件](./class_net_Socket.md#event_connect) 的监听器一次。
 
 
-<div id="connect_port" class="anchor"></div>
 ## net.connect(port[, host][, connectListener])
 
 一个工厂函数，返回一个新的 [net.Socket](./class_net_Socket.md#) 实例，并使用提供的 `path` 和 `host` 自动连接。
@@ -182,19 +175,16 @@ const client = net.connect({path: '/tmp/echo.sock'});
 `connectListener` 参数会被添加为 ['connect' 事件](./class_net_Socket.md#event_connect) 的监听器一次。
 
 
-<div id="isIP" class="anchor"></div>
 ## net.isIP(input)
 
 检测是否输入是一个 IP 地址。对于无效的字符串，返回 0，对于 IPv4 的地址返回 4，对于 IPv6 地址返回 6。
 
 
-<div id="isIPv4" class="anchor"></div>
 ## net.isIPv4(input)
 
 如果输入的是版本 4 的 IP 地址，则返回 true，否则返回 false。
 
 
-<div id="isIPv6" class="anchor"></div>
 ## net.isIPv6(input)
 
 如果输入的是版本 6 的 IP 地址，则返回 true，否则返回 false。

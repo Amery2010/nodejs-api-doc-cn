@@ -526,25 +526,25 @@
 
 [new stream.Transform([options])](../stream/api_for_stream_implementors.md#new_Transform)
 
-[net.createServer([options][, connectionListener])](../net/net.md#createServer)
+[net.createServer([options][, connectionListener])](../net/net.md#netcreateserveroptions)
 
-[net.createConnection(options[, connectListener])](../net/net.md#createConnection_options)
+[net.createConnection(options[, connectListener])](../net/net.md#netcreateconnectionoptions_connectListener)
 
-[net.createConnection(path[, connectListener])](../net/net.md#createConnection_path)
+[net.createConnection(path[, connectListener])](../net/net.md#netcreateconnectionpath_connectListener)
 
-[net.createConnection(port[, host][, connectListener])](../net/net.md#createConnection_port)
+[net.createConnection(port[, host][, connectListener])](../net/net.md#netcreateconnectionport_host_connectListener)
 
-[net.connect(options[, connectListener])](../net/net.md#connect_options)
+[net.connect(options[, connectListener])](../net/net.md#netconnectoptions_connectListener)
 
-[net.connect(path[, connectListener])](../net/net.md#connect_path)
+[net.connect(path[, connectListener])](../net/net.md#netconnectpath_connectListener)
 
-[net.connect(port[, host][, connectListener])](../net/net.md#connect_port)
+[net.connect(port[, host][, connectListener])](../net/net.md#netconnectport_host_connectListener)
 
-[net.isIP(input)](../net/net.md#isIP)
+[net.isIP(input)](../net/net.md#netisip_input)
 
-[net.isIPv4(input)](../net/net.md#isIPv4)
+[net.isIPv4(input)](../net/net.md#netisipv4_input)
 
-[net.isIPv6(input)](../net/net.md#isIPv6)
+[net.isIPv6(input)](../net/net.md#netisipv6_input)
 
 [net.Server 类](../net/class_net_Server.md#)
 
