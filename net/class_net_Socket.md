@@ -99,3 +99,67 @@
 * {Error}
 
 在发生错误时发出。`'close'` 事件会直接在该事件之后调用。
+
+
+## new net.Socket([options])
+
+构造一个新的 Socket 对象。
+
+`options` 是一个带有以下默认值的对象：
+
+``` javascript
+{
+    fd: null,
+    allowHalfOpen: false,
+    readable: false,
+    writable: false
+}
+```
+
+`fd` 允许你指定现有的 socket 文件描述符。设置 `readable` 或 `writable` 为 `true` 将允许在该 socket 上读取或写入（注意：仅当传入 `fd` 时有效）。关于 `allowHalfOpen`，请参考 `createServer()` 和 `'end'` 事件。
+
+`net.Socket` 实例是 [EventEmitter](../events/class_EventEmitter.md#)。
+
+
+## socket.bufferSize
+
+`net.Socket` 有该属性以保证 `socket.write()` 总是有效。这是为了帮助用户快速启动和运行。计算机不能总是赶上写入到一个 socket 中的数据量——网络连接只可能太慢。Node.js 在内部以队列形式写入到 socket 中，并在合适时机通过报文发送。（在内部，Node.js 轮询 socket 的文件描述符以保证可写）
+
+内部缓存可能会导致内存占用增加。该属性表示要被写入到当前缓冲的字符数。（字符数大约等于被写入的字节数，但 buffer 可能包含字符串并且该字符串是惰性编码的，所以无法知晓字节的确切数目。）
+
+遇到大的或增长的 `bufferSize` 的用户，应该在他们的程序中尝试通过 [pause()](#socketpause) 和 [resume()](#socketresume) 进行数据“节流”。
+
+
+## socket.bytesRead
+
+已接收的字节数。
+
+
+## socket.bytesWritten
+
+发送的字节数。
+
+
+## socket.localPort
+
+该数字表示本地端口。例如，`80` 或 `21`。
+
+
+## socket.localAddress
+
+该字符串表示用于远程客户端连接的本地 IP 地址。例如，如果你监听 `'0.0.0.0'` 并且客户端连接到了 `'192.168.1.1'`，该值将会是 `'192.168.1.1'`。
+
+
+## socket.remotePort
+
+该数字表示远程端口。例如，`80` 或 `21`。
+
+
+## socket.remoteFamily
+
+该数字表示远程 IP 族。`'IPv4'` 或 `'IPv6'`。
+
+
+## socket.remoteAddress
+
+该数字表示远程 IP 地址。例如，`'74.125.127.100'` 或 `'2001:4860:a005::68'`。如果 socket 被销毁，那么值也可能是 `undefined`（例如，假设客户端断开连接）。
