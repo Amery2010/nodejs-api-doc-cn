@@ -548,6 +548,8 @@
 
 [net.Server 类](../net/class_net_Server.md#)
 
+[new net.Socket([options])](../net/class_net_Socket.md#new_netsocketoptions)
+
 ### O
 
 [os.EOL](../os/os.md#EOL)
@@ -805,6 +807,36 @@
 [server.unref()](../net/class_net_Server.md#serverunref)
 
 [server.ref()](../net/class_net_Server.md#serverref)
+
+[socket.setEncoding([encoding])](../net/class_net_Socket.md#socketsetencodingencoding)
+
+[socket.setTimeout(timeout[, callback])](../net/class_net_Socket.md#socketsettimeouttimeout-callback)
+
+[socket.setNoDelay([noDelay])](../net/class_net_Socket.md#socketsetnodelaynodelay)
+
+[socket.setKeepAlive([enable][, initialDelay])](../net/class_net_Socket.md#socketsetkeepaliveenable-initialdelay)
+
+[socket.connect(path[, connectListener])](../net/class_net_Socket.md#socketconnectpath-connectlistener)
+
+[socket.connect(port[, host][, connectListener])](../net/class_net_Socket.md#socketconnectport-host-connectlistener)
+
+[socket.connect(options[, connectListener])](../net/class_net_Socket.md#socketconnectoptions-connectlistener)
+
+[socket.write(data[, encoding][, callback])](../net/class_net_Socket.md#socketwritedata-encoding-callback)
+
+[socket.pause()](../net/class_net_Socket.md#socketpause)
+
+[socket.resume()](../net/class_net_Socket.md#socketresume)
+
+[socket.end([data][, encoding])](../net/class_net_Socket.md#socketenddata-encoding)
+
+[socket.destroy()](../net/class_net_Socket.md#socketdestroy)
+
+[socket.address()](../net/class_net_Socket.md#socketaddress)
+
+[socket.unref()](../net/class_net_Socket.md#socketunref)
+
+[socket.ref()](../net/class_net_Socket.md#socketref)
 
 ### T
 
