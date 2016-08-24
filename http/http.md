@@ -64,4 +64,96 @@ Node.js 维护每台服务器的多个连接来实现 HTTP 请求。该函数允
 
 * `localAddress`：绑定到网络连接的本地接口。
 
-* `socketPath`：Unix Domain Socket
+* `socketPath`：Unix Domain Socket（使用 host:port 和 socketPath 的其中之一）
+
+* `method`：一个指定 HTTP 请求方法的字符串。默认为 `'GET'`。
+
+* `path`：请求路径。默认为 `'/'`。应包括查询字符串（如有的话）。如 `'/index.html?page=12'`。当请求的路径中包含非法字符时，会引发异常。目前，只有空字符会被拒绝，但在将来可能会发生变化。
+
+* `headers`：一个包含请求头的对象。
+
+* `auth`：基本身份验证，如，`'user:password'` 来计算 Authorization 头。
+
+* `agent`：控制[代理](./class_http_Agent.md#)行为。如果使用代理请求，默认为 `Connection: keep-alive`。可能的值：
+
+    - `undefined`（默认）：对主机和端口使用 [http.globalAgent](#httpglobalagent)。
+    
+    - `Agent` 对象：明确地使用代理。
+    
+    - `false`：选择跳出连接池的代理，默认请求 `Connection: close`。
+    
+* `createConnection`：当不使用 `agent` 信息选项时，产生一个用于请求的 socket/stream 的函数。这可以用于避免创建一个自定义的 Agent 类只是为了覆盖默认的 `createConnection` 函数。详见 [agent.createConnection()](./class_http_Agent.md#agentcreateconnectionoptions_callback) 了解更多信息。
+
+可选的 `callback` 参数会被添加为 `'response'` 事件的一次性监听器。
+
+`http.request()` 返回一个 [http.ClientRequest](./class_http_ClientRequest.md#) 类的实例。`ClientRequest` 实例是一个可写流。如果一个人想要通过 POST 请求上传一个文件，然后写入到 `ClientRequest` 对象。
+
+示例：
+
+``` javascript
+var postData = querystring.stringify({
+    'msg': 'Hello World!'
+});
+
+var options = {
+    hostname: 'www.google.com',
+    port: 80,
+    path: '/upload',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': postData.length
+    }
+};
+
+var req = http.request(options, (res) => {
+    console.log(`STATUS: ${res.statusCode}`);
+    console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+    res.setEncoding('utf8');
+    res.on('data', (chunk) => {
+        console.log(`BODY: ${chunk}`);
+    });
+    res.on('end', () => {
+        console.log('No more data in response.')
+    })
+});
+
+req.on('error', (e) => {
+    console.log(`problem with request: ${e.message}`);
+});
+
+// write data to request body
+req.write(postData);
+req.end();
+```
+
+请注意在示例中 `req.end()` 被调用。通过 `http.request()` 时，必须经常调用 `req.end()` 来表示你的请求已经结束 - 即使没有数据被写入请求主体。
+
+如果请求过程中遇到任何错误（DNS 解析错误，TCP 级的错误，或实际的 HTTP 解析错误），在返回请求时，会发出 `'error'` 事件。对于所有的 `'error'` 事件而言，如果没有注册监听器，那么错误将被抛出。
+
+这里有几个应该注意的特殊的头。
+
+* 发送一个 `'Connection: keep-alive'` 将通知 Node.js 到服务器的连接，应一直持续到下一个请求。
+
+* 发送一个 `'Content-length'` 头将禁用默认块编码。
+
+* 发送一个 `'Expect'` 头会立即发送请求头。通常情况下，当发送 `'Expect: 100-continue'`，你应该设置超时并监听 `'continue'` 事件。见 RFC2616 第 8.2.3 节以获取更多信息。
+
+* 发送 Authorization 头将覆盖使用 `auth` 选项计算基本身份验证。
+
+
+## http.get(options[, callback])
+
+由于大多数 GET 请求都没有内容，Node.js 提供了这个便捷方法。该方法与 [http.request()]() 的唯一区别是它设置该方法为 GET 并自动调用 `req.end()`。
+
+示例：
+
+``` javascript
+http.get('http://www.google.com/index.html', (res) => {
+    console.log(`Got response: ${res.statusCode}`);
+    // consume response body
+    res.resume();
+}).on('error', (e) => {
+    console.log(`Got error: ${e.message}`);
+});
+```
