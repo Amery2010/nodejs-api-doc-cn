@@ -18,7 +18,7 @@
 --------------------------------------------------
 
 
-该对象在内部创建并由 [http.request()](./http.md#httprequestoptions_callback)。它表示着一个*正在处理*的请求，其头部已经进入请求队列。该头部仍可以很容易地通过 `setHeader(name, value)`、`getHeader(name)` 和 `removeHeader(name)` API 进行修改。实际头部将与第一数据块或关闭连接时一起被发送。
+该对象在内部创建并由 [http.request()](./http.md#httprequestoptions-callback)。它表示着一个*正在处理*的请求，其头部已经进入请求队列。该头部仍可以很容易地通过 `setHeader(name, value)`、`getHeader(name)` 和 `removeHeader(name)` API 进行修改。实际头部将与第一数据块或关闭连接时一起被发送。
 
 为了获得响应对象，将一个 `'response'` 监听器添加到请求对象上。当收到响应头时，请求对象会发出一个 `'response'` 事件。`'response'` 事件只有一个执行参数，该参数是一个 [http.IncomingMessage](./class_http_IncomingMessage.md#) 实例。
 
