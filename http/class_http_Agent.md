@@ -1,12 +1,12 @@
 # http.Agent类
 
-* [new Agent([options])](#new_agentoptions)
+* [new Agent([options])](#new-agentoptions)
 * [agent.sockets](#agentsockets)
 * [agent.requests](#agentrequests)
 * [agent.freeSockets](#agentfreesockets)
 * [agent.maxSockets](#agentmaxsockets)
 * [agent.maxFreeSockets](#agentmaxfreesockets)
-* [agent.createConnection(options[, callback])](#agentcreateconnectionoptions_callback)
+* [agent.createConnection(options[, callback])](#agentcreateconnectionoptions-callback)
 * [agent.getName(options)](#agentgetnameoptions)
 * [agent.destroy()](#agentdestroy)
 

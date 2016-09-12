@@ -1,15 +1,15 @@
 # 方法和属性
 
 * [net.createServer([options][, connectionListener])](#netcreateserveroptions)
-* [net.createConnection(options[, connectListener])](#netcreateconnectionoptions_connectListener)
-* [net.createConnection(path[, connectListener])](#netcreateconnectionpath_connectListener)
+* [net.createConnection(options[, connectListener])](#netcreateconnectionoptions-connectlistener)
+* [net.createConnection(path[, connectListener])](#netcreateconnectionpath-connectlistener)
 * [net.createConnection(port[, host][, connectListener])](#netcreateconnectionport_host_connectListener)
-* [net.connect(options[, connectListener])](#netconnectoptions_connectListener)
-* [net.connect(path[, connectListener])](#netconnectpath_connectListener)
-* [net.connect(port[, host][, connectListener])](#netconnectport_host_connectListener)
-* [net.isIP(input)](#netisip_input)
-* [net.isIPv4(input)](#netisipv4_input)
-* [net.isIPv6(input)](#netisipv6_input)
+* [net.connect(options[, connectListener])](#netconnectoptions-connectlistener)
+* [net.connect(path[, connectListener])](#netconnectpath_connectlistener)
+* [net.connect(port[, host][, connectListener])](#netconnectport-host-connectlistener)
+* [net.isIP(input)](#netisip-input)
+* [net.isIPv4(input)](#netisipv4-input)
+* [net.isIPv6(input)](#netisipv6-input)
 
 --------------------------------------------------
 

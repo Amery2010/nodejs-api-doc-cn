@@ -3,10 +3,10 @@
 * [http.METHODS](#httpmethods)
 * [http.STATUS_CODES](#httpstatuscodes)
 * [http.globalAgent](#httpglobalagent)
-* [http.createServer([requestListener])](#httpcreateserverrequestListener)
+* [http.createServer([requestListener])](#httpcreateserverrequestlistener)
 * [http.createClient([port][, host])](#httpcreateclientport_host)
-* [http.request(options[, callback])](#httprequestoptions_callback)
-* [http.get(options[, callback])](#httpgetoptions_callback)
+* [http.request(options[, callback])](#httprequestoptions-callback)
+* [http.get(options[, callback])](#httpgetoptions-callback)
 
 --------------------------------------------------
 
