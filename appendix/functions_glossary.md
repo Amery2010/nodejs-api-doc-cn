@@ -314,159 +314,159 @@
 
 ### F
 
-[fs.readdir(path, callback)](./fs/fs.md#readdir)
+[fs.readdir(path, callback)](../fs/fs.md#readdir)
 
-[fs.readdirSync(path)](./fs/fs.md#readdirSync)
+[fs.readdirSync(path)](../fs/fs.md#readdirSync)
 
-[fs.mkdir(path[, mode], callback)](./fs/fs.md#mkdir)
+[fs.mkdir(path[, mode], callback)](../fs/fs.md#mkdir)
 
-[fs.mkdirSync(path[, mode])](./fs/fs.md#mkdirSync)
+[fs.mkdirSync(path[, mode])](../fs/fs.md#mkdirSync)
 
-[fs.rmdir(path, callback)](./fs/fs.md#rmdir)
+[fs.rmdir(path, callback)](../fs/fs.md#rmdir)
 
-[fs.rmdirSync(path)](./fs/fs.md#rmdirSync)
+[fs.rmdirSync(path)](../fs/fs.md#rmdirSync)
 
-[fs.realpath(path[, cache], callback)](./fs/fs.md#realpath)
+[fs.realpath(path[, cache], callback)](../fs/fs.md#realpath)
 
-[fs.realpathSync(path[, cache])](./fs/fs.md#realpathSync)
+[fs.realpathSync(path[, cache])](../fs/fs.md#realpathSync)
 
-[fs.link(srcpath, dstpath, callback)](./fs/fs.md#link)
+[fs.link(srcpath, dstpath, callback)](../fs/fs.md#link)
 
-[fs.linkSync(srcpath, dstpath)](./fs/fs.md#linkSync)
+[fs.linkSync(srcpath, dstpath)](../fs/fs.md#linkSync)
 
-[fs.symlink(target, path[, type], callback)](./fs/fs.md#symlink)
+[fs.symlink(target, path[, type], callback)](../fs/fs.md#symlink)
 
-[fs.symlinkSync(target, path[, type])](./fs/fs.md#symlinkSync)
+[fs.symlinkSync(target, path[, type])](../fs/fs.md#symlinkSync)
 
-[fs.readlink(path, callback)](./fs/fs.md#readlink)
+[fs.readlink(path, callback)](../fs/fs.md#readlink)
 
-[fs.readlinkSync(path)](./fs/fs.md#readlinkSync)
+[fs.readlinkSync(path)](../fs/fs.md#readlinkSync)
 
-[fs.unlink(path, callback)](./fs/fs.md#unlink)
+[fs.unlink(path, callback)](../fs/fs.md#unlink)
 
-[fs.unlinkSync(path)](./fs/fs.md#unlinkSync)
+[fs.unlinkSync(path)](../fs/fs.md#unlinkSync)
 
-[fs.lchmod(path, mode, callback)](./fs/fs.md#lchmod)
+[fs.lchmod(path, mode, callback)](../fs/fs.md#lchmod)
 
-[fs.lchmodSync(path, mode)](./fs/fs.md#lchmodSync)
+[fs.lchmodSync(path, mode)](../fs/fs.md#lchmodSync)
 
-[fs.lchown(path, uid, gid, callback)](./fs/fs.md#lchown)
+[fs.lchown(path, uid, gid, callback)](../fs/fs.md#lchown)
 
-[fs.lchownSync(path, uid, gid)](./fs/fs.md#lchownSync)
+[fs.lchownSync(path, uid, gid)](../fs/fs.md#lchownSync)
 
-[fs.lstat(path, callback)](./fs/fs.md#lstat)
+[fs.lstat(path, callback)](../fs/fs.md#lstat)
 
-[fs.lstatSync(path)](./fs/fs.md#lstatSync)
+[fs.lstatSync(path)](../fs/fs.md#lstatSync)
 
-[fs.createReadStream(path[, options])](./fs/fs.md#createReadStream)
+[fs.createReadStream(path[, options])](../fs/fs.md#createReadStream)
 
-[fs.read(fd, buffer, offset, length, position, callback)](./fs/fs.md#read)
+[fs.read(fd, buffer, offset, length, position, callback)](../fs/fs.md#read)
 
-[fs.readSync(fd, buffer, offset, length, position)](./fs/fs.md#readSync)
+[fs.readSync(fd, buffer, offset, length, position)](../fs/fs.md#readSync)
 
-[fs.createWriteStream(path[, options])](./fs/fs.md#createWriteStream)
+[fs.createWriteStream(path[, options])](../fs/fs.md#createWriteStream)
 
-[fs.write(fd, data[, position[, encoding]], callback)](./fs/fs.md#write_data)
+[fs.write(fd, data[, position[, encoding]], callback)](../fs/fs.md#write_data)
 
-[fs.writeSync(fd, data[, position[, encoding]])](./fs/fs.md#write_data_sync)
+[fs.writeSync(fd, data[, position[, encoding]])](../fs/fs.md#write_data_sync)
 
-[fs.write(fd, buffer, offset, length[, position], callback)](./fs/fs.md#write_buffer)
+[fs.write(fd, buffer, offset, length[, position], callback)](../fs/fs.md#write_buffer)
 
-[fs.writeSync(fd, buffer, offset, length[, position])](./fs/fs.md#write_buffer_sync)
+[fs.writeSync(fd, buffer, offset, length[, position])](../fs/fs.md#write_buffer_sync)
 
-[fs.truncate(path, len, callback)](./fs/fs.md#truncate)
+[fs.truncate(path, len, callback)](../fs/fs.md#truncate)
 
-[fs.truncateSync(path, len)](./fs/fs.md#truncateSync)
+[fs.truncateSync(path, len)](../fs/fs.md#truncateSync)
 
-[fs.stat(path, callback)](./fs/fs.md#stat)
+[fs.stat(path, callback)](../fs/fs.md#stat)
 
-[fs.statSync(path)](./fs/fs.md#statSync)
+[fs.statSync(path)](../fs/fs.md#statSync)
 
-[fs.chmod(path, mode, callback)](./fs/fs.md#chmod)
+[fs.chmod(path, mode, callback)](../fs/fs.md#chmod)
 
-[fs.chmodSync(path, mode)](./fs/fs.md#chmodSync)
+[fs.chmodSync(path, mode)](../fs/fs.md#chmodSync)
 
-[fs.chown(path, uid, gid, callback)](./fs/fs.md#chown)
+[fs.chown(path, uid, gid, callback)](../fs/fs.md#chown)
 
-[fs.chownSync(path, uid, gid)](./fs/fs.md#chownSync)
+[fs.chownSync(path, uid, gid)](../fs/fs.md#chownSync)
 
-[fs.utimes(path, atime, mtime, callback)](./fs/fs.md#utimes)
+[fs.utimes(path, atime, mtime, callback)](../fs/fs.md#utimes)
 
-[fs.utimesSync(path, atime, mtime)](./fs/fs.md#utimesSync)
+[fs.utimesSync(path, atime, mtime)](../fs/fs.md#utimesSync)
 
-[fs.exists(path, callback)](./fs/fs.md#exists)
+[fs.exists(path, callback)](../fs/fs.md#exists)
 
-[fs.existsSync(path)](./fs/fs.md#existsSync)
+[fs.existsSync(path)](../fs/fs.md#existsSync)
 
-[fs.open(path, flags[, mode], callback)](./fs/fs.md#open)
+[fs.open(path, flags[, mode], callback)](../fs/fs.md#open)
 
-[fs.openSync(path, flags[, mode])](./fs/fs.md#openSync)
+[fs.openSync(path, flags[, mode])](../fs/fs.md#openSync)
 
-[fs.close(fd, callback)](./fs/fs.md#close)
+[fs.close(fd, callback)](../fs/fs.md#close)
 
-[fs.closeSync(fd)](./fs/fs.md#closeSync)
+[fs.closeSync(fd)](../fs/fs.md#closeSync)
 
-[fs.access(path[, mode], callback)](./fs/fs.md#access)
+[fs.access(path[, mode], callback)](../fs/fs.md#access)
 
-[fs.accessSync(path[, mode])](./fs/fs.md#accessSync)
+[fs.accessSync(path[, mode])](../fs/fs.md#accessSync)
 
-[fs.rename(oldPath, newPath, callback)](./fs/fs.md#rename)
+[fs.rename(oldPath, newPath, callback)](../fs/fs.md#rename)
 
-[fs.renameSync(oldPath, newPath)](./fs/fs.md#renameSync)
+[fs.renameSync(oldPath, newPath)](../fs/fs.md#renameSync)
 
-[fs.watch(filename[, options][, listener])](./fs/fs.md#watch)
+[fs.watch(filename[, options][, listener])](../fs/fs.md#watch)
 
-[fs.watchFile(filename[, options], listener)](./fs/fs.md#watchFile)
+[fs.watchFile(filename[, options], listener)](../fs/fs.md#watchFile)
 
-[fs.unwatchFile(filename[, listener])](./fs/fs.md#unwatchFile)
+[fs.unwatchFile(filename[, listener])](../fs/fs.md#unwatchFile)
 
-[fs.readFile(file[, options], callback)](./fs/fs.md#readFile)
+[fs.readFile(file[, options], callback)](../fs/fs.md#readFile)
 
-[fs.readFileSync(file[, options])](./fs/fs.md#readFileSync)
+[fs.readFileSync(file[, options])](../fs/fs.md#readFileSync)
 
-[fs.writeFile(file, data[, options], callback)](./fs/fs.md#writeFile)
+[fs.writeFile(file, data[, options], callback)](../fs/fs.md#writeFile)
 
-[fs.writeFileSync(file, data[, options])](./fs/fs.md#writeFileSync)
+[fs.writeFileSync(file, data[, options])](../fs/fs.md#writeFileSync)
 
-[fs.appendFile(file, data[, options], callback)](./fs/fs.md#appendFile)
+[fs.appendFile(file, data[, options], callback)](../fs/fs.md#appendFile)
 
-[fs.appendFileSync(file, data[, options])](./fs/fs.md#appendFileSync)
+[fs.appendFileSync(file, data[, options])](../fs/fs.md#appendFileSync)
 
-[fs.ftruncate(fd, len, callback)](./fs/fs.md#ftruncate)
+[fs.ftruncate(fd, len, callback)](../fs/fs.md#ftruncate)
 
-[fs.ftruncateSync(fd, len)](./fs/fs.md#ftruncateSync)
+[fs.ftruncateSync(fd, len)](../fs/fs.md#ftruncateSync)
 
-[fs.fstat(fd, callback)](./fs/fs.md#fstat)
+[fs.fstat(fd, callback)](../fs/fs.md#fstat)
 
-[fs.fstatSync(fd)](./fs/fs.md#fstatSync)
+[fs.fstatSync(fd)](../fs/fs.md#fstatSync)
 
-[fs.fchmod(fd, mode, callback)](./fs/fs.md#fchmod)
+[fs.fchmod(fd, mode, callback)](../fs/fs.md#fchmod)
 
-[fs.fchmodSync(fd, mode)](./fs/fs.md#fchmodSync)
+[fs.fchmodSync(fd, mode)](../fs/fs.md#fchmodSync)
 
-[fs.fchown(fd, uid, gid, callback)](./fs/fs.md#fchown)
+[fs.fchown(fd, uid, gid, callback)](../fs/fs.md#fchown)
 
-[fs.fchownSync(fd, uid, gid)](./fs/fs.md#fchownSync)
+[fs.fchownSync(fd, uid, gid)](../fs/fs.md#fchownSync)
 
-[fs.futimes(fd, atime, mtime, callback)](./fs/fs.md#futimes)
+[fs.futimes(fd, atime, mtime, callback)](../fs/fs.md#futimes)
 
-[fs.futimesSync(fd, atime, mtime)](./fs/fs.md#futimesSync)
+[fs.futimesSync(fd, atime, mtime)](../fs/fs.md#futimesSync)
 
-[fs.fsync(fd, callback)](./fs/fs.md#fsync)
+[fs.fsync(fd, callback)](../fs/fs.md#fsync)
 
-[fs.fsyncSync(fd)](./fs/fs.md#fsyncSync)
+[fs.fsyncSync(fd)](../fs/fs.md#fsyncSync)
 
-[fs.fdatasync(fd, callback)](./fs/fs.md#fdatasync)
+[fs.fdatasync(fd, callback)](../fs/fs.md#fdatasync)
 
-[fs.fdatasyncSync(fd)](./fs/fs.md#fdatasyncSync)
+[fs.fdatasyncSync(fd)](../fs/fs.md#fdatasyncSync)
 
-[fs.ReadStream 类](./fs/class_fs_ReadStream.md#)
+[fs.ReadStream 类](../fs/class_fs_ReadStream.md#)
 
-[fs.WriteStream 类](./fs/class_fs_WriteStream.md#)
+[fs.WriteStream 类](../fs/class_fs_WriteStream.md#)
 
-[fs.Stats 类](./fs/class_fs_Stats.md#)
+[fs.Stats 类](../fs/class_fs_Stats.md#)
 
-[fs.FSWatcher 类](./fs/class_fs_FSWatcher.md#)
+[fs.FSWatcher 类](../fs/class_fs_FSWatcher.md#)
 
 ### G
 

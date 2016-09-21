@@ -184,3 +184,7 @@ srv.listen(1337, '127.0.0.1', () => {
 每当收到一个带有 http Expect ，但值不是 '100-continue' 的请求头部时发生。如果没有监听该事件，服务器会自动响应一个适当的 `417 Expectation Failed`。
 
 注意，当事件发生和处理后，`request` 事件将不会发生。
+
+
+## request.setTimeout(timeout[, callback])
+

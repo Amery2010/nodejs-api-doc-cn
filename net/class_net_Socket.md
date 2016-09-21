@@ -167,7 +167,7 @@
 
 ## socket.setEncoding([encoding])
 
-设置 socket 的编码作为一个[只读流](../api_for_stream_consumers.md#class_Readable)。详见 [stream.setEncoding()](../api_for_stream_consumers.md#setEncoding) 了解更多信息。
+设置 socket 的编码作为一个[只读流](../stream/api_for_stream_consumers.md#class_Readable)。详见 [stream.setEncoding()](../stream/api_for_stream_consumers.md#setEncoding) 了解更多信息。
 
 
 ## socket.setTimeout(timeout[, callback])
