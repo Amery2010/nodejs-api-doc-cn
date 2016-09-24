@@ -188,3 +188,54 @@ srv.listen(1337, '127.0.0.1', () => {
 
 ## request.setTimeout(timeout[, callback])
 
+一旦 socket 被分配给该请求，关联的 [socket.setTimeout()](../net/class_net_Socket.md#socketsettimeouttimeout-callback) 会被调用。
+
+* `timeout` {Number} 请求被认为是超时的毫秒数。
+
+* `callback` {Function} 可选的，当发生超时时调用的函数。同样绑定到 `timeout` 事件。
+
+
+## request.setNoDelay([noDelay])
+
+一旦 socket 被分配给该请求，关联的 [socket.setNoDelay()](../net/class_net_Socket.md#socketsetnodelaynodelay) 会被调用。
+
+
+## request.setSocketKeepAlive([enable][, initialDelay])
+
+一旦 socket 被分配给该请求，关联的 [socket.setKeepAlive()](../net/class_net_Socket.md#socketsetkeepaliveenable-initialdelay) 会被调用。
+
+
+## request.flushHeaders()
+
+强制刷新请求头。
+
+出于效率的考虑，Node.js 通常缓存请求头直到你调用 `request.end()` 或写入请求数据的第一个数据块。然后，它试图将请求头和数据封装成单一的 TCP 数据包。
+
+这通常是你想要的（它节省了 TCP 往返），除了当第一个数据块直到很久之后才会被发送的情况。`request.flushHeaders()` 让你绕过优化并提前开始请求。
+
+
+## request.write(chunk[, encoding][, callback])
+
+发送一个主体数据块。通过多次调用该方法，用户可以以流的形式将请求主体发送到服务器 —— 在这种情况下，当创建请求时，建议使用 `['Transfer-Encoding', 'chunked']` 头部行。
+
+该 `chunk` 参数应该是一个 [Buffer](../buffer/buffer.md#) 或字符串。
+
+该 `encoding` 参数是可选的，并仅适用于 `chunk` 是字符串的情况。默认为 `'utf8'`。
+
+该 `callback` 参数是可选的，并在数据块刷新时调用。
+
+返回 `request`。
+
+
+## request.end([data][, encoding][, callback])
+
+完成发送请求。如果主体中的任何部分未被发送，它会将它们刷新流中。如果请求被分块，它将发送终止 `'0\r\n\r\n'`。
+
+如果指定了 `data`，这等同于在 `request.end(callback)` 之后调用 [response.write(data, encoding)](./class_http_ServerResponse.md#responsewritechunk-encoding-callback)。
+
+如果指定了 `callback`，当请求流结束时，它会被调用。
+
+
+## request.abort()
+
+标志着请求终止。调用该方法将导致剩余的响应数据被丢弃，并销毁 socket。
