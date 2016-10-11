@@ -33,7 +33,7 @@
 
 `function (request, socket, head) { }`
 
-每当客户端请求一个 http 的 `CONNECT` 方法时发出。如果未监听该事件，那么客户端请求 `CONNECT` 方法会使自身的连接关闭。
+每当客户端请求一个 http 的 `CONNECT` 方法时发出。如果未监听该事件，那么这些请求 `CONNECT` 方法的客户端连接将会被关闭。
 
 * `request` 是一个 http 请求的参数，与 request 事件中的相同。
 
@@ -66,4 +66,30 @@
 
 `function (request, socket, head) { }`
 
-每当客户端请求一个 http 升级时发出。
+每当客户端请求一个 http 升级时发出。如果未监听该事件，那么这些请求升级的客户端连接将会被关闭。
+
+* `request` 是一个 http 请求的参数，与 request 事件中的相同。
+
+* `socket` 是服务端与客户端之间的网络套接字。
+
+* `head` 是一个 Buffer 的实例，隧道流的第一个包，该参数可能为空。
+
+当发出该事件后，请求的套接字将不会有 `'data'` 事件监听器，也就是说你将需要绑定一个监听器到 `'data'` 事件，来处理在套接字上被发送到服务器的数据。
+
+
+## 'close' 事件
+
+`function () { }`
+
+当服务器关闭时发出。
+
+
+## 'clientError' 事件
+
+`function (exception, socket) { }`
+
+如果客户端发出了一个 `'error'` 事件，那么它将在这里转发。
+
+`socket` 是发生错误的 [net.Socket](../net/class_net_Socket.md#) 对象。
+
+
