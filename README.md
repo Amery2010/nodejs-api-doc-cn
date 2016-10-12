@@ -14,7 +14,7 @@
 
 [Gitbook版](http://xiangfa.org/nodejs-api-book/)
 
-[直接阅读](./blob/master/SUMMARY.md)
+[直接阅读](./SUMMARY.md)
 
 ### 许可协议
 
