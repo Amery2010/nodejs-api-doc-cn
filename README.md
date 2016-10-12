@@ -4,13 +4,17 @@
 
 这是一份Node.js v5.x API文档的中文版，使用[GitBook](https://github.com/GitbookIO/gitbook)进行构建，适用于无法完整阅读英文原版的朋友参考阅读。
 
-Node.js v5.x 文档 [中文版](https://github.com/Amery2010/nodejs-api-book/) [英文原版](https://nodejs.org/dist/latest-v5.x/docs/api/)
+#### Node.js v5.x 文档
+
+[中文版](https://github.com/Amery2010/nodejs-api-book/)
+
+[英文原版](https://nodejs.org/dist/latest-v5.x/docs/api/)
 
 ### 文档阅读
 
 [Gitbook版](http://xiangfa.org/nodejs-api-book/)
 
-也可以直接访问项目下 SUMMARY.md 文件进行阅读
+[直接阅读](./blob/master/SUMMARY.md)
 
 ### 许可协议
 
