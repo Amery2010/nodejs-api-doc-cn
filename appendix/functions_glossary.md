@@ -30,6 +30,12 @@
 
 [assert.doesNotThrow(block[, error][, message])](../assert/assert.md#doesNotThrow)
 
+[agent.createConnection(options[, callback])](../http/class_http_Agent.md#agentcreateconnectionoptions-callback)
+
+[agent.getName(options)](../http/class_http_Agent.md#agentgetnameoptions)
+
+[agent.destroy()](../http/class_http_Agent.md#agentdestroy)
+
 ### B
 
 [Buffer类](../buffer/class_Buffer.md#)
@@ -474,6 +480,14 @@
 
 ### H
 
+[http.createServer([requestListener])](../http/http.md#httpcreateserverrequestlistener)
+
+[http.createClient([port][, host])](../http/http.md#httpcreateclientport_host)
+
+[http.request(options[, callback])](../http/http.md#httprequestoptions-callback)
+
+[http.get(options[, callback])](../http/http.md#httpgetoptions-callback)
+
 ### I
 
 ### J
@@ -499,6 +513,8 @@
 [module.parent](../globals/global.md#parent)
 
 [module.children](../globals/global.md#children)
+
+[message.setTimeout(msecs, callback)](../http/class_http_IncomingMessage.md#messagesettimeoutmsecs-callback)
 
 ### N
 
@@ -740,6 +756,36 @@
 
 [readable.push(chunk[, encoding])](../stream/api_for_stream_implementors.md#push)
 
+[request.setNoDelay([noDelay])](../http/class_http_ClientRequest.md#requestsetnodelaynodelay)
+
+[request.setSocketKeepAlive([enable][, initialDelay])](../http/class_http_ClientRequest.md#requestsetsocketkeepaliveenable-initialdelay)
+
+[request.flushHeaders()](../http/class_http_ClientRequest.md#requestflushheaders)
+
+[request.write(chunk[, encoding][, callback])](../http/class_http_ClientRequest.md#requestwritechunk-encoding-callback)
+
+[request.end([data][, encoding][, callback])](../http/class_http_ClientRequest.md#requestenddata-encoding-callback)
+
+[request.abort()](../http/class_http_ClientRequest.md#requestabort)
+
+[response.setHeader(name, value)](../http/class_http_ServerResponse.md#responsesetheadername-value)
+
+[response.getHeader(name)](../http/class_http_ServerResponse.md#responsegetheadername)
+
+[response.removeHeader(name)](../http/class_http_ServerResponse.md#responseremoveheadername)
+
+[response.addTrailers(headers)](../http/class_http_ServerResponse.md#responseaddtrailersheaders)
+
+[response.writeHead(statusCode[, statusMessage][, headers])](../http/class_http_ServerResponse.md#responsewriteheadstatuscode--statusmessage-headers)
+
+[response.write(chunk[, encoding][, callback])](../http/class_http_ServerResponse.md#responsewritechunk-encoding-callback)
+
+[response.writeContinue()](../http/class_http_ServerResponse.md#responsewritecontinue)
+
+[response.end([data][, encoding][, callback])](../http/class_http_ServerResponse.md#responseenddata-encoding-callback)
+
+[response.setTimeout(msecs, callback)](../http/class_http_ServerResponse.md#responsesettimeoutmsecs-callback)
+
 ### S
 
 [setTimeout(cb, ms)](../globals/global.md#setTimeout)
@@ -837,6 +883,16 @@
 [socket.unref()](../net/class_net_Socket.md#socketunref)
 
 [socket.ref()](../net/class_net_Socket.md#socketref)
+
+[server.listen(handle[, callback])](../http/class_http_Server.md#serverlistenhandle-callback)
+
+[server.listen(path[, callback])](../http/class_http_Server.md#serverlistenpath-callback)
+
+[server.listen(port[, hostname][, backlog][, callback])](../http/class_http_Server.md#serverlistenport-hostname-backlog-callback)
+
+[server.close([callback])](../http/class_http_Server.md#serverclosecallback)
+
+[server.setTimeout(msecs, callback)](../http/class_http_Server.md#serversettimeoutmsecs-callback)
 
 ### T
 
