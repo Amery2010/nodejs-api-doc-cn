@@ -488,6 +488,12 @@
 
 [http.get(options[, callback])](../http/http.md#httpgetoptions-callback)
 
+[https.createServer(options[, requestListener])](../https/https.md#httpscreateserveroptions-requestlistener)
+
+[https.request(options, callback)](../https/https.md#httpsrequestoptions-callback)
+
+[https.get(options, callback)](../https/https.md#httpsgetoptions-callback)
+
 ### I
 
 ### J
