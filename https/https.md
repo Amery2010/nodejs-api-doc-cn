@@ -1,5 +1,6 @@
 # 方法和属性
 
+* [https.globalAgent](#httpsglobalagent)
 * [https.createServer(options[, requestListener])](#httpscreateserveroptions-requestlistener)
   - [server.listen(handle[, callback])](#serverlistenhandle-callback)
   - [server.listen(path[, callback])](#serverlistenpath-callback)
@@ -7,9 +8,13 @@
   - [server.close([callback])](#serverclosecallback)
 * [https.request(options, callback)](#httpsrequestoptions-callback)
 * [https.get(options, callback)](#httpsgetoptions-callback)
-* [https.globalAgent(options, callback)](#httpsglobalagentoptions-callback)
 
 --------------------------------------------------
+
+
+## https.globalAgent
+
+[https.Agent](./class_https_Agent.md#) 的全局实例，应用于所有的 HTTPS 客户端请求。
 
 
 ## https.createServer(options[, requestListener])
@@ -128,4 +133,87 @@ req.on('error', (e) => {
     
     - `false`：选择跳出连接池的代理，默认请求 `Connection: close`。
     
- 
+来自 [tls.connect()](../tls/tls.md#tlsconnectoptions-callback) 的以下选项也可以指定。然而，这里静默忽略 [globalAgent](#httpsglobalagent)。
+
+* `pfx`：证书，用于 SSL 的私钥和 CA 证书。默认为 `null`。
+
+* `key`：用于 SSL 的私钥。默认为 `null`。
+
+* `passphrase`：用于私钥或 pfx 的密码字符串。默认为 `null`。
+
+* `cert`：使用的公共 x509 证书。默认为 `null`。
+
+* `ca`：一个字符串、[Buffer](../buffer/buffer.md#) 或字符串数组或受信任证书的 PEM 格式的 [Buffers](../buffer/buffer.md#)。如果省略，则使用几个著名的“根”的 CA，例如 VeriSign。这些用于授权的连接。
+
+* `ciphers`：一个描述使用或排除的加密方式的字符串。在格式上仔细考虑 [https://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT](https://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT)。
+
+* `rejectUnauthorized`：如果 `true`，对服务器证书验证是否存在于提供的 CA 列表中。如果验证失败会发出一个 `'error'` 事件。验证发生在连接层，在发送 HTTP 请求*之前*。默认为 `true`。
+
+* `secureProtocol`：使用的 SSL 方法。如，`SSLv3_method` 强制 SSL 版本 3。可能的值取决于你安装的 OpenSSL 并定义不变的 [SSL_METHODS](https://www.openssl.org/docs/ssl/ssl.html#DEALING_WITH_PROTOCOL_METHODS)。
+
+* `servername`：用于 SNI（服务器名称指示）TLS 扩展的服务器名。
+
+为了指定这些选项，使用自定义[代理](./class_https_Agent.md#)。
+
+示例：
+
+``` javascript
+var options = {
+    hostname: 'encrypted.google.com',
+    port: 443,
+    path: '/',
+    method: 'GET',
+    key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+    cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
+};
+options.agent = new https.Agent(options);
+
+var req = https.request(options, (res) => {
+    ...
+}
+```
+
+另外，可以通过不使用代理来退出连接池。
+
+示例：
+
+``` javascript
+var options = {
+    hostname: 'encrypted.google.com',
+    port: 443,
+    path: '/',
+    method: 'GET',
+    key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+    cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem'),
+    agent: false
+};
+
+var req = https.request(options, (res) => {
+    ...
+}
+```
+
+
+## https.get(options, callback)
+
+类似 [http.get()](./http/http.md#httpgetoptions-callback)，但基于 HTTPS。
+
+`options` 可以是对象或字符串。如果 `options` 是字符串，它会自动使用 [url.parse()](../url/url.md#urlparseurlstr_parsequerystring_slashesdenotehost) 解析。
+
+示例：
+
+``` javascript
+const https = require('https');
+
+https.get('https://encrypted.google.com/', (res) => {
+    console.log('statusCode: ', res.statusCode);
+    console.log('headers: ', res.headers);
+
+    res.on('data', (d) => {
+        process.stdout.write(d);
+    });
+
+}).on('error', (e) => {
+    console.error(e);
+});
+```
