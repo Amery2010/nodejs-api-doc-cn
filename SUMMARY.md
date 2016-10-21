@@ -138,7 +138,7 @@
   - [CryptoStream类](./tls/class_CryptoStream.md)
   - [SecurePair类](./tls/class_SecurePair.md)
   - [ALPN、NPN和SNI](./tls/alpn_npn_and_sni.md)
-  - [PFS(Perfect Forward Secrecy)](./tls/perfect_forward_secrecy.md)
+  - [PFS(完全正向加密)](./tls/perfect_forward_secrecy.md)
   - [修改TLS的默认加密方式](./tls/modifying_the_default_tls_cipher_suite.md)
   - [缓解由客户端发起的重新协商攻击](./tls/client_initiated_renegotiation_attack_mitigation.md)
 
