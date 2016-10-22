@@ -26,7 +26,7 @@ openssl x509 -req -in ryans-csr.pem -signkey ryans-key.pem -out ryans-cert.pem
 
 另外，你可以发送 CSR 到证书颁发机构进行签名。
 
-对于完美向前兼容加密，需要生成 Diffie-Hellman 参数：
+对于完全正向加密，需要生成 Diffie-Hellman 参数：
 
 ``` bash
 openssl pkcs12 -export -in agent5-cert.pem -inkey agent5-key.pem -certfile ca-cert.pem -out agent5.pfx

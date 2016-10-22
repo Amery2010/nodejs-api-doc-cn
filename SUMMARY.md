@@ -133,8 +133,8 @@
 
 * [TLS/SSL(TLS/SSL)](./tls/README.md)
   - [方法和属性](./tls/tls.md)
-  - [tls.Server类](./tls/class_tls_Server.md)
   - [tls.TLSSocket类](./tls/class_tls_TLSSocket.md)
+  - [tls.Server类](./tls/class_tls_Server.md)
   - [CryptoStream类](./tls/class_CryptoStream.md)
   - [SecurePair类](./tls/class_SecurePair.md)
   - [ALPN、NPN和SNI](./tls/alpn_npn_and_sni.md)
