@@ -99,3 +99,51 @@ server.on('resumeSession', (id, cb) => {
 当一个客户端连接在建立安全连接之前发出一个 `'error'` 事件时，它将在这里转发。
 
 `tlsSocket` 是源自 [tls.TLSSocket](./class_tls_TLSSocket.md#) 的错误。
+
+
+## server.connections
+
+在服务器上的并行连接数。
+
+
+## server.maxConnections
+
+将此属性设置为，当服务器的连接数超过指定的阈值时拒绝连接。
+
+
+## server.listen(port[, hostname][, callback])
+
+在指定的 `port` 和 `hostname` 上开始接受连接。如果省略 `hostname`，当 IPv6 可用时，服务器将接受任何 IPv6 地址（`::`），否则将接收任何 IPv4 地址（`0.0.0.0`）。零端口值将被分配一个随机端口。
+
+这个函数是异步的。最后的参数 `callback` 在服务器被绑定时调用。
+
+详见 `net.Server` 了解更多详情。
+
+
+## server.addContext(hostname, context)
+
+如果客户端请求的主机名 SNI 所提供的 `hostname` 匹配（可以使用通配符），添加将被使用的安全上下文。`context` 可以包含 `key`、`cert`、`ca` 或来自 [tls.createSecureContext()](./tls.md#tlscreatesecurecontextoptions) 中 `options` 参数的任何其他属性。
+
+
+## server.setTicketKeys(keys)
+
+升级用于[ TLS 会话凭证](https://www.ietf.org/rfc/rfc5077.txt) 加密/解密的密钥。
+
+**注意**：buffer 应该是 48 个字节长度。详见在 [tls.createServer](./tls.md#tlscreateserveroptions-secureconnectionlistener) 中的 `ticketKeys` 选项了解更多如何使用的信息。
+
+**注意**：该变化仅对之后的服务器连接有效。现有的或目前正在等待的服务器的连接将使用之前的密钥。
+
+
+## server.getTicketKeys()
+
+返回一个保存有目前用于[ TLS 会话凭证](https://www.ietf.org/rfc/rfc5077.txt) 加密/解密的密钥的 `Buffer` 实例。
+
+
+## server.close([callback])
+
+服务器停止接受新的连接。该函数是异步的，当服务器发出一个 `'close'` 事件时，该服务器最终关闭。你可以传递一个可选的回调函数到 `'close'` 事件的监听器中。
+
+
+## server.address()
+
+返回由操作系统所报告的绑定地址、地址族名称和服务器端口号。详见 [net.Server.address()](../net/class_net_Server.md#serveraddress) 了解更多信息。
