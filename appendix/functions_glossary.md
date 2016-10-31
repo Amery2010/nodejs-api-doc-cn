@@ -244,6 +244,8 @@
 
 [cluster.disconnect([callback])](../cluster/cluster.md#disconnect)
 
+[cryptoStream.bytesWritten](../tls/class_CryptoStream.md#cryptostreambyteswritten)
+
 ### D
 
 [decoder.write(buffer)](../string_decoder/class_StringDecoder.md#write)
@@ -900,11 +902,53 @@
 
 [server.setTimeout(msecs, callback)](../http/class_http_Server.md#serversettimeoutmsecs-callback)
 
+[server.listen(port[, hostname][, callback])](../tls/class_tls_Server.md#serverlistenport-hostname-callback)
+
+[server.addContext(hostname, context)](../tls/class_tls_Server.md#serveraddcontexthostname-context)
+
+[server.setTicketKeys(keys)](../tls/class_tls_Server.md#serversetticketkeyskeys)
+
+[server.getTicketKeys()](../tls/class_tls_Server.md#servergetticketkeys)
+
+[server.close([callback])](../tls/class_tls_Server.md#serverclosecallback)
+
+[server.address()](../tls/class_tls_Server.md#serveraddress)
+
 ### T
 
 [transform._transform(chunk, encoding, callback)](../stream/api_for_stream_implementors.md#_transform)
 
 [transform._flush(callback)](../stream/api_for_stream_implementors.md#_flush)
+
+[tls.createServer(options[, secureConnectionListener])](../tls/tls.md#tlscreateserveroptions-secureconnectionlistener)
+
+[tls.connect(options[, callback])](../tls/tls.md#tlsconnectoptions-callback)
+
+[tls.connect(port[, host][, options][, callback])](../tls/tls.md#tlsconnectport-host-options-callback)
+
+[tls.createSecureContext(options)](../tls/tls.md#tlscreatesecurecontextoptions)
+
+[tls.createSecurePair([context][, isServer][, requestCert][, rejectUnauthorized][, options])](../tls/tls.md#tlscreatesecurepaircontext-isserver-requestcert-rejectunauthorized-options)
+
+[tls.getCiphers()](../tls/tls.md#tlsgetciphers)
+
+[tlsSocket.address()](../tls/class_tls_TLSSocket.md#tlssocketaddress)
+
+[tlsSocket.getTLSTicket()](../tls/class_tls_TLSSocket.md#tlssocketgettlsticket)
+
+[tlsSocket.getPeerCertificate([ detailed ])](../tls/class_tls_TLSSocket.md#tlssocketgetpeercertificatedetailed)
+
+[tlsSocket.getCipher()](../tls/class_tls_TLSSocket.md#tlssocketgetcipher)
+
+[tlsSocket.getEphemeralKeyInfo()](../tls/class_tls_TLSSocket.md#tlssocketgetephemeralkeyinfo)
+
+[tlsSocket.getProtocol()](../tls/class_tls_TLSSocket.md#tlssocketgetprotocol)
+
+[tlsSocket.getSession()](../tls/class_tls_TLSSocket.md#tlssocketgetsession)
+
+[tlsSocket.renegotiate(options, callback)](../tls/class_tls_TLSSocket.md#tlssocketrenegotiateoptions-callback)
+
+[tlsSocket.setMaxSendFragment(size)](../tls/class_tls_TLSSocket.md#tlssocketsetmaxsendfragmentsize)
 
 ### U
 
