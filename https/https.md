@@ -72,7 +72,7 @@ https.createServer(options, (req, res) => {
 
 建立一个安全的 Web 服务器的请求。
 
-`options` 可以是一个对象或字符串。如果 `options` 是一个字符串，它会自动使用 [url.parse()](../url/url.md#urlparseurlstr_parsequerystring_slashesdenotehost) 解析。
+`options` 可以是一个对象或字符串。如果 `options` 是一个字符串，它会自动使用 [url.parse()](../url/url.md#urlparseurlstr-parsequerystring-slashesdenotehost) 解析。
 
 所有的 [http.request()](../http/http.md#httprequestoptions-callback) 选项都是有效的。
 
@@ -107,7 +107,7 @@ req.on('error', (e) => {
 
 * `host`：发出请求的服务器域名或 IP 地址。默认为 `'localhost'`。
 
-* `hostname`：`host` 的别名。以支持 [url.parse()](../url/url.md#urlparseurlstr_parsequerystring_slashesdenotehost) 解析 `hostname` 会优于 `host`。
+* `hostname`：`host` 的别名。以支持 [url.parse()](../url/url.md#urlparseurlstr-parsequerystring-slashesdenotehost) 解析 `hostname` 会优于 `host`。
 
 * `family`：在解析 `hostname` 和 `host` 时所使用的 IP 地址族。有效值是 `4` 或 `6`。当它是 `unspecified` 时，将同时使用 IPv4 和 IPv6。
 
@@ -198,7 +198,7 @@ var req = https.request(options, (res) => {
 
 类似 [http.get()](./http/http.md#httpgetoptions-callback)，但基于 HTTPS。
 
-`options` 可以是对象或字符串。如果 `options` 是字符串，它会自动使用 [url.parse()](../url/url.md#urlparseurlstr_parsequerystring_slashesdenotehost) 解析。
+`options` 可以是对象或字符串。如果 `options` 是字符串，它会自动使用 [url.parse()](../url/url.md#urlparseurlstr-parsequerystring-slashesdenotehost) 解析。
 
 示例：
 

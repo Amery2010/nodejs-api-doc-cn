@@ -1006,6 +1006,12 @@
 
 [util.deprecate(function, string)](../util/util.md#deprecate)
 
+[url.parse(urlStr[, parseQueryString][, slashesDenoteHost])](../url/url.md#urlparseurlstr-parsequerystring-slashesdenotehost)
+
+[url.format(urlObj)](../url/url.md#urlformaturlobj)
+
+[url.resolve(from, to)](../url/url.md#urlresolvefrom-to)
+
 ### V
 
 [v8.setFlagsFromString(string)](../v8/v8.md#setFlagsFromString)

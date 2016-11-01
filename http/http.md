@@ -48,7 +48,7 @@
 
 Node.js 维护每台服务器的多个连接来实现 HTTP 请求。该函数允许透明地发出请求。
 
-`options` 可以是一个对象或字符串。如果 `options` 是一个字符串，它会自动使用 [url.parse()](../url/url.md#urlparseurlstr_parsequerystring_slashesdenotehost) 解析。
+`options` 可以是一个对象或字符串。如果 `options` 是一个字符串，它会自动使用 [url.parse()](../url/url.md#urlparseurlstr-parsequerystring-slashesdenotehost) 解析。
 
 选项：
 
@@ -56,7 +56,7 @@ Node.js 维护每台服务器的多个连接来实现 HTTP 请求。该函数允
 
 * `host`：发出请求的服务器域名或 IP 地址。默认为 `'localhost'`。
 
-* `hostname`：`host` 的别名。以支持 [url.parse()](../url/url.md#urlparseurlstr_parsequerystring_slashesdenotehost) 解析 `hostname` 会优于 `host`。
+* `hostname`：`host` 的别名。以支持 [url.parse()](../url/url.md#urlparseurlstr-parsequerystring-slashesdenotehost) 解析 `hostname` 会优于 `host`。
 
 * `family`：在解析 `hostname` 和 `host` 时所使用的 IP 地址族。有效值是 `4` 或 `6`。当它是 `unspecified` 时，将同时使用 IPv4 和 IPv6。
 
