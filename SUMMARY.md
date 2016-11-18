@@ -162,6 +162,8 @@
 * [数据报处理(UDP/Datagram)](./dgram/README.md)
   - [方法和属性](./dgram/dgram.md)
   - [dgram.Socket类](./dgram/class_dgram_Socket.md)
+  - [socket.bind() 行为变为异步](./dgram/change_to_asynchronous_socketbind_behavior.md)
+  - [有关 UDP 数据报大小的注意事项](./dgram/a_note_about_udp_datagram_size.md)
 
 * [终端(TTY)](./tty/README.md)
   - [方法和属性](./tty/tty.md)
