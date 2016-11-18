@@ -300,6 +300,10 @@
 
 [domain.dispose()](../domain/class_Domain.md#dispose)
 
+[dgram.createSocket(options[, callback])](../dgram/dgram.md#createsocket-options)
+
+[dgram.createSocket(type[, callback])](../dgram/dgram.md#createsocket-type)
+
 ### E
 
 [exports](../globals/global.md#exports)
@@ -913,6 +917,32 @@
 [server.close([callback])](../tls/class_tls_Server.md#serverclosecallback)
 
 [server.address()](../tls/class_tls_Server.md#serveraddress)
+
+[socket.address()](../dgram/class_dgram_Socket.md#socketaddress)
+
+[socket.bind(options[, callback])](../dgram/class_dgram_Socket.md#socketbindoptions-callback)
+
+[socket.bind([port][, address][, callback])](../dgram/class_dgram_Socket.md#socketbindport-address-callback)
+
+[socket.send(msg, [offset, length,] port, address[, callback])](../dgram/class_dgram_Socket.md#socketsendmsg-offset-length-port-address-callback)
+
+[socket.setTTL(ttl)](../dgram/class_dgram_Socket.md#socketsetttlttl)
+
+[socket.setMulticastTTL(ttl)](../dgram/class_dgram_Socket.md#socketsetmulticastttlttl)
+
+[socket.setMulticastLoopback(flag)](../dgram/class_dgram_Socket.md#socketsetmulticastloopbackflag)
+
+[socket.setBroadcast(flag)](../dgram/class_dgram_Socket.md#socketsetbroadcastflag)
+
+[socket.close([callback])](../dgram/class_dgram_Socket.md#socketclosecallback)
+
+[socket.addMembership(multicastAddress[, multicastInterface])](../dgram/class_dgram_Socket.md#socketaddmembershipmulticastaddress-multicastinterface)
+
+[socket.dropMembership(multicastAddress[, multicastInterface])](../dgram/class_dgram_Socket.md#socketdropmembership(multicastaddress-multicastinterface)
+
+[socket.unref()](../dgram/class_dgram_Socket.md#socketunref)
+
+[socket.ref()](../dgram/class_dgram_Socket.md#socketref)
 
 ### T
 
