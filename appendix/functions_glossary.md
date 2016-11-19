@@ -798,6 +798,8 @@
 
 [response.setTimeout(msecs, callback)](../http/class_http_ServerResponse.md#responsesettimeoutmsecs-callback)
 
+[rs.setRawMode(mode)](../tty/class_ReadStream.md#rssetrawmodemode)
+
 ### S
 
 [setTimeout(cb, ms)](../globals/global.md#setTimeout)
@@ -979,6 +981,10 @@
 [tlsSocket.renegotiate(options, callback)](../tls/class_tls_TLSSocket.md#tlssocketrenegotiateoptions-callback)
 
 [tlsSocket.setMaxSendFragment(size)](../tls/class_tls_TLSSocket.md#tlssocketsetmaxsendfragmentsize)
+
+[tty.isatty(fd)](../tty/tty.md#ttyisattyfd)
+
+[tty.setRawMode(mode)](../tty/tty.md#ttysetrawmodemode)
 
 ### U
 
