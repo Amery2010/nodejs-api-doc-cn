@@ -169,6 +169,12 @@
   - [方法和属性](./tty/tty.md)
   - [ReadStream类](./tty/class_ReadStream.md)
   - [WriteStream类](./tty/class_WriteStream.md)
+  
+* [逐行读取(Readline)](./readline/README.md)
+  - [方法和属性](./readline/readline.md)
+  - [Interface 类](./readline/class_Interface.md)
+  - [示例：Tiny CLI](./readline/tiny_cli.md)
+  - [示例：Read File Stream Line-by-Line](./readline/read_file_stream_line_by_line.md)
 
 * [命令行交互(REPL)](./repl/README.md)
   - [方法和属性](./repl/repl.md)
@@ -181,11 +187,6 @@
   - [概述](./cli/synopsis.md)
   - [选项(Options)](./cli/options.md)
   - [环境变量](./cli/environment_variables.md)
-
-* [逐行读取(Readline)](./readline/README.md)
-  - [方法和属性](./readline/readline.md)
-  - [示例：Tiny CLI](./readline/tiny_cli.md)
-  - [示例：Read File Stream Line-by-Line](./readline/read_file_stream_line_by_line.md)
 
 * [V8(V8)](./v8/README.md)
   - [方法和属性](./v8/v8.md)
