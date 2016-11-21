@@ -800,6 +800,12 @@
 
 [rs.setRawMode(mode)](../tty/class_ReadStream.md#rssetrawmodemode)
 
+[repl.start([options])](../repl/repl.md#replstartoptions)
+
+[replServer.defineCommand(keyword, cmd)](../repl/class_REPLServer.md#replserverdefinecommandkeyword-cmd)
+
+[replServer.displayPrompt([preserveCursor])](../repl/class_REPLServer.md#replserverdisplaypromptpreservecursor)
+
 ### S
 
 [setTimeout(cb, ms)](../globals/global.md#setTimeout)
