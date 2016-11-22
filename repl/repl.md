@@ -42,7 +42,7 @@ function eval(cmd, context, filename, callback) {
 }
 ```
 
-选项卡完成时，`eval` 将用 `.scope` 作为输入字符串调用。它期望返回用于自动完成的作用域名称的数组。
+选项卡完成时，`eval` 将用 `.scope` 作为输入字符串调用。它期望返回用于自动补全的作用域名称的数组。
 
 多数的 REPLs 可以针对相同的 Node.js 运行实例启动。每个将共享相同的全局对象，但会具有唯一的 I/O。
 

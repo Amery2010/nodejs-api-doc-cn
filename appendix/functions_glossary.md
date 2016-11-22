@@ -806,6 +806,30 @@
 
 [replServer.displayPrompt([preserveCursor])](../repl/class_REPLServer.md#replserverdisplaypromptpreservecursor)
 
+[readline.createInterface(options)](../readline/readline.md#readlinecreateInterfaceoptions)
+
+[readline.cursorTo(stream, x, y)](../readline/readline.md#readlinecursortostream-x-y)
+
+[readline.moveCursor(stream, dx, dy)](../readline/readline.md#readlinemovecursorstream-dx-dy)
+
+[readline.clearLine(stream, dir)](../readline/readline.md#readlineclearLinestream-dir)
+
+[readline.clearScreenDown(stream)](../readline/readline.md#readlineclearscreendownstream)
+
+[rl.write(data[, key])](../readline/class_Interface.md#rlwritedatakey)
+
+[rl.setPrompt(prompt)](../readline/class_Interface.md#rlsetpromptprompt)
+
+[rl.prompt([preserveCursor])](../readline/class_Interface.md#rlpromptpreservecursor)
+
+[rl.question(query, callback)](../readline/class_Interface.md#rlquestionquery-callback)
+
+[rl.pause()](../readline/class_Interface.md#rlpause)
+
+[rl.resume()](../readline/class_Interface.md#rlresume)
+
+[rl.close()](../readline/class_Interface.md#rlclose)
+
 ### S
 
 [setTimeout(cb, ms)](../globals/global.md#setTimeout)

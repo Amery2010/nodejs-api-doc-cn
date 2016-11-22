@@ -174,7 +174,7 @@
   - [方法和属性](./readline/readline.md)
   - [Interface 类](./readline/class_Interface.md)
   - [示例：Tiny CLI](./readline/tiny_cli.md)
-  - [示例：Read File Stream Line-by-Line](./readline/read_file_stream_line_by_line.md)
+  - [示例：逐行读取文件流](./readline/read_file_stream_line_by_line.md)
 
 * [命令行交互(REPL)](./repl/README.md)
   - [方法和属性](./repl/repl.md)
