@@ -66,4 +66,4 @@ console.log(hash.digest('hex'));
 
 计算所有传入的数据的散列摘要（使用 [hash.update()](#hashupdatedata-inputencoding) 方法）。`encoding` 可以是 `'hex'`、`'binary'` 或 `'base64'`。如果提供了 `encoding`，会返回一个字符串；否则返回一个 [Buffer](../buffer/)。
 
-在调用 `hash.digest()` 方法之后，`Hash` 对象将不能再次使用。多个调用将导致抛出错误。
+在调用 `hash.digest()` 方法之后，`Hash` 对象将不能再次使用。多次调用将导致抛出错误。

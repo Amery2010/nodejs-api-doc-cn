@@ -66,4 +66,4 @@ console.log(hmac.digest('hex'));
 
 计算所有传入的的数据的 HMAC 摘要（使用 [hmac.update()](#hmacupdatedata-inputencoding) 方法）。`encoding` 可以是 `'hex'`、`'binary'` 或 `'base64'`。如果提供了 `encoding`，会返回一个字符串；否则返回一个 [Buffer](../buffer/)。
 
-在调用 `hmac.digest()` 方法之后，`Hmac` 对象将不能再次使用。多个调用将导致抛出错误。
+在调用 `hmac.digest()` 方法之后，`Hmac` 对象将不能再次使用。多次调用将导致抛出错误。

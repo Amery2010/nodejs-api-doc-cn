@@ -246,6 +246,72 @@
 
 [cryptoStream.bytesWritten](../tls/class_CryptoStream.md#cryptostreambyteswritten)
 
+[crypto.DEFAULT_ENCODING](../crypto/crypto.md#cryptodefaultencoding)
+
+[crypto.createCipher(algorithm, password)](../crypto/crypto.md#cryptocreatecipheralgorithm-password)
+
+[crypto.createCipheriv(algorithm, key, iv)](../crypto/crypto.md#cryptocreatecipherivalgorithm-key-iv)
+
+[crypto.createCredentials(details)](../crypto/crypto.md#cryptocreatecredentialsdetails)
+
+[crypto.createDecipher(algorithm, password)](../crypto/crypto.md#cryptocreatedecipheralgorithm-password)
+
+[crypto.createDecipheriv(algorithm, key, iv)](../crypto/crypto.md#cryptocreatedecipherivalgorithm-key-iv)
+
+[crypto.createDiffieHellman(prime[, prime_encoding][, generator][, generator_encoding])](../crypto/crypto.md#cryptocreatediffiehellmanprime-primeencoding-generator-generatorencoding)
+
+[crypto.createDiffieHellman(prime_length[, generator])](../crypto/crypto.md#cryptocreatediffiehellmanprimelength-generator)
+
+[crypto.createECDH(curve_name)](../crypto/crypto.md#cryptocreateecdhcurvename)
+
+[crypto.createHash(algorithm)](../crypto/crypto.md#cryptocreatehashalgorithm)
+
+[crypto.createHmac(algorithm, key)](../crypto/crypto.md#cryptocreatehmacalgorithm-key)
+
+[crypto.createSign(algorithm)](../crypto/crypto.md#cryptocreatesignalgorithm)
+
+[crypto.createVerify(algorithm)](../crypto/crypto.md#cryptocreateverifyalgorithm)
+
+[crypto.getCiphers()](../crypto/crypto.md#cryptogetciphers)
+
+[crypto.getCurves()](../crypto/crypto.md#cryptogetcurves)
+
+[crypto.getDiffieHellman(group_name)](../crypto/crypto.md#cryptogetdiffiehellmangroupname)
+
+[crypto.getHashes()](../crypto/crypto.md#cryptogethashes)
+
+[crypto.pbkdf2(password, salt, iterations, keylen[, digest], callback)](../crypto/crypto.md#cryptopbkdf2password-salt-iterations-keylen-digest-callback)
+
+[crypto.pbkdf2Sync(password, salt, iterations, keylen[, digest])](../crypto/crypto.md#cryptopbkdf2syncpassword-salt-iterations-keylen-digest)
+
+[crypto.privateEncrypt(private_key, buffer)](../crypto/crypto.md#cryptoprivateencryptprivatekey-buffer)
+
+[crypto.privateDecrypt(private_key, buffer)](../crypto/crypto.md#cryptoprivatedecryptprivatekey-buffer)
+
+[crypto.publicEncrypt(public_key, buffer)](../crypto/crypto.md#cryptopublicencryptpublickey-buffer)
+
+[crypto.publicDecrypt(public_key, buffer)](../crypto/crypto.md#cryptopublicdecryptpublickey-buffer)
+
+[crypto.randomBytes(size[, callback])](../crypto/crypto.md#cryptorandombytessize-callback)
+
+[crypto.setEngine(engine[, flags])](../crypto/crypto.md#cryptosetengineengine-flags)
+
+[cipher.setAAD(buffer)](../crypto/class_Cipher.md#ciphersetaadbuffer)
+
+[cipher.setAutoPadding(auto_padding=true)](../crypto/class_Cipher.md#ciphersetautopaddingautopaddingtrue)
+
+[cipher.getAuthTag()](../crypto/class_Cipher.md#ciphergetauthtag)
+
+[cipher.update(data[, input_encoding][, output_encoding])](../crypto/class_Cipher.md#cipherupdatedata-inputencoding-outputencoding)
+
+[cipher.final([output_encoding])](../crypto/class_Cipher.md#cipherfinaloutputencoding)
+
+[certificate.exportPublicKey(spkac)](../crypto/class_Certificate.md#certificateexportpublickeyspkac)
+
+[certificate.exportChallenge(spkac)](../crypto/class_Certificate.md#certificateexportchallengespkac)
+
+[certificate.verifySpkac(spkac)](../crypto/class_Certificate.md#certificateverifyspkacspkac)
+
 ### D
 
 [decoder.write(buffer)](../string_decoder/class_StringDecoder.md#write)
@@ -304,6 +370,32 @@
 
 [dgram.createSocket(type[, callback])](../dgram/dgram.md#createsocket-type)
 
+[decipher.setAAD(buffer)](../crypto/class_Decipher.md#deciphersetaadbuffer)
+
+[decipher.setAutoPadding(auto_padding=true)](../crypto/class_Decipher.md#deciphersetautopaddingautopaddingtrue)
+
+[decipher.setAuthTag(buffer)](../crypto/class_Decipher.md#deciphersetauthtagbuffer)
+
+[decipher.update(data[, input_encoding][, output_encoding])](../crypto/class_Decipher.md#decipherupdatedata-inputencoding-outputencoding)
+
+[decipher.final([output_encoding])](../crypto/class_Decipher.md#decipherfinaloutputencoding)
+
+[diffieHellman.generateKeys([encoding])](../crypto/class_DiffieHellman.md#diffiehellmangeneratekeysencoding)
+
+[diffieHellman.getGenerator([encoding])](../crypto/class_DiffieHellman.md#diffiehellmangetgeneratorencoding)
+
+[diffieHellman.setPublicKey(public_key[, encoding])](../crypto/class_DiffieHellman.md#diffiehellmansetpublickeypublickey-encoding)
+
+[diffieHellman.getPublicKey([encoding])](../crypto/class_DiffieHellman.md#diffiehellmangetpublickeyencoding)
+
+[diffieHellman.setPrivateKey(private_key[, encoding])](../crypto/class_DiffieHellman.md#diffiehellmansetprivatekeyprivatekey-encoding)
+
+[diffieHellman.getPrivateKey([encoding])](../crypto/class_DiffieHellman.md#diffiehellmangetprivatekeyencoding)
+
+[diffieHellman.getPrime([encoding])](../crypto/class_DiffieHellman.md#diffiehellmangetprimeencoding)
+
+[diffieHellman.computeSecret(other_public_key[, input_encoding][, output_encoding])](../crypto/class_DiffieHellman.md#diffiehellmancomputesecretotherpublickey-inputencoding-outputencoding)
+
 ### E
 
 [exports](../globals/global.md#exports)
@@ -323,6 +415,19 @@
 [error.code](../errors/system_errors.md#code)
 
 [error.syscall](../errors/system_errors.md#syscall)
+
+[ecdh.generateKeys([encoding[, format]])](../crypto/class_ECDH.md#ecdhgeneratekeysencoding-format)
+
+[ecdh.setPrivateKey(private_key[, encoding])](../crypto/class_ECDH.md#ecdhsetprivatekeyprivatekey-encoding)
+
+[ecdh.getPrivateKey([encoding])](../crypto/class_ECDH.md#ecdhgetprivatekeyencoding)
+
+[ecdh.setPublicKey(public_key[, encoding])](../crypto/class_ECDH.md#ecdhsetpublickeypublickey-encoding)
+
+[ecdh.getPublicKey([encoding[, format]])](../crypto/class_ECDH.md#ecdhgetpublickeyencoding-format)
+
+[ecdh.computeSecret(other_public_key[, input_encoding][, output_encoding])](../crypto/class_ECDH.md#ecdhcomputesecretotherpublickey-inputencoding-outputencoding)
+
 
 ### F
 
@@ -500,6 +605,14 @@
 
 [https.get(options, callback)](../https/https.md#httpsgetoptions-callback)
 
+[hash.update(data[, input_encoding])](../crypto/class_Hash.md#hashupdatedata-inputencoding)
+
+[hash.digest([encoding])](../crypto/class_Hash.md#hashdigestencoding)
+
+[hmac.update(data[, input_encoding])](../crypto/class_Hmac.md#hmacupdatedata-inputencoding)
+
+[hmac.digest([encoding])](../crypto/class_Hmac.md#hmacdigestencoding)
+
 ### I
 
 ### J
@@ -577,6 +690,8 @@
 [net.Server 类](../net/class_net_Server.md#)
 
 [new net.Socket([options])](../net/class_net_Socket.md#new_netsocketoptions)
+
+[new crypto.Certificate()](../crypto/class_Certificate.md#new-cryptocertificate)
 
 ### O
 
@@ -976,6 +1091,10 @@
 
 [socket.ref()](../dgram/class_dgram_Socket.md#socketref)
 
+[sign.update(data[, input_encoding])](../crypto/class_Sign.md#signupdatedata-inputencoding)
+
+[sign.sign(private_key[, output_format])](../crypto/class_Sign.md#signsignprivatekey-outputformat)
+
 ### T
 
 [transform._transform(chunk, encoding, callback)](../stream/api_for_stream_implementors.md#_transform)
@@ -1097,6 +1216,10 @@
 [vm.runInNewContext(code[, sandbox][, options])](../vm/vm.md#runInNewContext)
 
 [vm.runInDebugContext(code)](../vm/vm.md#runInDebugContext)
+
+[verifier.update(data[, input_encoding])](../crypto/class_Verify.md#verifierupdatedata-inputencoding)
+
+[verifier.verify(object, signature[, signature_format])](../crypto/class_Verify.md#verifierverifyobject-signature-signatureformat)
 
 ### W
 
