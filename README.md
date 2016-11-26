@@ -14,7 +14,7 @@
 
 [Gitbook 版](https://xiangfa.org/book/nodejs/)
 
-[GitHub 版](https://github.com/amery2010/nodejs-api-book/blob/master/SUMMARY.md)
+[GitHub 版](https://github.com/amery2010/nodejs-api-doc-cn/blob/master/SUMMARY.md)
 
 ### 许可协议
 
