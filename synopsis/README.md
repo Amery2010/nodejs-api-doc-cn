@@ -1,23 +1,35 @@
-# 概述
+# 用法和示例
 
-一个输出 “Hello World” 的简单 [Web 服务器](../http/) 例子：
+`node [options] [v8 options] [script.js | -e "script"] [arguments]`
+
+有关使用 Node.js 运行脚本的各种选项和方法的相关信息，请参阅文档中的[命令行选项](./cli/README.md)章节。
+
+示例：
+
+一个使用 Node.js 编写的输出 “Hello World” 的 [Web 服务器](../http/) 示例：
 
 ``` javascript
 const http = require('http');
 
-http.createServer( (request, response) => {
-  response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.end('Hello World\n');
-}).listen(8124);
+const hostname = '127.0.0.1';
+const port = 3000;
 
-console.log('Server running at http://127.0.0.1:8124/');
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World\n');
+});
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
 ```
 
-要运行这个服务器，需要先将程序代码保存为 “example.js” 的文件，并使用 `node` 命令来执行：
+如果要运行这个服务器，需要先将代码保存名为 `example.js` 的文件，并使用 Node.js 来执行：
 
 ```
 $ node example.js
-Server running at http://127.0.0.1:8124/
+Server running at http://127.0.0.1:3000/
 ```
 
-文档中的所有例子都可以使用相同的方式运行。
+文档中的所有示例都可以使用相同的方式运行。

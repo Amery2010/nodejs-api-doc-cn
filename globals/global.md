@@ -1,6 +1,6 @@
 # 方法和属性
 
-* [Buffer类](#class_Buffer)
+* [Buffer 类](#buffer-类)
 * [__dirname](#dirname)
 * [__filename](#filename)
 * [global](#global)
@@ -8,116 +8,140 @@
 * [module](#module)
 * [exports](#exports)
 * [require()](#require)
-  - [require.cache](#require_cache)
-  - [require.extensions](#require_extensions)
-  - [require.resolve()](#require_resolve)
+  - [require.cache](#requirecache)
+  - [require.extensions](#requireextensions) 废弃
+  - [require.resolve()](#requireresolve)
 * [console](#console)
-* [setTimeout(cb, ms)](#setTimeout)
-* [clearTimeout(t)](#clearTimeout)
-* [setInterval(cb, ms)](#setInterval)
-* [clearInterval(t)](#clearInterval)
+* [setTimeout(callback, delay[, ...args])](#settimeoutcallback-delay-args)
+* [clearTimeout(timeoutObject)](#cleartimeouttimeoutobject)
+* [setInterval(callback, delay[, ...args])](#setintervalcallback-delay-args)
+* [clearInterval(intervalObject)](#clearintervalintervalobject)
+* [setImmediate(callback[, ...args])](#setimmediatecallback-args)
+* [clearImmediate(immediateObject)](#clearimmediateimmediateobject)
 
 --------------------------------------------------
 
 
-<div id="class_Buffer" class="anchor"></div>
-## Buffer类
+## Buffer 类
+
+添加：v0.1.103
 
 - {Function}
 
-用于处理二进制数据，详见 [Buffer](../buffer/) 章节。
+用于处理二进制数据。详见 [Buffer](../buffer/) 章节。
 
 
-<div id="dirname" class="anchor"></div>
 ## __dirname
+
+添加：v0.1.27
 
 - {String}
 
-当前执行脚本所在目录的目录名。
+当前执行脚本所在的目录名称。
 
-举个栗子：在 `/Users/mjr` （此处为你的项目目录，[译者](https://github.com/Amery2010)注）下运行 `node example.js` 。
+示例：在 `/Users/mjr` 中运行 `node example.js`：
 
 ``` javascript
 console.log(__dirname);
-// /Users/mjr
+// 打印: /Users/mjr
 ```
 
-`__dirname` 实际上是各个模块本地的而非全局。
+`__dirname` 实际上不是全局的，而是每个模块内部的。
+
+例如，给出两个模块：`a` 和 `b`，其中 `b` 是 `a` 的依赖文件。目录结构如下：
+
+* `/Users/mjr/app/a.js`
+
+* `/Users/mjr/app/node_modules/b/b.js`
+
+在 `b.js` 中引用 `__dirname` 会返回 `/Users/mjr/app/node_modules/b`，而在 `a.js` 中引用 `__dirname` 则会返回 `/Users/mjr/app`。
+
+*上文的 `/Users/mjr` 指代用户目录，在实际应用中请使用自己的目录路径进行操作，[译者](https://github.com/Amery2010)注。*
 
 
-<div id="filename" class="anchor"></div>
 ## __filename
+
+添加：v0.0.1
 
 - {String}
 
-当前所执行脚本的文件路径。这是该脚本文件经过解析后生成的绝对路径，在模块中此变量值是该模块的文件路径。对于主程序来说，这和命令行中显示的文件路径未必相同。
+当前所执行脚本的文件名。这是该脚本文件经过解析后生成的绝对路径。在模块中此变量值是该模块的文件路径。对于主程序而言，这与命令行中使用的文件名未必相同。
 
-举个栗子：在 `/Users/mjr` （此处为你的项目目录，[译者](https://github.com/Amery2010)注）下运行 `node example.js` 。
+示例：在 `/Users/mjr` 中运行 `node example.js`：
 
 ``` javascript
 console.log(__filename);
-// /Users/mjr/example.js
+// 打印: /Users/mjr/example.js
 ```
 
-`__filename` 实际上是各个模块本地的而非全局。
+`__filename` 实际上不是全局的，而是每个模块内部的。
+
+*上文的 `/Users/mjr` 指代用户目录，在实际应用中请使用自己的目录路径进行操作，[译者](https://github.com/Amery2010)注。*
 
 
-<div id="global" class="anchor"></div>
 ## global
 
-- {Object} 全局命名空间对象
+添加：v0.1.27
 
-在浏览器中，顶级作用域就是全局作用域。这就是说，在浏览器中如果当前是在全局作用域内，`var something` 将会声明一个全局变量。在 Node 中则不同。顶级作用域并非全局作用域，在 Node 模块里的 `var something` 只属于那个模块。
+- {Object} 全局命名空间对象。
+
+在浏览器中，顶级作用域就是全局作用域。这也意味着在浏览器中，如果在全局作用域内使用 `var something` 将会声明一个全局变量。在 Node.js 中则不同。顶级作用域并非全局作用域；在 Node.js 模块中使用 `var something` 会生成该模块的一个本地变量。
 
 
-<div id="process" class="anchor"></div>
 ## process
+
+添加：v0.1.7
 
 - {Object}
 
 进程对象。详见[进程](../process/)章节。
 
 
-<div id="module" class="anchor"></div>
 ## module
+
+添加：v0.1.16
 
 - {Object}
 
-当前模块的引用。`module.exports` 用于导出模块代码并确保模块能够通过 `require()` 导入。
+当前模块的引用。尤其是 `module.exports` 用于定义模块的导出并确保该模块能够通过 `require()` 引入。
 
-`module` 实际上是各个模块本地的而非全局。
+`module` 实际上不是全局的，而是每个模块内部的。
 
-详情可查阅[模块系统文档](../modules/)。
+有关的详细信息，请参阅[模块系统文档](../modules/)。
 
 
-<div id="exports" class="anchor"></div>
 ## exports
 
-`module.exports` 的快捷引用方式。何时使用 `exports` 以及何时使用 `module.exports` 的详细内容可查阅[模块系统文档](../modules/)。
+添加：v0.1.12
 
-`exports` 实际上是各个模块本地的而非全局。
+`module.exports` 的快捷引用方式。何时使用 `exports` 以及何时使用 `module.exports` 的详细内容，请参阅[模块系统文档](../modules/)。
 
-详情可查阅[模块系统文档](../modules/)。
+`exports` 实际上不是全局的，而是每个模块内部的。
+
+有关详细信息，请参阅[模块系统文档](../modules/)。
 
 
-<div id="require" class="anchor"></div>
 ## require()
+
+添加：v0.1.13
 
 - {Function}
 
-引入模块，详见[模块](../modules/)章节。
+引入模块。详见[模块](../modules/)章节。
 
-`require()` 实际上是各个模块本地的而非全局。
+`require` 实际上不是全局的，而是每个模块内部的。
 
-<div id="require_cache" class="anchor"></div>
-#### require.cache
+### require.cache
+
+添加：v0.3.0
 
 - {Object}
 
-模块在引入时会缓存到该对象。如果删除该对象的键值，下次调用require时将会重新加载相应模块。
+模块在引入时会缓存到该对象中。如果从该对象中删除键值，下次调用 `require` 时将重新加载相应模块。请注意，这不适用于[原生插件](./addons/)，因为重新加载这类插件将导致错误。
 
-<div id="require_extensions" class="anchor"></div>
-#### require.extensions
+### require.extensions
+
+添加：v0.3.0  废弃：v0.10.6
 
 > 稳定度：0 - 已废弃
 
@@ -125,59 +149,74 @@ console.log(__filename);
 
 用于指导 `require` 方法如何处理特定的文件扩展名。
 
-将 `.sjs` 文件作为 `.js` 文件处理：
+将带有扩展名 `.sjs` 文件作为 `.js` 文件处理：
 
 ``` javascript
 require.extensions['.sjs'] = require.extensions['.js'];
 ```
 
-在 `废弃` 之前，该列表用于编译加载 Node.js 的非 JavaScript 模块。然而，实践中有更好的方式实现该功能，比如通过其他 Node.js 程序加载模块，或提前将他们编译成 JavaScript 代码。
+在 `废弃` 之前，该列表用于将通过按需编译的非 JavaScript 模块加载到 Node.js 中。然而，实践中有更好的方式实现这一点，比如通过其他的 Node.js 程序来加载模块，或预先将它们编译成 JavaScript 代码。
 
 由于[模块系统](../modules/)被锁定，该特性可能永远不会消失。改动它可能会产生细微的错误和复杂性，所以最好保持不变。
 
-<div id="require_resolve" class="anchor"></div>
-#### require.resolve()
+请注意，模块系统必须执行与已注册的扩展数成线性比例的文件系统操作次数，才能将一个 `require(...)` 语句解析为文件名。
 
-该方法使用 `require()` 的内部机制查找一个模块的位置，但并不会加载该模块，只返回解析后的文件名。
+换句话说，添加扩展会降低模块加载器的执行效率，不鼓励使用该方法。
 
 
-<div id="console" class="anchor"></div>
+### require.resolve()
+
+添加：v0.3.0
+
+该方法使用 `require()` 的内部机制来查找模块的位置，但不会加载该模块，只返回解析后的文件名。
+
+
 ## console
+
+添加：v0.1.100
 
 - {Object}
 
-用于打印 `stdout` 和 `stderr` 。详见[控制台](../console/)章节。
+用于打印 `stdout` 和 `stderr`。详见[控制台](../console/)章节。
 
 
-<div id="setTimeout" class="anchor"></div>
-## setTimeout(cb, ms)
+## setTimeout(callback, delay[, ...args])
 
-在至少 `ms` 毫秒后调用回调函数 `cb` 。实际延迟取决于外部因素，如操作系统定时器粒度及系统负载。
+添加：v0.0.1
 
-超时值必须在 1-2147483647 的范围内（包含1和2147483647）。如果该值超出范围，则被当作1毫秒处理。一般来说，一个定时器不能超过24.8天。
-
-返回一个代表该定时器的句柄值。
+有关 [setTimeout](../timers/timer.md#setTimeout) 的描述在[定时器](../timers/)章节。
 
 
-<div id="clearTimeout" class="anchor"></div>
-## clearTimeout(t)
+## clearTimeout(timeoutObject)
 
-停止一个之前通过 [setTimeout()](#setTimeout) 创建的定时器。回调将不再被执行。
+添加：v0.0.1
 
-
-<div id="setInterval" class="anchor"></div>
-## setInterval(cb, ms)
-
-每隔 `ms` 毫秒重复调用回调函数 `cb` 。值得注意的是，实际间隔取决于外部因素，如操作系统定时器粒度及系统负载。它绝不会少于 `ms` 但可能比 `ms` 长。
-
-超时值必须在 1-2147483647 的范围内（包含1和2147483647）。如果该值超出范围，则被当作1毫秒处理。一般来说，一个定时器不能超过24.8天。
-
-返回一个代表该定时器的句柄值。
+有关 [clearTimeout](../timers/timer.md#clearTimeout) 的描述在[定时器](../timers/)章节。
 
 
-<div id="clearInterval" class="anchor"></div>
-## clearInterval(t)
+## setInterval(callback, delay[, ...args])
 
-停止一个之前通过 [clearInterval()](#clearInterval) 创建的定时器。回调将不再被执行。
+添加：v0.0.1
 
-定时器函数是一个全局变量。详见[定时器](../timers/)章节。
+有关 [setInterval](../timers/timer.md#setInterval) 的描述在[定时器](../timers/)章节。
+
+
+## clearInterval(intervalObject)
+
+添加：v0.0.1
+
+有关 [clearInterval](../timers/timer.md#clearInterval) 的描述在[定时器](../timers/)章节。
+
+
+## setImmediate(callback[, ...args])
+
+添加：v0.9.1
+
+有关 [setImmediate](../timers/timer.md#setImmediate) 的描述在[定时器](../timers/)章节。
+
+
+## clearImmediate(immediateObject)
+
+添加：v0.9.1
+
+有关 [clearImmediate](../timers/timer.md#clearImmediate) 的描述在[定时器](../timers/)章节。

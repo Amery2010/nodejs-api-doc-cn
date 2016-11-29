@@ -194,11 +194,7 @@
 
 [console.timeEnd(label)](../console/class_Console.md#timeEnd)
 
-[clearTimeout(t)](../globals/global.md#clearTimeout)
-
 [clearTimeout(timeoutObject)](../timers/timer.md#clearTimeout)
-
-[clearInterval(t)](../globals/global.md#clearInterval)
 
 [clearInterval(intervalObject)](../timers/timer.md#clearInterval)
 
@@ -399,8 +395,6 @@
 ### E
 
 [exports](../globals/global.md#exports)
-
-[exports的别名](../globals/global.md#exports_alias)
 
 [Error.captureStackTrace(targetObject[, constructorOpt])](../errors/class_Error.md#captureStackTrace)
 
@@ -623,21 +617,21 @@
 
 ### M
 
-[module](../globals/global.md#module)
+[module](../modules/module.md#module)
 
-[module.exports](../globals/global.md#exports)
+[module.exports](../modules/module.md#exports)
 
-[module.require(id)](../globals/global.md#require)
+[module.require(id)](../modules/module.md#require)
 
-[module.id](../globals/global.md#id)
+[module.id](../modules/module.md#id)
 
-[module.filename](../globals/global.md#filename)
+[module.filename](../modules/module.md#filename)
 
-[module.loaded](../globals/global.md#loaded)
+[module.loaded](../modules/module.md#loaded)
 
-[module.parent](../globals/global.md#parent)
+[module.parent](../modules/module.md#parent)
 
-[module.children](../globals/global.md#children)
+[module.children](../modules/module.md#children)
 
 [message.setTimeout(msecs, callback)](../http/class_http_IncomingMessage.md#messagesettimeoutmsecs-callback)
 
@@ -853,11 +847,11 @@
 
 [require()](../globals/global.md#require)
 
-[require.cache](../globals/global.md#require_cache)
+[require.cache](../globals/global.md#requirecache)
 
-[require.extensions](../globals/global.md#require_extensions)
+[require.extensions](../globals/global.md#requireextensions)
 
-[require.resolve()](../globals/global.md#require_resolve)
+[require.resolve()](../globals/global.md#requireresolve)
 
 [ref()](../timers/timer.md#ref)
 
@@ -947,11 +941,7 @@
 
 ### S
 
-[setTimeout(cb, ms)](../globals/global.md#setTimeout)
-
 [setTimeout(callback, delay[, arg][, ...])](../timers/timer.md#setTimeout)
-
-[setInterval(cb, ms)](../globals/global.md#setInterval)
 
 [setInterval(callback, delay[, arg][, ...])](../timers/timer.md#setInterval)
 
