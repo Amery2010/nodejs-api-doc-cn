@@ -3,37 +3,17 @@
     "generator": "site",
     "language": "zh",
     "plugins": [
-        "-lunr",
-        "-search",
         "-sharing",
         "fontsettings",
         "github",
-        "regexplace"
+        "sitemap"
     ],
     "pluginsConfig": {
         "github": {
-            "url": "https://github.com/amery2010/nodejs-api-book"
+            "url": "https://github.com/amery2010/nodejs-api-doc-cn/"
         },
-        "regexplace": {
-            "substitutes": [
-                {
-                    "pattern": ".md#",
-                    "flags": "g",
-                    "substitute": ".html#"
-                }
-            ]
+        "sitemap": {
+            "hostname": "http://nodejs.xiangfa.org/"
         }
-    },
-    "pdf": {
-        "fontSize": 14,
-        "paperSize": "a4",
-        "margin": {
-            "right": 62,
-            "left": 62,
-            "top": 36,
-            "bottom": 36
-        },
-        "headerTemplate": null,
-        "footerTemplate": null
     }
 }
