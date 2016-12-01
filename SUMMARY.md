@@ -11,8 +11,8 @@
   * [方法和属性](./globals/global.md)
 
 * [控制台(Console)](./console/README.md)
-  * [Console类](./console/class_Console.md)
-  * [异步和同步的控制台](./console/asynchronous_vs_synchronous_consoles.md)
+  * [Console 类](./console/class_Console.md)
+  * [异步与同步的控制台](./console/asynchronous_vs_synchronous_consoles.md)
 
 * [定时器(Timers)](./timers/README.md)
   * [方法和属性](./timers/timer.md)

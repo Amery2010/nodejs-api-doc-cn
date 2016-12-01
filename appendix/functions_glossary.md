@@ -176,23 +176,23 @@
 
 [console](../globals/global.md#console)
 
-[console.log([data][, ...])](../console/class_Console.md#log)
+[console.log([data][, ...args])](../console/class_Console.md#consolelogdata-argss)
 
-[console.dir(obj[, options])](../console/class_Console.md#dir)
+[console.dir(obj[, options])](../console/class_Console.md#consoledirobj-options)
 
-[console.info([data][, ...])](../console/class_Console.md#info)
+[console.info([data][, ...args])](../console/class_Console.md#consoleinfodata-args)
 
-[console.warn([data][, ...])](../console/class_Console.md#warn)
+[console.warn([data][, ...args])](../console/class_Console.md#consolewarndata-args)
 
-[console.error([data][, ...])](../console/class_Console.md#error)
+[console.error([data][, ...args])](../console/class_Console.md#consoleerrordata-args)
 
-[console.trace(message[, ...])](../console/class_Console.md#trace)
+[console.trace(message[, ...args])](../console/class_Console.md#consoletracemessage-args)
 
-[console.assert(value[, message][, ...])](../console/class_Console.md#assert)
+[console.assert(value[, message][, ...args])](../console/class_Console.md#consoleassertvalue-message-args)
 
-[console.time(label)](../console/class_Console.md#time)
+[console.time(label)](../console/class_Console.md#consoletimelabel)
 
-[console.timeEnd(label)](../console/class_Console.md#timeEnd)
+[console.timeEnd(label)](../console/class_Console.md#consoletimeendlabel)
 
 [clearTimeout(timeoutObject)](../timers/timer.md#clearTimeout)
 
@@ -637,7 +637,7 @@
 
 ### N
 
-[new Console(stdout[, stderr])](../console/class_Console.md#new_Console)
+[new Console(stdout[, stderr])](../console/class_Console.md#new-consolestdout-stderr)
 
 [new Error(message)](../errors/class_Error.md#new_Error)
 

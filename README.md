@@ -12,7 +12,7 @@
 
 ### 文档阅读
 
-[Gitbook 版](https://xiangfa.org/book/nodejs/)
+[Gitbook 版](https://nodejs.xiangfa.org)
 
 [GitHub 版](https://github.com/amery2010/nodejs-api-doc-cn/blob/master/SUMMARY.md)
 

@@ -507,7 +507,7 @@ require('util').log('Timestamped message.');
 <div id="error" class="anchor"></div>
 ## util.error([...])
 
-> 稳定度：0 - 已废弃：使用 [console.error()](../console/class_Console.md#error) 代替。
+> 稳定度：0 - 已废弃：使用 [console.error()](../console/class_Console.md#consoleerrordata-args) 代替。
 
 `console.error` 的过时前身。
 
@@ -515,7 +515,7 @@ require('util').log('Timestamped message.');
 <div id="debug" class="anchor"></div>
 ## util.debug(string)
 
-> 稳定度：0 - 已废弃：使用 [console.error()](../console/class_Console.md#error) 代替。
+> 稳定度：0 - 已废弃：使用 [console.error()](../console/class_Console.md#consoleerrordata-args) 代替。
 
 `console.error` 的过时前身。
 
@@ -552,7 +552,7 @@ FOO 3245: hello from foo [123]
 <div id="print" class="anchor"></div>
 ## util.print([...])
 
-> 稳定度：0 - 已废弃：使用 [console.log()](../console/class_Console.md#log) 代替。
+> 稳定度：0 - 已废弃：使用 [console.log()](../console/class_Console.md#consolelogdata-args) 代替。
 
 `console.log` 的过时前身。
 
@@ -560,7 +560,7 @@ FOO 3245: hello from foo [123]
 <div id="puts" class="anchor"></div>
 ## util.puts([...])
 
-> 稳定度：0 - 已废弃：使用 [console.log()](../console/class_Console.md#log) 代替。
+> 稳定度：0 - 已废弃：使用 [console.log()](../console/class_Console.md#consolelogdata-args) 代替。
 
 `console.log` 的过时前身。
 
