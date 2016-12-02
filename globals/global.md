@@ -184,39 +184,39 @@ require.extensions['.sjs'] = require.extensions['.js'];
 
 添加：v0.0.1
 
-有关 [setTimeout](../timers/timer.md#setTimeout) 的描述在[定时器](../timers/)章节。
+有关 [setTimeout](../timers/scheduling_timers.md#settimeoutcallback-delay-args) 的描述在[定时器](../timers/)章节。
 
 
 ## clearTimeout(timeoutObject)
 
 添加：v0.0.1
 
-有关 [clearTimeout](../timers/timer.md#clearTimeout) 的描述在[定时器](../timers/)章节。
+有关 [clearTimeout](../timers/cancelling_timers.md#cleartimeouttimeout) 的描述在[定时器](../timers/)章节。
 
 
 ## setInterval(callback, delay[, ...args])
 
 添加：v0.0.1
 
-有关 [setInterval](../timers/timer.md#setInterval) 的描述在[定时器](../timers/)章节。
+有关 [setInterval](../timers/scheduling_timers.md#setintervalcallback-delay-args) 的描述在[定时器](../timers/)章节。
 
 
 ## clearInterval(intervalObject)
 
 添加：v0.0.1
 
-有关 [clearInterval](../timers/timer.md#clearInterval) 的描述在[定时器](../timers/)章节。
+有关 [clearInterval](../timers/cancelling_timers.md#clearintervaltimeout) 的描述在[定时器](../timers/)章节。
 
 
 ## setImmediate(callback[, ...args])
 
 添加：v0.9.1
 
-有关 [setImmediate](../timers/timer.md#setImmediate) 的描述在[定时器](../timers/)章节。
+有关 [setImmediate](../timers/scheduling_timers.md#setimmediatecallback-args) 的描述在[定时器](../timers/)章节。
 
 
 ## clearImmediate(immediateObject)
 
 添加：v0.9.1
 
-有关 [clearImmediate](../timers/timer.md#clearImmediate) 的描述在[定时器](../timers/)章节。
+有关 [clearImmediate](../timers/cancelling_timers.md#clearimmediateimmediate) 的描述在[定时器](../timers/)章节。

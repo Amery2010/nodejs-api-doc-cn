@@ -8,7 +8,7 @@
 
 ### 简介
 
-这是一份 Node.js API 文档的中文版，使用 [GitBook](https://github.com/GitbookIO/gitbook) 进行构建，适用于无力阅读英文原版的朋友参考阅读。
+这是一份 Node.js API 的中文文档，使用 [GitBook](https://github.com/GitbookIO/gitbook) 进行构建，适用于无力阅读英文原版的朋友参考阅读。
 
 ### 文档阅读
 

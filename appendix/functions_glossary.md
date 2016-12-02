@@ -194,11 +194,11 @@
 
 [console.timeEnd(label)](../console/class_Console.md#consoletimeendlabel)
 
-[clearTimeout(timeoutObject)](../timers/timer.md#clearTimeout)
+[clearTimeout(timeout)](../timers/cancelling_timers.md#cleartimeouttimeout)
 
-[clearInterval(intervalObject)](../timers/timer.md#clearInterval)
+[clearInterval(timeout)](../timers/cancelling_timers.md#clearintervaltimeout)
 
-[clearImmediate(immediateObject)](../timers/timer.md#clearImmediate)
+[clearImmediate(immediate)](../timers/cancelling_timers.md#clearimmediateimmediate)
 
 [child_process.exec(command[, options][, callback])](../child_process/asynchronous_process_creation.md#exec)
 
@@ -853,8 +853,6 @@
 
 [require.resolve()](../globals/global.md#requireresolve)
 
-[ref()](../timers/timer.md#ref)
-
 [readable.read([size])](../stream/api_for_stream_consumers.md#read)
 
 [readable.setEncoding(encoding)](../stream/api_for_stream_consumers.md#setEncoding)
@@ -941,11 +939,11 @@
 
 ### S
 
-[setTimeout(callback, delay[, arg][, ...])](../timers/timer.md#setTimeout)
+[setTimeout(callback, delay[, ...args])](../timers/scheduling_timers.md#settimeoutcallback-delay-args)
 
-[setInterval(callback, delay[, arg][, ...])](../timers/timer.md#setInterval)
+[setInterval(callback, delay[, ...args])](../timers/scheduling_timers.md#setintervalcallback-delay-args)
 
-[setImmediate(callback[, arg][, ...])](../timers/timer.md#setImmediate)
+[setImmediate(callback[, ...args])](../timers/scheduling_timers.md#setimmediatecallback-args)
 
 [System Error类](../errors/system_errors.md#class_System_Error)
 
@@ -1087,6 +1085,10 @@
 
 ### T
 
+[timeout.unref()](../timers/class_Timeout.md#timeoutunref)
+
+[timeout.ref()](../timers/class_Timeout.md#timeoutref)
+
 [transform._transform(chunk, encoding, callback)](../stream/api_for_stream_implementors.md#_transform)
 
 [transform._flush(callback)](../stream/api_for_stream_implementors.md#_flush)
@@ -1126,8 +1128,6 @@
 [tty.setRawMode(mode)](../tty/tty.md#ttysetrawmodemode)
 
 ### U
-
-[unref()](../timers/timer.md#unref)
 
 [util.isBoolean(object)](../util/util.md#isBoolean)
 

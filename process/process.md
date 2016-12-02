@@ -581,7 +581,7 @@ console.log(process.versions);
 
 一旦当前的事件循环完成了一圈的运行，就会调用该回调函数。
 
-这*不是* [setTimeout(fn, 0)](../timers/timer.md#setTimeout) 的一个简单的别名，因为它的效率高多了。在事件循环的后续时间刻度（subsequent ticks）中，它运行在任何附加的 I/O 事件（包括定时器）触发之前。
+这*不是* [setTimeout(fn, 0)](../timers/scheduling_timers.md#settimeoutcallback-delay-args) 的一个简单的别名，因为它的效率高多了。在事件循环的后续时间刻度（subsequent ticks）中，它运行在任何附加的 I/O 事件（包括定时器）触发之前。
 
 ```javascript
 console.log('start');
