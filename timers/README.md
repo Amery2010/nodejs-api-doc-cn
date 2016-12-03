@@ -1,6 +1,6 @@
 # 定时器(Timers)
 
-* [计划定时器](./timers/scheduling_timers.md)
+* [预定定时器](./timers/scheduling_timers.md)
 * [取消定时器](./timers/cancelling_timers.md)
 * [Timeout 类](./timers/class_Timeout.md)
 * [Immediate 类](./timers/class_Immediate.md)

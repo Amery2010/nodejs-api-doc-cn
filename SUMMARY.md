@@ -15,7 +15,7 @@
   * [异步与同步的控制台](./console/asynchronous_vs_synchronous_consoles.md)
 
 * [定时器(Timers)](./timers/README.md)
-  * [计划定时器](./timers/scheduling_timers.md)
+  * [预定定时器](./timers/scheduling_timers.md)
   * [取消定时器](./timers/cancelling_timers.md)
   * [Timeout 类](./timers/class_Timeout.md)
   * [Immediate 类](./timers/class_Immediate.md)

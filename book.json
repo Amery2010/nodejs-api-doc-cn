@@ -3,8 +3,6 @@
     "generator": "site",
     "language": "zh",
     "plugins": [
-        "-sharing",
-        "fontsettings",
         "github",
         "sitemap"
     ],
