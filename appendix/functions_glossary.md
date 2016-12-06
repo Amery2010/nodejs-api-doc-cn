@@ -617,21 +617,19 @@
 
 ### M
 
-[module](../modules/module.md#module)
+[module.id](../modules/module.md#moduleid)
 
-[module.exports](../modules/module.md#exports)
+[module.filename](../modules/module.md#modulefilename)
 
-[module.require(id)](../modules/module.md#require)
+[module.loaded](../modules/module.md#moduleloaded)
 
-[module.id](../modules/module.md#id)
+[module.parent](../modules/module.md#moduleparent)
 
-[module.filename](../modules/module.md#filename)
+[module.children](../modules/module.md#modulechildren)
 
-[module.loaded](../modules/module.md#loaded)
+[module.exports](../modules/module.md#moduleexports)
 
-[module.parent](../modules/module.md#parent)
-
-[module.children](../modules/module.md#children)
+[module.require(id)](../modules/module.md#modulerequireid)
 
 [message.setTimeout(msecs, callback)](../http/class_http_IncomingMessage.md#messagesettimeoutmsecs-callback)
 

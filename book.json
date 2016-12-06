@@ -12,6 +12,15 @@
         },
         "sitemap": {
             "hostname": "https://nodejs.xiangfa.org/"
+        },
+        "sharing": {
+            "facebook": false,
+            "twitter": false,
+            "google": false,
+            "weibo": false,
+            "instapaper": false,
+            "vk": false,
+            "all": ["weibo", "facebook", "twitter", "google"]
         }
     }
 }

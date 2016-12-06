@@ -453,7 +453,7 @@ v0.8 版本允许更长的进程标题字符串，也支持覆盖环境内存，
 <div id="mainModule" class="anchor"></div>
 ## process.mainModule
 
-检索 [require.main](../modules/module.md#) 的另一种方法。不同的是，如果主模块在运行时改变，`require.main` 仍然会指向发生变化之前请求的模块的原始主模块。通常可以安全地假设两个都是指向相同的模块。
+检索 [require.main](../modules/module.md) 的另一种方法。不同的是，如果主模块在运行时改变，`require.main` 仍然会指向发生变化之前请求的模块的原始主模块。通常可以安全地假设两个都是指向相同的模块。
 
 针对 `require.main` 而言，如果没有入口脚本，它可能会变成 `undefined`。
 
