@@ -1,13 +1,13 @@
 # 文件模块
 
-如果按文件名没有查找到，那么 Node.js 会添加 `.js` 和 `.json` 后缀名，再尝试加载，如果还是没有找到，最后会加上 `.node` 的后缀名再次尝试加载。
+如果按确切的文件名没有查找到该模块，那么 Node.js 会尝试添加 `.js` 和 `.json` 拓展名进行查找，如果还未找到，最后会尝试添加 `.node` 的拓展名进行查找。
 
-`.js` 会被解析为 Javascript 纯文本文件，`.json` 会被解析为 JSON 格式的纯文本文件。 `.node` 则会被解析为编译后的插件模块通过 `dlopen` 加载。
+`.js` 文件会被解析为 JavaScript 文本文件，`.json` 文件会被解析为 JSON 文本文件。`.node` 文件会被解析为通过 `dlopen` 加载的编译后的插件模块。
 
-模块以 `'/'` 为前缀，则表示绝对路径。例如，`require('/home/marco/foo.js')` 加载的是 `/home/marco/foo.js` 这个文件。
+请求的模块以 `'/'` 为前缀，则表示绝对路径。例如，`require('/home/marco/foo.js')` 将会加载的是 `/home/marco/foo.js` 文件。
 
-模块以 `'./'` 为前缀，则路径是相对于调用 `require()` 的文件。 也就是说，`circle.js` 必须和 `foo.js` 在同一目录下，`require('./circle')` 才能找到。
+请求的模块以 `'./'` 为前缀，则表示相对于调用 `require()` 的文件的路径。也就是说，`circle.js` 必须和 `foo.js` 在同一目录下以便于 `require('./circle')` 找到它。
 
-当没有以 `'/'` 或者 `'./'` 来指向一个文件时，这个模块要么是“核心模块”，要么就是加载自一个 `node_modules` 文件夹。
+当没有以 `'/'`、`'./'` 或 `'../'` 开头来表示文件时，这个模块必须是“核心模块”或加载自 `node_modules` 目录。
 
-如果指定的路径不存在，`require()` 会抛出一个 `code` 属性为 `'MODULE_NOT_FOUND'` 的[错误](../errors/class_Error.md#)。
+如果给定的路径不存在，`require()` 会抛出一个 `code` 属性为 `'MODULE_NOT_FOUND'` 的[错误](../errors/class_Error.md#)。
