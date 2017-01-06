@@ -1,8 +1,8 @@
-# 总体而言...
+# 总的来说...
 
-为了获取调用 `require()` 加载的确切的文件名，请使用 `require.resolve()` 函数。
+想要获取调用 `require()` 时加载的确切的文件名，请使用 `require.resolve()` 函数。
 
-综上所述，下面用伪代码的高级算法形式表达 require.resolve 是如何工作的：
+综上所述，以下用伪代码的形式来表述 require.resolve 中的高级算法是如何工作的：
 
 ```
 require(X) from module at path Y
@@ -42,8 +42,8 @@ NODE_MODULES_PATHS(START)
 3. let DIRS = []
 4. while I >= 0,
    a. if PARTS[I] = "node_modules" CONTINUE
-   c. DIR = path join(PARTS[0 .. I] + "node_modules")
-   b. DIRS = DIRS + DIR
-   c. let I = I - 1
+   b. DIR = path join(PARTS[0 .. I] + "node_modules")
+   c. DIRS = DIRS + DIR
+   d. let I = I - 1
 5. return DIRS
 ```

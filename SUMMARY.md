@@ -31,8 +31,8 @@
   * [循环](./modules/cycles.md)
   * [缓存](./modules/caching.md)
   * [访问主模块](./modules/accessing_the_main_module.md)
-  * [总体而言...](./modules/all_together.md)
-  * [附录：包管理技巧](./modules/package_manager_tips.md)
+  * [总的来说...](./modules/all_together.md)
+  * [附录：包管理器的技巧](./modules/package_manager_tips.md)
 
 * [事件(Events)](./events/README.md)
   * [EventEmitter类](./events/class_EventEmitter.md)

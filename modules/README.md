@@ -9,9 +9,10 @@
 * [从全局文件夹加载模块](./loading_from_the_global_folders.md)
 * [循环](./cycles.md)
 * [缓存](./caching.md)
+  * [模块缓存的注意事项](./caching.md#模块缓存的注意事项)
 * [访问主模块](./accessing_the_main_module.md)
-* [总体而言...](./all_together.md)
-* [附录：包管理技巧](./package_manager_tips.md)
+* [总的来说...](./all_together.md)
+* [附录：包管理器的技巧](./package_manager_tips.md)
 
 --------------------------------------------------
 
