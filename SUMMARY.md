@@ -35,10 +35,10 @@
   * [附录：包管理器的技巧](./modules/package_manager_tips.md)
 
 * [事件(Events)](./events/README.md)
-  * [EventEmitter类](./events/class_EventEmitter.md)
+  * [EventEmitter 类](./events/class_EventEmitter.md)
   * [错误事件](./events/error_events.md)
   * [绑定一次性事件](./events/handling_events_only_once.md)
-  * [给监听器传参](./events/passing_arguments_and_this_to_listeners.md)
+  * [将参数和 this 传递给监听器](./events/passing_arguments_and_this_to_listeners.md)
   * [异步和同步](./events/asynchronous_vs_synchronous.md)
 
 * [错误(Errors)](./errors/README.md)
