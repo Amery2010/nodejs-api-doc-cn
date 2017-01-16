@@ -1,29 +1,29 @@
 # 绑定一次性事件
 
-当使用 `eventEmitter.on()` 方法注册一个监听器，这个监听器会在指定事件每次触发时被调用。
+当使用 `eventEmitter.on()` 方法注册监听器时，这个监听器会在*每次*发出该命名事件时被调用。
 
-```javascript
+``` javascript
 const myEmitter = new MyEmitter();
-var m = 0;
+let m = 0;
 myEmitter.on('event', () => {
-    console.log(++m);
+	console.log(++m);
 });
 myEmitter.emit('event');
-// Prints: 1
+// 打印：1
 myEmitter.emit('event');
-// Prints: 2
+// 打印：2
 ```
 
-当使用 `eventEmitter.once()` 方法时，一个已注册的监听器在调用后可能被立即取消注册。
+当使用 `eventEmitter.once()` 方法时，可以注册对于特定事件最多调用一次的监听器。一旦触发了该事件，监听器就会被注销，随后调用该事件。
 
-```javascript
+``` javascript
 const myEmitter = new MyEmitter();
-var m = 0;
+let m = 0;
 myEmitter.once('event', () => {
-    console.log(++m);
+	console.log(++m);
 });
 myEmitter.emit('event');
-// Prints: 1
+// 打印：1
 myEmitter.emit('event');
-// Ignored
+// 忽略
 ```

@@ -1,35 +1,35 @@
 # 错误事件
 
-当一个 `EventEmitter` 实例发生错误，一个典型的操作就是触发一个 `'error'` 事件。这些都被视为 Node.js 中的一个特例。
+当 `EventEmitter` 实例中发生错误时，典型的行为就是触发一个 `'error'` 事件。这些在 Node.js 中被视为特殊情况。
 
-如果一个 `EventEmitter` 没有注册过至少一个监听器，当一个 `'error'` 事件触发时，将抛出这个错误，打印跟踪堆栈，并退出 Node.js 进程。
+如果 `EventEmitter` 实例没有注册过至少一个监听器，当一个 `'error'` 事件触发时，将抛出这个错误，打印堆栈跟踪，并退出 Node.js 进程。
 
-```javascript
+``` javascript
 const myEmitter = new MyEmitter();
 myEmitter.emit('error', new Error('whoops!'));
-// Throws and crashes Node.js
+// Node.js 抛出错误，随后崩溃
 ```
 
-为了防止 Node.js 进程崩溃，开发者可以通过注册一个 `process.on('uncaughtException')` 事件的监听器或使用[域名（domain）](../domain/)模块（注意，这个 `domain` 模块*已被弃用*）。
+为了防止 Node.js 进程崩溃，可以在[进程对象 uncaughtException 事件](../process/process.md#event_uncaughtException)上注册监听器或使用[域（domain）](../domain/)模块（*请注意，`domain` 模块已被弃用*）。
 
-```javascript
+``` javascript
 const myEmitter = new MyEmitter();
 
 process.on('uncaughtException', (err) => {
-    console.log('whoops! there was an error');
+	console.log('哇哦！这儿有个错误');
 });
 
 myEmitter.emit('error', new Error('whoops!'));
-// Prints: whoops! there was an error
+// 打印：哇哦！这儿有个错误
 ```
 
-作为最佳实践，开发者应该总是注册 `'error'` 事件的监听器：
+作为最佳实践，应该始终为 `'error'` 事件注册监听器：
 
-```javascript
+``` javascript
 const myEmitter = new MyEmitter();
 myEmitter.on('error', (err) => {
-    console.log('whoops! there was an error');
+	console.log('哇哦！这儿有个错误');
 });
 myEmitter.emit('error', new Error('whoops!'));
-// Prints: whoops! there was an error
+// 打印：哇哦！这儿有个错误
 ```
