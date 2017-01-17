@@ -1,34 +1,39 @@
-# EventEmitter类
+# EventEmitter 类
 
-* ['newListener'事件](#newListener)
-* ['removeListener'事件](#removeListener)
-* [EventEmitter.defaultMaxListeners](#EventEmitter_defaultMaxListeners)
-* [EventEmitter.listenerCount(emitter, eventName)](#EventEmitter_listenerCount)
-* [emitter.on(eventName, listener)](#on)
-* [emitter.once(eventName, listener)](#once)
-* [emitter.addListener(eventName, listener)](#addListener)
-* [emitter.removeListener(eventName, listener)](#removeListener)
-* [emitter.removeAllListeners([eventName])](#removeAllListeners)
-* [emitter.emit(eventName[, arg1][, arg2][, ...])](#emit)
-* [emitter.listeners(eventName)](#listeners)
-* [emitter.listenerCount(eventName)](#listenerCount)
-* [emitter.setMaxListeners(n)](#setMaxListeners)
-* [emitter.getMaxListeners()](#getMaxListeners)
+* ['newListener' 事件](#newListener-事件)
+* ['removeListener' 事件](#removeListener-事件)
+* [EventEmitter.defaultMaxListeners](#eventemitterdefaultmaxlisteners)
+* [EventEmitter.listenerCount(emitter, eventName)](#eventemitterlistenercountemitter-eventname) <del>已废弃</del>
+* [emitter.on(eventName, listener)](#emitteroneventname-listener)
+* [emitter.once(eventName, listener)](#emitteronceeventname-listener)
+* [emitter.addListener(eventName, listener)](#emitteraddlistenereventname-listener)
+* [emitter.prependListener(eventName, listener)](#emitterprependlistenereventname-listener)
+* [emitter.prependOnceListener(eventName, listener)](#emitterprependoncelistenereventname-listener)
+* [emitter.removeListener(eventName, listener)](#emitterremovelistenereventname-listener)
+* [emitter.removeAllListeners([eventName])](#emitterremovealllistenerseventname)
+* [emitter.emit(eventName[, ...args])](#emitteremiteventname-args)
+* [emitter.listeners(eventName)](#emitterlistenerseventname)
+* [emitter.listenerCount(eventName)](#emitterlistenercounteventname)
+* [emitter.setMaxListeners(n)](#emittersetmaxlistenersn)
+* [emitter.getMaxListeners()](#emittergetmaxlisteners)
 
 --------------------------------------------------
 
 
-`EventEmitter` 类由 `events` 模块定义和暴露：
+添加：v0.1.26
 
-```javascript
+`EventEmitter` 类由 `events` 模块定义和公开：
+
+``` javascript
 const EventEmitter = require('events');
 ```
 
 所有的事件触发器都会在新的监听器被添加时触发 `'newListener'` 事件；在一个监听器被移除时触发 `'removeListener'` 事件。
 
 
-<div id="newListener" class="anchor"></div>
 ## 'newListener' 事件
+
+添加：v0.1.26
 
 - `eventName` {String} | {Symbol} 被监听的事件的名称
 
@@ -61,7 +66,6 @@ myEmitter.emit('event');
 ```
 
 
-<div id="removeListener" class="anchor"></div>
 ## 'removeListener' 事件
 
 - `eventName` {String} | {Symbol} 被监听的事件的名称
@@ -71,7 +75,6 @@ myEmitter.emit('event');
 `'removeListener'` 事件在一个监听器被移除*后*触发。
 
 
-<div id="EventEmitter_defaultMaxListeners" class="anchor"></div>
 ## EventEmitter.defaultMaxListeners
 
 任何单一事件默认都可以注册最多 10 个监听器。每个 `EventEmitter` 实例都可以使用 [emitter.setMaxListeners(n)](#setMaxListeners) 方法来破除这个限制。可以使用 `EventEmitter.defaultMaxListeners` 属性改变*所有* `EventEmitter` 实例的默认设置。
@@ -89,7 +92,6 @@ emitter.once('event', () => {
 ```
 
 
-<div id="EventEmitter_listenerCount" class="anchor"></div>
 ## EventEmitter.listenerCount(emitter, eventName)
 
 > 稳定度：0 - 已废弃：请使用 [emitter.listenerCount()](#listenerCount) 替代。
@@ -105,7 +107,6 @@ console.log(EventEmitter.listenerCount(myEmitter, 'event'));
 ```
 
 
-<div id="on" class="anchor"></div>
 ## emitter.on(eventName, listener)
 
 在监听器数组末尾添加名为 `eventName` 的 `listener` 函数，不会检测 `listener` 是否已经被添加。通过重复传递相同的 `eventName` 和 `listener` 组合会导致 `listener` 被添加和调用多次。
@@ -119,7 +120,6 @@ server.on('connection', (stream) => {
 返回一个当前 `EventEmitter` 的引用以便链式调用。
 
 
-<div id="once" class="anchor"></div>
 ## emitter.once(eventName, listener)
 
 给名为 `eventName` 的事件添加一个**一次性**的 `listener` 函数。这个监听器仅在下次 `eventName` 触发时被激活，随后又被删除。
@@ -133,13 +133,11 @@ server.once('connection', (stream) => {
 返回一个当前 `EventEmitter` 的引用以便链式调用。
 
 
-<div id="addListener" class="anchor"></div>
 ## emitter.addListener(eventName, listener)
 
 [emitter.on(eventName, listener)](#on) 的别名。
 
 
-<div id="removeListener" class="anchor"></div>
 ## emitter.removeListener(eventName, listener)
 
 从监听器数组中移除名为 `eventName` 的特定的 `listener` 。
@@ -191,7 +189,6 @@ myEmitter.emit('event');
 
 返回一个当前 `EventEmitter` 的引用以便链式调用。
 
-<div id="removeAllListeners" class="anchor"></div>
 ## emitter.removeAllListeners([eventName])
 
 移除全部或某些特定 `eventName` 的监听器。
@@ -201,7 +198,6 @@ myEmitter.emit('event');
 返回一个当前 `EventEmitter` 的引用以便链式调用。
 
 
-<div id="emit" class="anchor"></div>
 ## emitter.emit(eventName[, arg1][, arg2][, ...])
 
 按照监听器的注册顺序同步调用每个以 `eventName` 注册的监听器，并将额外的参数传递给它们。
@@ -209,13 +205,11 @@ myEmitter.emit('event');
 如果事件有监听器存在就返回 `true` ，否则返回 `false` 。
 
 
-<div id="listeners" class="anchor"></div>
 ## emitter.listeners(eventName)
 
 返回名为 `eventName` 的事件的监听器数组的副本。
 
 
-<div id="listenerCount" class="anchor"></div>
 ## emitter.listenerCount(eventName)
 
 - `eventName` {Value} 被监听的事件名
@@ -223,7 +217,6 @@ myEmitter.emit('event');
 返回正在监听名为 `eventName` 的事件的监听器数量。
 
 
-<div id="setMaxListeners" class="anchor"></div>
 ## emitter.setMaxListeners(n)
 
 在默认情况下，`EventEmitter` 会在多于 `10` 个监听器监听某个事件的时候出现警告，此限制在寻找内存泄露时非常有用。很显然，并不是所有的事件都要被仅限为 `10` 个。`emitter.setMaxListeners()` 方法允许修改特定的 `EventEmitter` 实例的限制数量。如果想要不限制监听器的数量，可以将这个值设置为 `Infinity` （或 `0`）。
@@ -231,7 +224,6 @@ myEmitter.emit('event');
 返回一个当前 `EventEmitter` 的引用以便链式调用。
 
 
-<div id="getMaxListeners" class="anchor"></div>
 ## emitter.getMaxListeners()
 
 返回当前 `EventEmitter` 实例的最大监听器数量，该值可能是通过 [emitter.setMaxListeners(n)](#setMaxListeners) 设置的值或 [EventEmitter.defaultMaxListeners](#EventEmitter_defaultMaxListeners) 默认值。
