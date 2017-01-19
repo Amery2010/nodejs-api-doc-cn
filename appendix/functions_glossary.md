@@ -396,6 +396,32 @@
 
 [exports](../globals/global.md#exports)
 
+[EventEmitter.defaultMaxListeners](../events/class_EventEmitter.md#eventemitterdefaultmaxlisteners)
+
+[emitter.on(eventName, listener)](../events/class_EventEmitter.md#emitteroneventname-listener)
+
+[emitter.once(eventName, listener)](../events/class_EventEmitter.md#emitteronceeventname-listener)
+
+[emitter.addListener(eventName, listener)](../events/class_EventEmitter.md#emitteraddlistenereventname-listener)
+
+[emitter.prependListener(eventName, listener)](../events/class_EventEmitter.md#emitterprependlistenereventname-listener)
+
+[emitter.prependOnceListener(eventName, listener)](../events/class_EventEmitter.md#emitterprependoncelistenereventname-listener)
+
+[emitter.removeListener(eventName, listener)](../events/class_EventEmitter.md#emitterremovelistenereventname-listener)
+
+[emitter.removeAllListeners([eventName])](../events/class_EventEmitter.md#emitterremovealllistenerseventname)
+
+[emitter.emit(eventName[, ...args])](../events/class_EventEmitter.md#emitteremiteventname-args)
+
+[emitter.listeners(eventName)](../events/class_EventEmitter.md#emitterlistenerseventname)
+
+[emitter.listenerCount(eventName)](../events/class_EventEmitter.md#emitterlistenercounteventname)
+
+[emitter.setMaxListeners(n)](../events/class_EventEmitter.md#emittersetmaxlistenersn)
+
+[emitter.getMaxListeners()](../events/class_EventEmitter.md#emittergetmaxlisteners)
+
 [Error.captureStackTrace(targetObject[, constructorOpt])](../errors/class_Error.md#captureStackTrace)
 
 [Error.stackTraceLimit](../errors/class_Error.md#stackTraceLimit)
