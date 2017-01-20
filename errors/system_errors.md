@@ -1,10 +1,10 @@
 # 系统错误
 
-* [System Error类](#class_System_Error)
-  - [error.errno](#errno)
-  - [error.code](#code)
-  - [error.syscall](#syscall)
-* [通用的系统错误](#common_cystem_errors)
+* [系统错误类](#系统错误类)
+  - [error.errno](#errorerrno)
+  - [error.code](#errorcode)
+  - [error.syscall](#errorsyscall)
+* [通用的系统错误](#通用的系统错误)
 
 --------------------------------------------------
 
