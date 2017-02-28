@@ -9,45 +9,38 @@
 --------------------------------------------------
 
 
-系统错误通常在程序运行环境中引发的异常。当应用程序违反了操作系统的限制时通常会引发操作错误，例如试图读取一个不存在的文件或用户没有足够的权限。
+当程序在运行时环境中发生异常时会产生系统错误。通常，这些是当应用违反操作系统约束（例如尝试读取不存在的文件或当用户没有足够的权限）时发生的操作错误。
 
-系统错误通常是在系统调用（syscall）的级别产生：一组错误代码的详尽清单和它们的含义在线上或大多数的 Unix 上运行 `man 2 intro` 或 `man 3 errno` 是可行的。
+系统错误通常是在系统调用（syscall）级别产生：通过在大多数 Unix 上运行 `man 2 intro` 或 `man 3 errno` 或[在线](http://man7.org/linux/man-pages/man3/errno.3.html)查找，可以获取错误代码及其含义的详尽列表。
 
-在 Node.js 中，系统错误表现为已传参的 `Error` 对象的附加属性。
-
-
-<div id="class_System_Error" class="anchor"></div>
-## System Error类
+在 Node.js 中，系统错误表现为添加额外属性的增强型 `Error` 对象。
 
 
-<div id="errno" class="anchor"></div>
-#### error.errno
-
-返回表示错误代码的字符串，经常是 `E` 后面跟着一串大写字母，并有可能是 `man 2 intro` 中的引用。
-
-`error.code` 和 `error.errno` 属性是彼此的别名并返回相同的值。
+## 系统错误类
 
 
-<div id="code" class="anchor"></div>
-#### error.code
+### error.errno
 
-同 [error.errno](#errno)。
+返回表示**否定**错误码相应的数字，可能引用自 `man 2 intro`。例如，`ENOENT` 错误的 `errno` 的值为 `-2`，因为 `ENOENT` 的错误码为 `2`。
 
 
-<div id="syscall" class="anchor"></div>
-#### error.syscall
+### error.code
+
+返回一个表示错误码的字符串，它总是 `E` 后面跟着一串大写字母，并可能引用自 `man 2 intro`。
+
+
+### error.syscall
 
 返回描述失败的系统调用（[syscall](http://man7.org/linux/man-pages/man2/syscall.2.html)）的字符串。
 
 
-<div id="common_cystem_errors" class="anchor"></div>
 ## 通用的系统错误
 
-这个列表并**不详尽**，但列举了写一个 Node.js 程序时可能遇到的许多常见系统错误。一个详尽的清单可以在[这里](http://man7.org/linux/man-pages/man3/errno.3.html)找到。
+这个列表并**不详尽**，但列举了开发 Node.js 程序时可能遇到的许多常见的系统错误。在[这里](http://man7.org/linux/man-pages/man3/errno.3.html)可以找到一个详尽的列表。
 
 * `EACCES`（没有权限）：试图在一个文件权限不允许的文件夹中访问一个文件。
 
-* `EADDRINUSE`（地址已被使用）：试图给一个服务器（[net](../net/)、[http](../http/) 或 [https](../https/)）绑定本地地址因另外一个在本地系统中服务器已经占据了这个地址所导致的失败。
+* `EADDRINUSE`（地址已被使用）：试图将一个服务器（[net](../net/)、[http](../http/) 或 [https](../https/)）绑定本地地址失败，原因是本地系统上的另一个服务已占用了该地址。
 
 * `ECONNREFUSED`（连接被拒绝）：目标机器积极拒绝导致的无法连接。这通常是试图连接到国外主机上不活动的服务后的结果。
 
